@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class War {
     
-    //Tabuleiro tabueliro;
+    //Tabuleiro tabuleiro;
     ArrayList<Exercito> exercitos;
     
     
