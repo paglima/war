@@ -11,9 +11,18 @@ class Territorio {
     private Exercito exercito;
     private int quantidadeExercito;
     
-    public Territorio(String nome){
+    Territorio(String nome){
         this.nome = nome;
         continente = null;
+        vizinhos = new ArrayList<>();
+        
+        exercito = null;
+        quantidadeExercito = 0;
+    }
+    
+    Territorio(String nome, Continente continente){
+        this.nome = nome;
+        this.continente = continente;
         vizinhos = new ArrayList<>();
         
         exercito = null;
@@ -55,6 +64,9 @@ class Territorio {
         return vizinhos;
     }
     
+    /**
+     * @param vizinho the territorios to set
+     */
     public void addVizinho(Territorio territorio){
         vizinhos.add(territorio);
     }

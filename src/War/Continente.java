@@ -7,7 +7,7 @@ class Continente {
     private String nome;
     private final ArrayList<Territorio> territorios;
     
-    public Continente(String nome){
+    Continente(String nome){
         this.nome = nome;
         territorios = new ArrayList<>();
     }
