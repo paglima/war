@@ -557,6 +557,10 @@
            $(".brasil").click(function() {
                 if(confirm("Jogar Dados?")){
                     $("#dados").show();
+                    setTimeout(function(){
+                        $("#dados").hide();
+                    }, 5000);
+
                 }
             });
         </script>
