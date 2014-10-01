@@ -1,5 +1,0 @@
-package War;
-
-interface Carta {
-    
-}
