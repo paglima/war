@@ -1,3 +1,6 @@
+CREATE USER TrabalhoES IDENTIFIED BY TrabalhoES;
+GRANT CONNECT,  RESOURCE, CREATE table, CREATE synonym, CREATE sequence TO TrabalhoES;
+
 CREATE TABLE OBJETIVO 
 (
   ID_OBJETIVO          number, 
