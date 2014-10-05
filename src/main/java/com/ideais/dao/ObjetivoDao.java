@@ -2,16 +2,34 @@ package com.ideais.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ideais.dados.Objetivo;
+import com.ideais.dao.ObjetivoDao;
 
-public interface ObjetivoDao {
 
-	List<Objetivo> findAll();
+@Repository
+@Transactional
+public class ObjetivoDao extends GenericDao<Objetivo>{
+	
+	public List<Objetivo> findAll() {
+		return super.findAll("from Objetivo");
+	}
 
-	Objetivo findById(Long id);
+	@Override
+	public Objetivo findById(Long id) {
+		return super.findById(id);
+	}
 
-	void saveOrUpdate(Objetivo objetivo);
+	@Override
+	public void saveOrUpdate(Objetivo objetivo) {
+		super.saveOrUpdate(objetivo);
+	}
 
-	void remove(Objetivo objetivo);
+	@Override
+	public void remove(Objetivo objetivo) {
+		super.remove(objetivo);
+	}
 
 }

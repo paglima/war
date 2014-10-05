@@ -2,13 +2,13 @@ package com.ideais.service;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.ideais.dados.Objetivo;
 import com.ideais.dao.ObjetivoDao;
 
-@Service
-public class ObjetivoService {
+@Component
+public class ObjetivoService{
 	
 	private static final int NUMERO_DE_OBJETIVOS = 14;
 	

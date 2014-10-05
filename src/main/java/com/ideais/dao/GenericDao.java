@@ -1,17 +1,53 @@
 package com.ideais.dao;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import com.ideais.dados.Usuario;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface GenericDao<T extends Object> {
+@Repository
+@Transactional
+public class GenericDao<T extends Object>{
+
+	@Autowired
+	protected SessionFactory sessionFactory;
 	
-	List<T> findAll(String tableName);
+	private Class<T> persistentClass;
 
-	Usuario findById(Long id);
+	@SuppressWarnings("unchecked")
+	public List<T> findAll(String tableName) {
+		return sessionFactory.getCurrentSession().createQuery(tableName).list();
+	}
 
-	void saveOrUpdate(T object);
+	@SuppressWarnings("unchecked")
+	public T findById(Long id) {
+		return (T) sessionFactory.getCurrentSession().get(getPersistentClass(), id);
+	}
 
-	void remove(T object);
+	@SuppressWarnings("unchecked")
+	public void saveOrUpdate(T object) {
+		T p = (T) sessionFactory.getCurrentSession().merge(object);
+		sessionFactory.getCurrentSession().save(p);
+	}
 
+
+	public void remove(T object) {
+		sessionFactory.getCurrentSession().delete(object);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Class<T> getPersistentClass() {
+		if ( persistentClass == null ) {
+			this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+
+		}
+		return persistentClass;
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 }

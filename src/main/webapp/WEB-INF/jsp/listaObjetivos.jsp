@@ -6,7 +6,7 @@
         <title>Lista Objetivos</title>
       	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js" type="text/javascript"></script>
-    	<script src="JScript/listaObjetivos.js" type="text/javascript"></script>
+    	<script src="js/listaObjetivos.js" type="text/javascript"></script>
     	<link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
 	<body>
