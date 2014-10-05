@@ -31,4 +31,11 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements UsuarioDa
 	public Usuario findById(Long id) {
 		return super.findById(id);
 	}
+
+	@Override
+	public void saveAll(List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			saveOrUpdate(usuario);
+		}
+	}
 }

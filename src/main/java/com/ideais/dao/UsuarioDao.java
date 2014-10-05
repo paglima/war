@@ -13,5 +13,7 @@ public interface UsuarioDao {
 	void saveOrUpdate(Usuario usuario);
 
 	void remove(Usuario usuario);
+	
+	void saveAll(List<Usuario> usuarios);
 
 }

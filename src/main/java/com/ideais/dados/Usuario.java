@@ -32,11 +32,11 @@ public class Usuario {
 	private String nomeUsuario;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ID_OBJETIVO", nullable = false)
+	@JoinColumn(name = "ID_OBJETIVO", nullable = true)
 	private Objetivo objetivo;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_USUARIO", nullable = false)
+	@JoinColumn(name = "ID_USUARIO", nullable = true)
 	private List<Territorio> territorios;
 	
 	public Usuario() {

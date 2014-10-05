@@ -1,5 +1,8 @@
 package com.ideais.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -16,23 +19,58 @@ import com.ideais.dados.Usuario;
 import com.ideais.dao.ObjetivoDao;
 import com.ideais.dao.TerritorioDao;
 import com.ideais.dao.UsuarioDao;
+import com.ideais.form.UsuarioForm;
+import com.ideais.service.ObjetivoService;
 
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class GenericController {
 	
 	@Autowired
-	ObjetivoDao objetivoDao;
+	private ObjetivoDao objetivoDao;
 	
 	@Autowired
-	UsuarioDao usuarioDao;
+	private ObjetivoService objetivoService;
 	
 	@Autowired
-	TerritorioDao territorioDao;
+	private UsuarioDao usuarioDao;
+	
+	@Autowired
+	private TerritorioDao territorioDao;
 	
 	@RequestMapping(value = "/tabuleiro",method = RequestMethod.GET )
 	public String tabuleiro(){
 		return "tabuleiro";
+	}
+	
+	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.GET )
+	public ModelAndView cadastraUsuario(){
+		UsuarioForm usuarioForm = new UsuarioForm();
+		usuarioForm.setUsuarios(new ArrayList<Usuario>());
+		return new ModelAndView("cadastraUsuario","usuarioForm",usuarioForm);
+	}
+	
+	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
+	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm){
+		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
+		usuarioDao.saveAll(usuariosCadastrados);
+		
+		List<Long> listaObjetivoId = new ArrayList<Long>();
+		
+		for (Usuario usuario : usuariosCadastrados) {
+			Objetivo objetivo = objetivoService.sorteiaObjetivo();
+			
+			if(listaObjetivoId.contains(objetivo.getIdObjetivo())){
+				continue;
+			}
+			
+			usuario.setObjetivo(objetivo);
+			listaObjetivoId.add(objetivo.getIdObjetivo());
+			
+		}
+		
+		
+		return new ModelAndView("listaObjetivos","jogadores",usuariosCadastrados);
 	}
 	
 	@RequestMapping(value = "/cadastro",method = RequestMethod.GET )
@@ -54,6 +92,8 @@ public class GenericController {
 
 	@RequestMapping(value= "/testes",method = RequestMethod.GET)
 	public String testes(){
+		
+		objetivoService.sorteiaObjetivo();
 		Usuario usuario = usuarioDao.findById(1L);
 		
 		territorioDao.findByName("Japão");
