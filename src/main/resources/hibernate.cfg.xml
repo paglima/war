@@ -5,5 +5,6 @@
 	 <session-factory>
 	  	<mapping class="com.ideais.dados.Usuario"/>
 	  	<mapping class="com.ideais.dados.Objetivo"/>
+	  	<mapping class="com.ideais.dados.Territorio"/>
 	 </session-factory>
 </hibernate-configuration>

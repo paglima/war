@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ideais.dados.Objetivo;
 import com.ideais.dados.Usuario;
 import com.ideais.dao.ObjetivoDao;
+import com.ideais.dao.TerritorioDao;
+import com.ideais.dao.UsuarioDao;
 
 @Controller
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -21,6 +23,12 @@ public class GenericController {
 	
 	@Autowired
 	ObjetivoDao objetivoDao;
+	
+	@Autowired
+	UsuarioDao usuarioDao;
+	
+	@Autowired
+	TerritorioDao territorioDao;
 	
 	@RequestMapping(value = "/tabuleiro",method = RequestMethod.GET )
 	public String tabuleiro(){
@@ -44,6 +52,19 @@ public class GenericController {
 		return "oi";
 	}
 
+	@RequestMapping(value= "/testes",method = RequestMethod.GET)
+	public String testes(){
+		Usuario usuario = usuarioDao.findById(1L);
+		
+		territorioDao.findByName("Japão");
+		
+		usuario.addTerritorio(territorioDao.findById(1L));
+		
+		usuarioDao.saveOrUpdate(usuario);
+		
+		return "teste";
+	}
+	
 	@RequestMapping(value= "/lista",method = RequestMethod.GET)
 	public ModelAndView list(){
 		return new ModelAndView("description", "objetivos", objetivoDao.findAll());

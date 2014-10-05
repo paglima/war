@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GenericDaoImpl<T extends Object>{
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
 	
 	private Class<T> persistentClass;
 
