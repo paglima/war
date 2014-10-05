@@ -53,7 +53,6 @@ public class GenericController {
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
 	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm){
 		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
-		usuarioDao.saveAll(usuariosCadastrados);
 		
 		List<Long> listaObjetivoId = new ArrayList<Long>();
 		
@@ -69,6 +68,7 @@ public class GenericController {
 			
 		}
 		
+		usuarioDao.saveAll(usuariosCadastrados);
 		
 		return new ModelAndView("listaObjetivos","jogadores",usuariosCadastrados);
 	}
