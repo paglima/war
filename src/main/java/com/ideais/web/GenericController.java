@@ -54,20 +54,7 @@ public class GenericController {
 	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm){
 		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
 		
-		List<Long> listaObjetivoId = new ArrayList<Long>();
-		
-		for (Usuario usuario : usuariosCadastrados) {
-			Objetivo objetivo = objetivoService.sorteiaObjetivo();
-			
-			if(listaObjetivoId.contains(objetivo.getIdObjetivo())){
-				continue;
-			}
-			
-			usuario.setObjetivo(objetivo);
-			listaObjetivoId.add(objetivo.getIdObjetivo());
-			
-		}
-		
+		objetivoService.sorteiaObjetivos(usuariosCadastrados);
 		usuarioDao.saveAll(usuariosCadastrados);
 		
 		return new ModelAndView("listaObjetivos","jogadores",usuariosCadastrados);
@@ -93,7 +80,7 @@ public class GenericController {
 	@RequestMapping(value= "/testes",method = RequestMethod.GET)
 	public String testes(){
 		
-		objetivoService.sorteiaObjetivo();
+//		objetivoService.sorteiaObjetivo();
 		Usuario usuario = usuarioDao.findById(1L);
 		
 		usuarioDao.remove(usuario);
