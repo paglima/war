@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(function($) {
 	$("#duplica").click(function(){
 		$(".fotosbox1").append($("input[name=fotos]:eq(0)").clone().val(""));
 	});

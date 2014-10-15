@@ -4,7 +4,6 @@ package com.ideais.dados;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +34,7 @@ public class Usuario {
 	@JoinColumn(name = "ID_OBJETIVO", nullable = true)
 	private Objetivo objetivo;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_USUARIO", nullable = true)
 	private List<Territorio> territorios;
 	

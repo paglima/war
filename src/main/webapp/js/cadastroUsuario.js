@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(function($) {
 	$('#numeroJogadores').change(function(){
 		var nJogadores = $(this).val();
 		$("form[name='cadastraUsuarioForm']").children().remove();

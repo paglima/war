@@ -22,7 +22,7 @@ public class UsuarioDao extends GenericDao<Usuario>{
 
 	@Override
 	public void remove(Usuario usuario) {
-		super.saveOrUpdate(usuario);
+		super.remove(usuario);
 	}
 	
 	@Override

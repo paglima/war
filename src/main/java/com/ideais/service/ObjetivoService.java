@@ -18,6 +18,7 @@ public class ObjetivoService{
 	public Objetivo sorteiaObjetivo() {
 		Random random = new Random();
 		Integer idObjetivoSorteado = random.nextInt(NUMERO_DE_OBJETIVOS) + 1;
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> "+ idObjetivoSorteado);
 		return objetivoDao.findById(idObjetivoSorteado.longValue());
 	}
 

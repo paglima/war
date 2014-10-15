@@ -94,13 +94,9 @@ public class GenericController {
 	public String testes(){
 		
 		objetivoService.sorteiaObjetivo();
-		Usuario usuario = usuarioDao.findById(39L);
+		Usuario usuario = usuarioDao.findById(1L);
 		
-		territorioDao.findByName("Japão");
-		
-		usuario.addTerritorio(territorioDao.findById(1L));
-		
-		usuarioDao.saveOrUpdate(usuario);
+		usuarioDao.remove(usuario);
 		
 		return "teste";
 	}
