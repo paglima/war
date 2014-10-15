@@ -24,6 +24,8 @@ CREATE TABLE USUARIO
   ID_OBJETIVO          number
 );
 
+ALTER TABLE USUARIO ADD CONSTRAINT PK_USUARIO PRIMARY KEY (ID_USUARIO);
+
 ALTER TABLE USUARIO
 ADD CONSTRAINT FK_OBJETIVO 
 FOREIGN KEY (ID_OBJETIVO) REFERENCES OBJETIVO (ID_OBJETIVO);
@@ -42,14 +44,11 @@ CREATE TABLE TERRITORIO
 (
   ID_TERRITORIO          number, 
   NM_TERRITORIO          varchar2(500),
-  ID_USUARIO             number not null 
+  ID_USUARIO             number 
 );
-
 
 ALTER TABLE TERRITORIO ADD CONSTRAINT PK_TERRITORIO PRIMARY KEY (ID_TERRITORIO);
 ALTER TABLE TERRITORIO ADD CONSTRAINT FK_USUARIO FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO (ID_USUARIO) ON DELETE SET NULL;
-
-
 
 CREATE SEQUENCE TERRITORIO_SEQ_ID
   START WITH 1
@@ -58,7 +57,6 @@ CREATE SEQUENCE TERRITORIO_SEQ_ID
   NOCYCLE
   NOCACHE
   NOORDER;
-
 
 insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.nextval,'Brasil');
 insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.nextval,'Argentina');
@@ -114,3 +112,19 @@ insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.ne
 insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.nextval,'Congo');
 insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.nextval,'África do Sul');
 insert into TERRITORIO(id_territorio, nm_territorio) values(TERRITORIO_SEQ_ID.nextval,'Madasgascar');
+
+SET DEFINE OFF;
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('1','Conquistar na totalidade a EUROPA, a OCEANIA e mais um terceiro');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('2','Conquistar na totalidade a ASIA e a AMÉRICA DO SUL.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('3','Conquistar na totalidade a EUROPA, a AMÉRICA DO SUL e mais um terceiro.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('4','Conquistar 18 TERRITÓRIOS e ocupar cada um deles com pelo menos dois exércitos.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('5','Conquistar na totalidade a ASIA e a ÁFRICA.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('6','Conquistar na totalidade a AMÉRICA DO NORTE e a ÁFRICA.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('7','Conquistar 24 TERRITÓRIOS à sua escolha.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('8','Conquistar na totalidade a AMÉRICA DO NORTE e a OCEANIA.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('9','Destruir totalmente OS EXÉRCITOS AZUIS.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('10','Destruir totalmente OS EXÉRCITOS AMARELOS.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('11','Destruir totalmente OS EXÉRCITOS VERMELHOS.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('12','Destruir totalmente OS EXÉRCITOS PRETOS.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('13','Destruir totalmente OS EXÉRCITOS BRANCO.');
+Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('14','Destruir totalmente OS EXÉRCITOS VERDES.');
