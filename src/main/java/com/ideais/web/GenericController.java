@@ -38,6 +38,11 @@ public class GenericController {
 	@Autowired
 	private TerritorioDao territorioDao;
 	
+	@RequestMapping(value = "/tabuleiro",method = RequestMethod.POST )
+	public String tabuleiroPost(){
+		return "tabuleiro";
+	}
+	
 	@RequestMapping(value = "/tabuleiro",method = RequestMethod.GET )
 	public String tabuleiro(){
 		return "tabuleiro";

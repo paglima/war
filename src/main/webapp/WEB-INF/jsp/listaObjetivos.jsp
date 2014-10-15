@@ -16,6 +16,9 @@
 				<span style="display: none" class="objetivo"> ${jogador.objetivo.descricao} </span>
 				<input style="display: inline-block;" type="button" class="objetivoButton" value="Mostrar"/>
 			</div>
-		</c:forEach>		
+		</c:forEach>
+		<form:form id="tabuleiro" method="post" action="tabuleiro">
+			<input type="submit"/>
+		</form:form>		
 	</body>
 </html>
