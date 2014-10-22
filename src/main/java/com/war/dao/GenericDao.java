@@ -1,4 +1,4 @@
-package com.ideais.dao;
+package com.war.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

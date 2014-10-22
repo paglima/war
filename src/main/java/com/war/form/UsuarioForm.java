@@ -1,8 +1,8 @@
-package com.ideais.form;
+package com.war.form;
 
 import java.util.List;
 
-import com.ideais.dados.Usuario;
+import com.war.dados.Usuario;
 
 public class UsuarioForm {
 	

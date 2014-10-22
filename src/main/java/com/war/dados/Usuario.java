@@ -1,5 +1,4 @@
-package com.ideais.dados;
-
+package com.war.dados;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "USUARIO")
@@ -82,6 +80,5 @@ public class Usuario {
 		
 		territorios.add(territorio);
 	}
-	
 	
 }

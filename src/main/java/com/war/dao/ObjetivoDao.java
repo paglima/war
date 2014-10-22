@@ -1,12 +1,12 @@
-package com.ideais.dao;
+package com.war.dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ideais.dados.Objetivo;
-import com.ideais.dao.ObjetivoDao;
+import com.war.dados.Objetivo;
+import com.war.dao.ObjetivoDao;
 
 
 @Repository

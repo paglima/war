@@ -1,12 +1,12 @@
-package com.ideais.dao;
+package com.war.dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ideais.dados.Territorio;
-import com.ideais.dao.TerritorioDao;
+import com.war.dados.Territorio;
+import com.war.dao.TerritorioDao;
 
 @Repository
 @Transactional

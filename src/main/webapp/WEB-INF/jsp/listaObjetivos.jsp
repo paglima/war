@@ -6,16 +6,17 @@
         <title>Lista Objetivos</title>
       	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js" type="text/javascript"></script>
-    	<script src="js/listaObjetivos.js" type="text/javascript"></script>
-    	<link rel="stylesheet" type="text/css" href="css/style.css">
+    	<script src="../js/listaObjetivos.js" type="text/javascript"></script>
+    	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
 	<body>
+		<a href="../jogo/"></a>		
 		<c:forEach items="${jogadores}" var="jogador">
 			<div>
 				<span>${jogador.nomeUsuario} </span> 
 				<span style="display: none" class="objetivo"> ${jogador.objetivo.descricao} </span>
 				<input style="display: inline-block;" type="button" class="objetivoButton" value="Mostrar"/>
 			</div>
-		</c:forEach>		
+		</c:forEach>
 	</body>
 </html>

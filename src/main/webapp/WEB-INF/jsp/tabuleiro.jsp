@@ -7,7 +7,6 @@
 	<title>Tabuleiro</title>
 	</head>
 	<body>
-		<div style="background-image: url(img/war.jpg); height: 910px; width: 1280px;"></div>
-<!-- 		<img alt="tab" src="../img/war.jpg"> -->
+		<div style="background-image: url(../img/war.jpg); height: 910px; width: 1280px;"></div>
 	</body>
 </html>

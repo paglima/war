@@ -1,11 +1,11 @@
-package com.ideais.dao;
+package com.war.dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ideais.dados.Usuario;
+import com.war.dados.Usuario;
 
 @Repository
 @Transactional
@@ -35,4 +35,5 @@ public class UsuarioDao extends GenericDao<Usuario>{
 			saveOrUpdate(usuario);
 		}
 	}
+
 }

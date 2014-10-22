@@ -1,4 +1,4 @@
-package com.ideais.dao;
+package com.war.dao;
 
 public class AbstractDaoTest{
 

@@ -6,8 +6,8 @@
         <title>Objetivo</title>
        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js" type="text/javascript"></script>
-    	<script src="js/script.js" type="text/javascript"></script>
-    	<link rel="stylesheet" type="text/css" href="css/style.css">
+    	<script src="../js/script.js" type="text/javascript"></script>
+    	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     
 	<h1>Cadastro Objetivos </h1>

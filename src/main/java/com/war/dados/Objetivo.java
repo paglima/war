@@ -1,4 +1,4 @@
-package com.ideais.dados;
+package com.war.dados;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +31,5 @@ public class Objetivo {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 	
 }

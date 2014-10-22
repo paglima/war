@@ -3,8 +3,8 @@
                                          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	 <session-factory>
-	  	<mapping class="com.ideais.dados.Usuario"/>
-	  	<mapping class="com.ideais.dados.Objetivo"/>
-	  	<mapping class="com.ideais.dados.Territorio"/>
+	  	<mapping class="com.war.dados.Usuario"/>
+	  	<mapping class="com.war.dados.Objetivo"/>
+	  	<mapping class="com.war.dados.Territorio"/>
 	 </session-factory>
 </hibernate-configuration>
