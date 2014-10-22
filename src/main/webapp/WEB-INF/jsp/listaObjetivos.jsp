@@ -10,7 +10,6 @@
     	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
 	<body>
-		<a href="../jogo/"></a>		
 		<c:forEach items="${jogadores}" var="jogador">
 			<div>
 				<span>${jogador.nomeUsuario} </span> 
@@ -19,7 +18,7 @@
 			</div>
 		</c:forEach>
 
-		<form:form id="tabuleiro" method="post" action="tabuleiro">
+		<form:form id="tabuleiro" method="post" action="../jogo/">
 			<input type="submit"/>
 		</form:form>		
 	</body>

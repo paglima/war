@@ -128,3 +128,11 @@ Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('11','Destrui
 Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('12','Destruir totalmente OS EXÉRCITOS PRETOS.');
 Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('13','Destruir totalmente OS EXÉRCITOS BRANCO.');
 Insert into TRABALHOES.OBJETIVO (ID_OBJETIVO,NM_DESCRICAO) values ('14','Destruir totalmente OS EXÉRCITOS VERDES.');
+
+CREATE TABLE VIZINHO 
+(
+ID_VIZINHO             number,
+ID_TERRITORIO          number ,
+ID_TERRITORIO_VIZINHO number
+);
+
