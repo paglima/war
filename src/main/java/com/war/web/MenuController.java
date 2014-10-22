@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.war.dados.Objetivo;
 import com.war.dados.Usuario;
 import com.war.dao.ObjetivoDao;
 import com.war.dao.TerritorioDao;
@@ -53,25 +52,12 @@ public class MenuController {
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
 	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm, HttpServletRequest request) {
-		List<Usuario> jogadores = usuarioForm.getUsuarios();
+		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
 		
-		List<Long> listaObjetivoId = new ArrayList<Long>();
+		objetivoService.sorteiaObjetivos(usuariosCadastrados);
+		usuarioDao.saveAll(usuariosCadastrados);
 		
-		for (Usuario usuario : jogadores) {
-			Objetivo objetivo = objetivoService.sorteiaObjetivo();
-			
-			if(listaObjetivoId.contains(objetivo.getIdObjetivo())){
-				continue;
-			}
-			
-			usuario.setObjetivo(objetivo);
-			listaObjetivoId.add(objetivo.getIdObjetivo());
-		}
-		
-		request.getSession().setAttribute("Jogadores", jogadores);
-		usuarioDao.saveAll(jogadores);
-		
-		return new ModelAndView("listaObjetivos","jogadores", jogadores);
+		return new ModelAndView("listaObjetivos","jogadores",usuariosCadastrados);
 	}
 
 }

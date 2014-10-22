@@ -18,5 +18,9 @@
 				<input style="display: inline-block;" type="button" class="objetivoButton" value="Mostrar"/>
 			</div>
 		</c:forEach>
+
+		<form:form id="tabuleiro" method="post" action="tabuleiro">
+			<input type="submit"/>
+		</form:form>		
 	</body>
 </html>

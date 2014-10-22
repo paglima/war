@@ -1,45 +1,53 @@
 package com.war.service;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.war.dados.Objetivo;
 import com.war.dados.Usuario;
 import com.war.dao.ObjetivoDao;
 
-@Service
-public class ObjetivoService{
-		
+@Component
+public class ObjetivoService {
+	
 	private static final int NUMERO_DE_OBJETIVOS = 14;
 	
 	@Autowired
 	private ObjetivoDao objetivoDao;
 	
-	@Autowired
-	private UsuarioService usuarioService;
+	private List<Integer> sorteiaObjetivosId(int numeroUsuarios) {
+		Random random 			 = new Random();
+		Set<Integer> idSet		 = new HashSet<Integer>();
+		
+		do{
+			Integer idObjetivoSorteado = random.nextInt(NUMERO_DE_OBJETIVOS) + 1;
+			idSet.add(idObjetivoSorteado);
+		}while(idSet.size() < numeroUsuarios);
+		
+		return new ArrayList<Integer>(idSet);
+	}
 	
-	public Objetivo sorteiaObjetivo() {
-		Random random = new Random();
-		Integer idObjetivoSorteado = random.nextInt(NUMERO_DE_OBJETIVOS) + 1;
-		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuarioService.pegaTodosUsuarios();
+	public void sorteiaObjetivos(List<Usuario> usuarios) { 
+		int numeroUsuarios 		  = usuarios.size();
+		List<Integer> objetivoIds = sorteiaObjetivosId(numeroUsuarios);
 		
-		while (confereRedundanciaDeObjetivos(usuarios, idObjetivoSorteado)) {
-			idObjetivoSorteado = random.nextInt(NUMERO_DE_OBJETIVOS) + 1;
+		for (int i = 0; i < numeroUsuarios; i++) {
+			Integer  objetivoId = objetivoIds.get(i);
+			Objetivo objetivo   = objetivoDao.findById(objetivoId.longValue());
+			
+			Usuario usuario = usuarios.get(i);
+			usuario.setObjetivo(objetivo);
 		}
-		
-		return objetivoDao.findById(idObjetivoSorteado.longValue());
-	}	
-
-	private boolean confereRedundanciaDeObjetivos(ArrayList<Usuario> usuarios, Integer idObjetivoSorteado) {
-		for (Usuario usuario : usuarios) {
-			if (usuario.getObjetivo().getIdObjetivo().equals(idObjetivoSorteado)) {
-				return true;
-			}
-		}
-		
-		return false;
 	}
 
+	public Objetivo findById(Long id){
+		return objetivoDao.findById(id);
+	}
+	
 }
