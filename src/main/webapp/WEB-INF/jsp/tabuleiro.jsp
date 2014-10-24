@@ -12,18 +12,19 @@
 	   	<script src="../js/tabuleiro.js" type="text/javascript"></script>
 		<title>Tabuleiro</title>
 	</head>
-	<body>
+	<body style="background-color: black;">
 		<div id="tabuleiro" style="background-image: url(../img/war.jpg); height: 910px; width: 1280px;">
 			<a id="tabLink" href="#tableDiv" style="position:absolute; left: 320px; top: 613px;">Brasil</a>
 		</div>
 		
 		<div id="divTeste" style="display: none;">
-			<div id="tableDiv" style="width:200px;height:300px;overflow:auto;">
+			<div id="tableDiv" style="width:280px;height:300px;overflow:auto;">
 				<h2>Ataque</h2>
 				<table>
 					  <tr>
-					    <th style="">Países</th>
-					    <th>Nº Soldados</th>
+					    <th>Países</th>
+					    <th>Total Soldados</th>
+					    <th>Soldados atacar</th>
 					  </tr>
 					  <tr>
 					    <td>
@@ -39,14 +40,27 @@
 					    </td>
 					    <td>
 					    	<select>
-							  <option value="1">1</option>
-							  <option value="2">2</option>
+							  <option value="9">9</option>
+							  <option value="8">8</option>
+							  <option value="7">7</option>
+							  <option value="6">6</option>
+							  <option value="5">5</option>
+							  <option value="4">4</option>
 							  <option value="3">3</option>
+							  <option value="2">2</option>
+							  <option value="1">1</option>
+							</select>
+					    </td>
+					    <td>
+					    	<select>
+							  <option value="3">3</option>
+							  <option value="2">2</option>
+							  <option value="1">1</option>
 							</select>
 					    </td>
 					  </tr>
 				</table>
-				<input type="button" value="atacar" style="top: 10px;"/>
+				<input id="ataqueButton" type="button" value="atacar" style="position: relative; top: 40px; left: 120px"/>
 			</div>
 		</div>
 	</body>

@@ -6,4 +6,8 @@ jQuery(function($) {
 	
 	$("#tabLink").fancybox();
 	
+	$("#ataqueButton").click(function(){
+		$.fancybox.close();
+	});
+	
 });
