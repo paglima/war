@@ -51,7 +51,7 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
-	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm, HttpServletRequest request) {
+	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm) {
 		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
 		
 		objetivoService.sorteiaObjetivos(usuariosCadastrados);
