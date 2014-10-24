@@ -10,6 +10,7 @@
     	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
 	<body>
+		<h1>Objetivos</h1>
 		<c:forEach items="${jogadores}" var="jogador">
 			<div>
 				<span>${jogador.nomeUsuario} </span> 
