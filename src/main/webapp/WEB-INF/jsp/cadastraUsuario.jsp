@@ -5,7 +5,7 @@
     <head>
         <title>Cadastro Jogadores</title>
        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <script src="../js/jQuery/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="../js/jQuery/jquery-1.8.0.min.js" type="text/javascript"></script>
     	<script src="../js/cadastroUsuario.js" type="text/javascript"></script>
     	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
