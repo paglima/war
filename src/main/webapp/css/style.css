@@ -16,17 +16,45 @@ input {
 }
 
 select {
+	cursor: pointer;
 	text-align: center;
 	font-family: cursive;
 	border: 0 !important; 
-	-webkit-appearance: none; 
-	-moz-appearance: none;
-	background: #067A40 url(../img/arrowDown.png) no-repeat 90% center;
+	background: #fff url(../img/arrowDown.png) no-repeat 90% center;
 	width: 100px; 
-	color: #FFF;
-	border-radius: 15px;
+	color: #333131;
+	border-radius: 5px;
+	padding-right: 25px;
 	padding: 5px;
 	box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
+}
+
+.Vermelho {
+	color: #D50000;
+}
+
+.Azul {
+	color: #0721B4;
+}
+
+.Amarelo {
+	color: #EBC000;
+}
+
+.Laranja {
+	color: #EF9F00;
+}
+
+.Roxo {
+	color: #8C00F7;
+}
+
+.Rosa {
+	color: #F300C7;
+}
+
+.Verde {
+	color: #009917;
 }
 
 #wrapper {

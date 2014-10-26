@@ -18,7 +18,7 @@
 					
 					<div class="firstData">
 						<span>Digite o seu nome:</span>
-		        		<input type="text" name="nome"/>
+		        		<input type="text" maxlength="20" name="nome"/>
 					</div>
 					
 					<div class="otherData" > 
@@ -27,10 +27,10 @@
 							<c:forEach items="${cores}" var="cor">
 								<c:choose>
 									<c:when test="${cor.nomeCor eq 'Vermelho'}">
-										<option style="color:${cor.codigoCor}" value="cor.codigoCor" selected>${cor.nomeCor}</option>
+										<option class="${cor.nomeCor}" value="cor.nomeCor" selected>${cor.nomeCor}</option>
 									</c:when>
 									<c:otherwise>
-										<option style="color:${cor.codigoCor}" value="cor.codigoCor">${cor.nomeCor}</option>
+										<option class="${cor.nomeCor}" value="cor.nomeCor">${cor.nomeCor}</option>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach> 

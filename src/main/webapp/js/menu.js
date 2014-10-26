@@ -11,10 +11,10 @@ jQuery(function($) {
 		$('#playSolo').submit();
 	});
 	
-	$('#colors').css('color', $('#colors option:selected').css('color'));
-	
+	$('#colors').removeClass().addClass(jQuery(this).find("option:selected").attr("class")); 
+		
 	$('#colors').change(function(){
-		$('#colors').css('color', $('#colors option:selected').css('color'));
+		$(this).removeClass().addClass(jQuery(this).find("option:selected").attr("class")); 
 	});
 	
  });
