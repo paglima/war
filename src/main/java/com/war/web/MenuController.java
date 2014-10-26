@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.war.dados.Cor;
 import com.war.dados.Jogo;
 import com.war.dados.TipoDeJogo;
 import com.war.dados.Usuario;
@@ -44,11 +45,13 @@ public class MenuController extends GenericController {
 	
 	@RequestMapping(value = "/jogarSolo",method = RequestMethod.POST )
 	public String jogarSolo(@RequestParam(value="nome", required=true) String nome, 
+							@RequestParam(value="codigoCor", required=true) String codigoCor,
 							@RequestParam(value="quantidadeInimigos", required=true) String quantidadeInimigos,
 							HttpServletRequest request) {
 		
 		Usuario usuario = new Usuario(nome);
 		usuario.setJogadorUsuario(Boolean.TRUE);
+		//Usuario.setCor(codigoCor);
 		
 		String nomeIdentificador = "Sala " + UUID.randomUUID().toString();
 		salaDeJogo.adicionaJogo(new Jogo(TipoDeJogo.SOLO.getTipo(), usuario, Integer.parseInt(quantidadeInimigos), nomeIdentificador));
@@ -92,7 +95,7 @@ public class MenuController extends GenericController {
 	@RequestMapping(value = "/solo",method = RequestMethod.GET )
 	public ModelAndView jogoSolo() {
 		ModelAndView view = getBaseView("solo");
-		view.addObject("usuario", new Usuario());
+		view.addObject("cores", Cor.values());
 		
 		return view;
 	}

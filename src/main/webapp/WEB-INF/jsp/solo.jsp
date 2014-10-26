@@ -15,22 +15,40 @@
 				<span id="sub-title">Jogo Solo</span>
 				
 				<form id="playSolo" action="jogarSolo" method="post">
-				
-					<div id="numberOfPlayers" > 
-						<label for="numeroJogadores">Entre com o número de jogadores</label> 
-						<select id="numeroJogadores" name="quantidadeInimigos">
-						  <option value="1" selected>1</option>
-						  <option value="2">2</option>
-						  <option value="3">3</option>
-						  <option value="4">4</option>
-						  <option value="5">5</option>
-						  <option value="6">6</option>
+					
+					<div class="firstData">
+						<span>Digite o seu nome:</span>
+		        		<input type="text" name="nome"/>
+					</div>
+					
+					<div class="otherData" > 
+						<label for="colors">Selecione uma cor para o seu exército</label> 
+						<select name="codigoCor">
+							<c:forEach items="${cores}" var="cor">
+								<c:choose>
+									<c:when test="${cor.nomeCor eq 'Vermelho'}">
+										<option style="color:${cor.codigoCor}" value="cor.codigoCor" selected>${cor.nomeCor}</option>
+									</c:when>
+									<c:otherwise>
+										<option style="color:${cor.codigoCor}" value="cor.codigoCor">${cor.nomeCor}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach> 
 						</select>
 					</div>
 				
-	        		<span>Digite o seu nome:</span>
-	        		<input type="text" name="nome"/>
-	        		
+					<div class="otherData" > 
+						<label for="numberOfPlayers">Entre com o número de jogadores</label> 
+						<select name="quantidadeInimigos">
+							<option value="1" selected>1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select>
+					</div>
+				
 		        	<div id="play">
 		        		<button id="playButton" type="submit">Jogar</button>
 					</div>

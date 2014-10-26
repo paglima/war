@@ -57,8 +57,6 @@ public class Territorio {
 	}
 
 	public List<Territorio> getVizinhos() {
-		Map<String, List<Territorio>> vizinhos = new HashMap<String, List<Territorio>>(); 
-				
 		return null;
 	}
 

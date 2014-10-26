@@ -46,8 +46,12 @@ select {
 	margin: auto;
 }
 
-#numberOfPlayers {
-	margin-top: 80px;
+.firstData {
+	margin-top: 80px;	
+}
+
+.otherData {
+	margin-top: 40px;
 	margin-bottom: 30px;
 	text-align: center;
 }
@@ -75,7 +79,7 @@ select {
 }
 
 #play {
-	margin: 170px auto 80px auto;
+	margin: 120px auto 80px auto;
 	width: 250px;
 	height: 85px; 
 	cursor: pointer;
