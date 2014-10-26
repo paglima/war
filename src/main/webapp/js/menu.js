@@ -11,4 +11,10 @@ jQuery(function($) {
 		$('#playSolo').submit();
 	});
 	
+	$('#colors').css('color', $('#colors option:selected').css('color'));
+	
+	$('#colors').change(function(){
+		$('#colors').css('color', $('#colors option:selected').css('color'));
+	});
+	
  });
