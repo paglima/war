@@ -1,9 +1,176 @@
+body, html {
+	width: 100%;
+	height: 100%;	
+	margin: 0;
+	background-color: #002C30;
+	font-family: Cursive;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+}
+
 input {
 	display: block;
+}
+
+select {
+	text-align: center;
+	font-family: cursive;
+	border: 0 !important; 
+	-webkit-appearance: none; 
+	-moz-appearance: none;
+	background: #067A40 url(../img/arrowDown.png) no-repeat 90% center;
+	width: 100px; 
+	color: #FFF;
+	border-radius: 15px;
+	padding: 5px;
+	box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
+}
+
+#wrapper {
+	width: 1024px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+#playSolo input {
+	margin: 10px auto;
+}
+
+#options {
+	padding-top: 150px;
+	text-align: center;
+	width: 500px;
+	margin: auto;
+}
+
+#numberOfPlayers {
+	margin-top: 80px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+#singleplayer, #multiplayer {
+	width: 250px;
+	height: 85px; 
+	cursor: pointer;
+	background-color: #067A40;
+	
+	border-bottom-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	
+	border-bottom-width: 5px;
+	border-right-width: 5px;
+	border-left-width: 5px;
+	border-top-width: 5px;
+	
+	border-right-color: #054123;
+	border-bottom-color: #0A2D1B;
+	border-left-color: #131E18;
+	border-top-color: #0FA55A;
+}
+
+#play {
+	margin: 170px auto 80px auto;
+	width: 250px;
+	height: 85px; 
+	cursor: pointer;
+	background-color: #C8752C;
+	
+	border-bottom-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	
+	border-bottom-width: 5px;
+	border-right-width: 5px;
+	border-left-width: 5px;
+	border-top-width: 5px;
+	
+	border-right-color: #A55B1A;
+	border-bottom-color: #7F4614;
+	border-left-color: #3D240E;
+	border-top-color: #F29E54;
+}
+
+#play:hover {
+	background-color: #FFBB7F;
+}
+
+#play button {
+	border: 0px;
+	background: none;
+	outline: 0;
+	color: #fff;
+	font-family: cursive;
+	cursor: pointer;
+}
+
+#singleplayer:hover, #multiplayer:hover {
+	width: 250px;
+	height: 85px; 
+	cursor: pointer;
+	background-color: #45C284;
+}
+
+#singleplayer {
+	margin: 80px auto 80px auto;
+}
+
+#multiplayer {
+	margin: 0 auto;
+}
+
+#singleplayer span , #multiplayer span, #play span, #play button {
+	font-size: 1.8em;
+    vertical-align: middle;
+	line-height:75px;
+}
+
+#title {
+	font-size: 6em;
+	text-shadow: -3px 3px #525F59;
+}
+
+#sub-title {
+	font-size: 4em;
+	text-shadow: -3px 3px #525F59;
+}
+
+#wrapper-tabuleiro {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	margin-left: -11px;
+	margin-top: -11px;	
+}
+
+#numeroJogadores {
+	margin-left: 5px;
 }
 
 table, th, td {
    padding: 5px;
    text-align:center; 
    vertical-align:middle;
+}
+
+#tabuleiro input {
+	margin-top: 5px;
+}
+
+#wrapper h1, label, #divFormCadastroUsuario span, #wrapper span {
+	color: #fff;
+}
+
+#divFormCadastroUsuario {
+	margin-top: 10px;
+}
+
+#divFormCadastroUsuario input {
+	margin-top: 5px;
 }

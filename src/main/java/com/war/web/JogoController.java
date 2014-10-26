@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class JogoController {
 
-	@RequestMapping(value = "/",method = RequestMethod.POST )
+	@RequestMapping(value = "/",method = RequestMethod.GET )
 	public ModelAndView jogo() {
 		return new ModelAndView("tabuleiro");
 	}

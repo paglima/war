@@ -2,6 +2,7 @@ package com.war.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.war.dados.Jogo;
+import com.war.dados.TipoDeJogo;
 import com.war.dados.Usuario;
 import com.war.dao.ObjetivoDao;
 import com.war.dao.TerritorioDao;
@@ -24,7 +28,7 @@ import com.war.service.ObjetivoService;
 @Controller("MenuController")
 @RequestMapping("/menu")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class MenuController {
+public class MenuController extends GenericController {
 	
 	@Autowired
 	private ObjetivoDao objetivoDao;
@@ -38,26 +42,59 @@ public class MenuController {
 	@Autowired
 	private TerritorioDao territorioDao;
 	
-	@RequestMapping(value = "/jogar",method = RequestMethod.GET )
-	public String jogar(){
-		return "../jogo/";
+	@RequestMapping(value = "/jogarSolo",method = RequestMethod.POST )
+	public String jogarSolo(@RequestParam(value="nome", required=true) String nome, 
+							@RequestParam(value="quantidadeInimigos", required=true) String quantidadeInimigos,
+							HttpServletRequest request) {
+		
+		Usuario usuario = new Usuario(nome);
+		usuario.setJogadorUsuario(Boolean.TRUE);
+		
+		String nomeIdentificador = "Sala " + UUID.randomUUID().toString();
+		salaDeJogo.adicionaJogo(new Jogo(TipoDeJogo.SOLO.getTipo(), usuario, Integer.parseInt(quantidadeInimigos), nomeIdentificador));
+		
+		request.getSession().setAttribute(nomeIdentificador, salaDeJogo.getJogoPorNome(nomeIdentificador));
+		
+		return "redirect:../jogo/";
 	}
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.GET )
-	public ModelAndView cadastraUsuario(){
+	public ModelAndView cadastraUsuario() {
+		ModelAndView view = getBaseView("cadastraUsuario");
+		
 		UsuarioForm usuarioForm = new UsuarioForm();
 		usuarioForm.setUsuarios(new ArrayList<Usuario>());
-		return new ModelAndView("cadastraUsuario","usuarioForm",usuarioForm);
+		
+		view.addObject("usuarioForm", usuarioForm);
+		
+		return view;
 	}
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
 	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm) {
+		ModelAndView view = getBaseView("listaObjetivos");
+		
 		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
 		
 		objetivoService.sorteiaObjetivos(usuariosCadastrados);
 		usuarioDao.saveAll(usuariosCadastrados);
 		
-		return new ModelAndView("listaObjetivos","jogadores",usuariosCadastrados);
+		view.addObject("jogadores", usuariosCadastrados);
+		
+		return view;
 	}
-
+	
+	@RequestMapping(value = "/inicio",method = RequestMethod.GET )
+	public ModelAndView modoDeJogo() {
+		return getBaseView("opcaoDeJogo");
+	}
+	
+	@RequestMapping(value = "/solo",method = RequestMethod.GET )
+	public ModelAndView jogoSolo() {
+		ModelAndView view = getBaseView("solo");
+		view.addObject("usuario", new Usuario());
+		
+		return view;
+	}
+	
 }

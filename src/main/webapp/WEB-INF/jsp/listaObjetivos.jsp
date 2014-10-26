@@ -10,17 +10,19 @@
     	<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
 	<body>
-		<h1>Objetivos</h1>
-		<c:forEach items="${jogadores}" var="jogador">
-			<div>
-				<span>${jogador.nomeUsuario} </span> 
-				<span style="display: none" class="objetivo"> ${jogador.objetivo.descricao} </span>
-				<input style="display: inline-block;" type="button" class="objetivoButton" value="Mostrar"/>
-			</div>
-		</c:forEach>
-
-		<form:form id="tabuleiro" method="post" action="../jogo/">
-			<input type="submit"/>
-		</form:form>		
+		<div id="wrapper">
+			<h1>Objetivos</h1>
+			<c:forEach items="${jogadores}" var="jogador">
+				<div>
+					<span>${jogador.nomeUsuario} </span> 
+					<span style="display: none" class="objetivo"> - ${jogador.objetivo.descricao} </span>
+					<input style="display: inline-block;" type="button" class="objetivoButton" value="Mostrar"/>
+				</div>
+			</c:forEach>
+	
+			<form:form id="tabuleiro" method="post" action="../jogo/">
+				<input type="submit"/>
+			</form:form>		
+		</div>
 	</body>
 </html>

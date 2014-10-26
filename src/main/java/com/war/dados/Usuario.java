@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "USUARIO")
@@ -28,6 +29,9 @@ public class Usuario {
 	@Column(name = "NM_NOME_USUARIO", nullable = false, unique = true)
 	private String nomeUsuario;
 	
+	@Transient
+	private Boolean jogadorUsuario;
+	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_OBJETIVO", nullable = true)
 	private Objetivo objetivo;
@@ -37,6 +41,11 @@ public class Usuario {
 	private List<Territorio> territorios;
 	
 	public Usuario() {
+		territorios = new ArrayList<Territorio>();
+	}
+	
+	public Usuario(String nome) {
+		nomeUsuario = nome;
 		territorios = new ArrayList<Territorio>();
 	}
 	
@@ -78,6 +87,22 @@ public class Usuario {
 		}
 		
 		territorios.add(territorio);
+	}
+
+	public List<Territorio> getTerritorios() {
+		return territorios;
+	}
+
+	public void setTerritorios(List<Territorio> territorios) {
+		this.territorios = territorios;
+	}
+
+	public Boolean getJogadorUsuario() {
+		return jogadorUsuario;
+	}
+
+	public void setJogadorUsuario(Boolean jogadorUsuario) {
+		this.jogadorUsuario = jogadorUsuario;
 	}
 	
 }

@@ -25,10 +25,10 @@ public class ObjetivoService {
 		Random random 			 = new Random();
 		Set<Integer> idSet		 = new HashSet<Integer>();
 		
-		do{
+		do {
 			Integer idObjetivoSorteado = random.nextInt(NUMERO_DE_OBJETIVOS) + 1;
 			idSet.add(idObjetivoSorteado);
-		}while(idSet.size() < numeroUsuarios);
+		} while(idSet.size() < numeroUsuarios);
 		
 		return new ArrayList<Integer>(idSet);
 	}
