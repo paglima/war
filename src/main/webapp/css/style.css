@@ -18,7 +18,7 @@ input {
 select {
 	cursor: pointer;
 	text-align: center;
-	font-family: cursive;
+	font-family: Cursive;
 	border: 0 !important; 
 	background: #fff url(../img/arrowDown.png) no-repeat 90% center;
 	width: 100px; 
@@ -138,7 +138,7 @@ select {
 	background: none;
 	outline: 0;
 	color: #fff;
-	font-family: cursive;
+	font-family: Cursive;
 	cursor: pointer;
 }
 
