@@ -1,8 +1,6 @@
 package com.war.dados;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,10 +18,10 @@ public class Territorio {
 	@Column(name = "ID_TERRITORIO", nullable = false, unique = true)
 	private Long idTerritorio;
 	
-	@Column(name = "NM_TERRITORIO", nullable = false, unique = true)
+	@Column(name = "NM_NOME", nullable = false, unique = true)
 	private String nomeTerritorio;
 	
-	@Column(name = "NR_EXERCITO", nullable = false)
+	@Column(name = "NR_NUM_PECAS", nullable = false)
 	private Integer quantidadeExercito;
 	
 	@ManyToMany

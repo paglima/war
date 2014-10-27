@@ -50,7 +50,7 @@ public class MenuController extends GenericController {
 							HttpServletRequest request) {
 		
 		Usuario usuario = new Usuario(nome);
-		usuario.setJogadorUsuario(Boolean.TRUE);
+		usuario.setJogadorHumano(Boolean.TRUE);
 		//Usuario.setCor(codigoCor);
 		
 		String nomeIdentificador = "Sala " + UUID.randomUUID().toString();

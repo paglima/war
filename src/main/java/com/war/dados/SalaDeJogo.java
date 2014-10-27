@@ -31,7 +31,7 @@ public class SalaDeJogo {
 	
 	public Jogo getJogoPorId(Long id) {
 		for (Jogo jogo : jogos) {
-			if (jogo.getId().equals(id)) {
+			if (jogo.getIdJogo().equals(id)) {
 				return jogo;
 			}
 		}

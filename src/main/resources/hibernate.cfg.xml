@@ -6,5 +6,8 @@
 	  	<mapping class="com.war.dados.Usuario"/>
 	  	<mapping class="com.war.dados.Objetivo"/>
 	  	<mapping class="com.war.dados.Territorio"/>
+ 		<mapping class="com.war.dados.Jogo"/>
+		<mapping class="com.war.dados.Continente"/>
+	  	<mapping class="com.war.dados.Carta"/>
 	 </session-factory>
 </hibernate-configuration>

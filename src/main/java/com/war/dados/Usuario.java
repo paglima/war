@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "USUARIO")
@@ -26,19 +25,26 @@ public class Usuario {
 	@Column(name = "ID_USUARIO", nullable = false, unique = true)
 	private Long idUsuario;
 	
-	@Column(name = "NM_NOME_USUARIO", nullable = false, unique = true)
+	@Column(name = "NM_NOME", nullable = false)
 	private String nomeUsuario;
 	
-	@Transient
-	private Boolean jogadorUsuario;
+	@Column(name = "NM_COR", nullable = false)
+	private String cor;
+	
+	@Column(name = "BO_HUMANO", nullable = false)
+	private Boolean jogadorHumano;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_OBJETIVO", nullable = true)
 	private Objetivo objetivo;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USUARIO", nullable = true)
 	private List<Territorio> territorios;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_USUARIO", nullable = true)
+	private List<Carta> cartas;
 	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
@@ -97,12 +103,28 @@ public class Usuario {
 		this.territorios = territorios;
 	}
 
-	public Boolean getJogadorUsuario() {
-		return jogadorUsuario;
+	public Boolean getJogadorHumano() {
+		return jogadorHumano;
 	}
 
-	public void setJogadorUsuario(Boolean jogadorUsuario) {
-		this.jogadorUsuario = jogadorUsuario;
+	public void setJogadorHumano(Boolean jogadorHumano) {
+		this.jogadorHumano = jogadorHumano;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public List<Carta> getCartas() {
+		return cartas;
+	}
+
+	public void setCartas(List<Carta> cartas) {
+		this.cartas = cartas;
 	}
 	
 }
