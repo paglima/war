@@ -27,7 +27,7 @@ public class Carta {
 	private String cartaCoringa;
 	
 	@OneToOne
-	@JoinColumn(name="ID_TERRITORIO", referencedColumnName="ID_TERRITORIO", nullable=true)
+	@JoinColumn(name="ID_CARTA", referencedColumnName="ID_CARTA", nullable=true)
 	private Territorio Territorio;
 
 	public Long getIdCarta() {
