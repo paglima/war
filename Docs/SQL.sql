@@ -1,4 +1,3 @@
-drop sequence CARTA_SEQ_id;
 drop sequence JOGO_SEQ_ID;
 drop sequence USUARIO_SEQ_ID;
 drop table CARTA;

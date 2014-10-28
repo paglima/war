@@ -15,8 +15,6 @@ import javax.persistence.Table;
 public class Carta {
 
 	@Id
-	@SequenceGenerator( name = "sequence", sequenceName = "CARTA_SEQ_ID" )
-    @GeneratedValue( generator = "sequence", strategy = GenerationType.AUTO )
 	@Column(name = "ID_CARTA", nullable = false, unique = true)
 	private Long idCarta;
 	
