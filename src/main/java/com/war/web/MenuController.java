@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.war.dados.Cor;
 import com.war.dados.Jogo;
+import com.war.dados.SalaDeJogo;
 import com.war.dados.TipoDeJogo;
 import com.war.dados.Usuario;
 import com.war.dao.ObjetivoDao;
@@ -29,7 +30,7 @@ import com.war.service.ObjetivoService;
 @Controller("MenuController")
 @RequestMapping("/menu")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class MenuController extends GenericController {
+public class MenuController {
 	
 	@Autowired
 	private ObjetivoDao objetivoDao;
@@ -43,27 +44,28 @@ public class MenuController extends GenericController {
 	@Autowired
 	private TerritorioDao territorioDao;
 	
+	@Autowired
+	protected SalaDeJogo salaDeJogo;
+	
 	@RequestMapping(value = "/jogarSolo",method = RequestMethod.POST )
 	public String jogarSolo(@RequestParam(value="nome", required=true) String nome, 
-							@RequestParam(value="codigoCor", required=true) String codigoCor,
+							@RequestParam(value="nomeCor", required=true) String nomeCor,
 							@RequestParam(value="quantidadeInimigos", required=true) String quantidadeInimigos,
 							HttpServletRequest request) {
 		
-		Usuario usuario = new Usuario(nome);
-		usuario.setJogadorHumano(Boolean.TRUE);
-		//Usuario.setCor(codigoCor);
+		Usuario usuario = new Usuario(nome, nomeCor);
 		
 		String nomeIdentificador = "Sala " + UUID.randomUUID().toString();
 		salaDeJogo.adicionaJogo(new Jogo(TipoDeJogo.SOLO.getTipo(), usuario, Integer.parseInt(quantidadeInimigos), nomeIdentificador));
 		
-		request.getSession().setAttribute(nomeIdentificador, salaDeJogo.getJogoPorNome(nomeIdentificador));
+		request.getSession().setAttribute("Usuario", usuario);
 		
-		return "redirect:../jogo/";
+		return "redirect:../jogo/distribuiExercito";
 	}
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.GET )
 	public ModelAndView cadastraUsuario() {
-		ModelAndView view = getBaseView("cadastraUsuario");
+		ModelAndView view = new ModelAndView("cadastraUsuario");
 		
 		UsuarioForm usuarioForm = new UsuarioForm();
 		usuarioForm.setUsuarios(new ArrayList<Usuario>());
@@ -75,7 +77,7 @@ public class MenuController extends GenericController {
 	
 	@RequestMapping(value = "/cadastraUsuario",method = RequestMethod.POST )
 	public ModelAndView cadastraUsuario(@ModelAttribute("usuarioForm") UsuarioForm usuarioForm) {
-		ModelAndView view = getBaseView("listaObjetivos");
+		ModelAndView view = new ModelAndView("listaObjetivos");
 		
 		List<Usuario> usuariosCadastrados = usuarioForm.getUsuarios();
 		
@@ -89,12 +91,12 @@ public class MenuController extends GenericController {
 	
 	@RequestMapping(value = "/inicio",method = RequestMethod.GET )
 	public ModelAndView modoDeJogo() {
-		return getBaseView("opcaoDeJogo");
+		return new ModelAndView("opcaoDeJogo");
 	}
 	
 	@RequestMapping(value = "/solo",method = RequestMethod.GET )
 	public ModelAndView jogoSolo() {
-		ModelAndView view = getBaseView("solo");
+		ModelAndView view = new ModelAndView("solo");
 		view.addObject("cores", Cor.values());
 		
 		return view;

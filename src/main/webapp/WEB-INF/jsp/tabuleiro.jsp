@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -15,7 +17,19 @@
 	<body style="background-color: black; font-family: Verdana;">
 		<div id="wrapper-tabuleiro">
 			<div id="tabuleiro" style="background-image: url(../img/war.jpg); height: 910px; width: 1280px;">
-				<a id="tabLink" href="#tableDiv" style="color: #fff; text-decoration: none; position:absolute; left: 320px; top: 613px;">Brasil</a>
+				
+				<c:forEach items="${usuarios}" var="usuario">
+				
+					<c:forEach items="${usuario.territorios}" var="territorio">
+						<div id="tabLink" class="territory ${territorio.nomeTerritorio} cor${usuario.cor}">${territorio.quantidadeExercito}</div>
+					</c:forEach>
+				
+				</c:forEach>
+			
+			</div>
+			
+			<div>
+				Informações sobre os jogadores!
 			</div>
 			
 			<div id="divTeste" style="display: none;">

@@ -29,6 +29,210 @@ select {
 	box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
 }
 
+.terrytory {
+	border-style: solid;
+	border-color: #95FF00;
+	border-width: 2px;
+}
+
+.Brasil {
+	position:absolute; 
+	left: 320px; 
+	top: 613px;
+}
+
+.Argentina-Uruguai {
+	
+}
+
+.Chile-Bolivia-Peru {
+	
+}
+
+.Colombia-Venezuela {
+	
+}
+
+.Mexico {
+	
+}
+
+.Nova-York {
+	
+}
+
+.California {
+	
+}
+
+.Ottawa {
+	
+}
+
+.Vancouver {
+	
+}
+
+.Labrador {
+	
+}
+
+.Alaska {
+	
+}
+
+.Mackenzie {
+	
+}
+
+.Groelandia {
+	
+}
+
+.Islandia {
+	
+}
+
+.Inglaterra {
+	
+}
+
+.Suecia {
+	
+}
+
+.Moscou {
+	
+}
+
+.Polonia-Iugoslavia {
+	
+}
+
+.Portugal-Espanha-Franca {
+	
+}
+
+.Alemanha {
+	
+}
+
+.Argelia-Nigeria {
+	
+}
+
+.Egito {
+	
+}
+
+.Sudao {
+	
+}
+
+.Congo {
+	
+}
+
+.Africa-do-Sul {
+	
+}
+
+.Madagascar {
+	
+}
+
+.Oriente-Medio {
+	
+}
+
+.Aral {
+	
+}
+
+.Omsk {
+	
+}
+
+.Dudinka {
+	
+}
+
+.Siberia {
+	
+}
+
+.Tchita {
+	
+}
+
+.Mongolia {
+	
+}
+
+.China {
+	
+}
+
+.India {
+	
+}
+
+.Vietna {
+	
+}
+
+.Japao {
+	
+}
+
+.Vladivostok {
+	
+}
+
+.Sumatra {
+	
+}
+
+.Borneo {
+	
+}
+
+.Nova-Guine {
+	
+}
+
+.Australia {
+	
+}
+
+.corAzul {
+	
+}
+
+.corLaranja {
+	
+}
+
+.corVerde {
+	
+}
+
+.corVermelho {
+	
+}
+
+.corAmarelo {
+	
+}
+
+.corRosa {
+	
+}
+
+.corRoxo {
+	
+}
+
 .Vermelho {
 	color: #D50000;
 }

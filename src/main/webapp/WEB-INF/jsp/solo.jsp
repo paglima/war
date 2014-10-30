@@ -23,7 +23,7 @@
 					
 					<div class="otherData" > 
 						<label for="colors">Selecione uma cor para o seu exército</label> 
-						<select id="colors" name="codigoCor">
+						<select id="colors" name="nomeCor">
 							<c:forEach items="${cores}" var="cor">
 								<c:choose>
 									<c:when test="${cor.nomeCor eq 'Vermelho'}">

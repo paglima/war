@@ -62,4 +62,16 @@ public class Territorio {
 		this.vizinhos = vizinhos;
 	}
 	
+	@Override
+	public String toString() {
+		String[] palavrasNoNome = nomeTerritorio.split("-");
+		String nome = "";
+		
+		for (int i = 0; i < palavrasNoNome.length; i++) {
+			nome += palavrasNoNome[i] + " ";
+		}
+		
+		return nome.substring(0, nome.length() - 1);
+	}
+	
 }

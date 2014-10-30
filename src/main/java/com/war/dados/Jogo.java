@@ -1,6 +1,8 @@
 package com.war.dados;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,9 +40,19 @@ public class Jogo {
 		this.tipo = tipo;
 		nome = nomeIdentificador;
 		getUsuarios().add(usuario);
+		usuario.setJogo(this);
+		
+		List<Cor> cores = Arrays.asList(Cor.values());
+		Cor.removeCor(cores, usuario.getCor());
+		Collections.shuffle(cores);
 		
 		for (int i = 1; i <= quantidadeInimigos; i++) {
-			usuarios.add(new Usuario("Inimigo " + i));
+			Usuario inimigo = new Usuario();
+			inimigo.setJogo(this);
+			inimigo.setNomeUsuario("Inimigo " + i);
+			inimigo.setCor(cores.get(i).getNomeCor());
+			
+			usuarios.add(inimigo);
 		}
 	}
 	

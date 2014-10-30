@@ -10,10 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "USUARIO")
@@ -46,6 +51,14 @@ public class Usuario {
 	@JoinColumn(name = "ID_USUARIO", nullable = true)
 	private List<Carta> cartas;
 	
+	@ManyToOne
+	@JoinColumn(name="ID_JOGO", referencedColumnName="ID_JOGO", nullable=false)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Jogo jogo;
+	
+	@Transient
+	private Boolean turnoDaJogada;
+	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
 	}
@@ -53,6 +66,13 @@ public class Usuario {
 	public Usuario(String nome) {
 		nomeUsuario = nome;
 		territorios = new ArrayList<Territorio>();
+	}
+	
+	public Usuario(String nome, String nomeCor) {
+		nomeUsuario = nome;
+		cor = nomeCor;
+		jogadorHumano = Boolean.TRUE;
+		turnoDaJogada = Boolean.TRUE;
 	}
 	
 	public Long getIdUsuario() {
@@ -79,16 +99,8 @@ public class Usuario {
 		this.nomeUsuario = nomeUsuario;
 	}
 
-	public List<Territorio> getTerritorio() {
-		return territorios;
-	}
-
-	public void setTerritorio(List<Territorio> territorio) {
-		this.territorios = territorio;
-	}
-
 	public void addTerritorio(Territorio territorio) {
-		if(territorios == null){
+		if(territorios == null) {
 			territorios = new ArrayList<Territorio>();
 		}
 		
@@ -125,6 +137,22 @@ public class Usuario {
 
 	public void setCartas(List<Carta> cartas) {
 		this.cartas = cartas;
+	}
+
+	public Boolean getTurnoDaJogada() {
+		return turnoDaJogada;
+	}
+
+	public void setTurnoDaJogada(Boolean turnoDaJogada) {
+		this.turnoDaJogada = turnoDaJogada;
+	}
+
+	public Jogo getJogo() {
+		return jogo;
+	}
+
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 	
 }
