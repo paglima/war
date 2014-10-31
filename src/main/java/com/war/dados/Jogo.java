@@ -49,7 +49,7 @@ public class Jogo {
 			Usuario inimigo = new Usuario();
 			inimigo.setJogo(this);
 			inimigo.setNomeUsuario("Inimigo " + i);
-			inimigo.setCor(cores.get(i).getNomeCor());
+			inimigo.setCor(cores.get(i - 1).getNomeCor());
 			
 			usuarios.add(inimigo);
 		}

@@ -1,7 +1,5 @@
 package com.war.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.war.dados.Jogo;
 import com.war.dados.SalaDeJogo;
-import com.war.dados.Territorio;
 import com.war.dados.Usuario;
 import com.war.service.JogoService;
 
