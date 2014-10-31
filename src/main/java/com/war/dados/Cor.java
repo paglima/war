@@ -1,5 +1,6 @@
 package com.war.dados;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Cor {
@@ -22,13 +23,16 @@ public enum Cor {
 		return nomeCor;
 	}
 	
-	public static void removeCor(List<Cor> cores, String usuarioNomeCor) {
+	public static List<Cor> removeCor(List<Cor> cores, String usuarioNomeCor) {
+		List<Cor> coresSemCorUsuario = new ArrayList<Cor>();
+		
 		for (Cor cor : cores) {
-			if (cor.getNomeCor().equals(usuarioNomeCor)) {
-				cores.remove(cor);
-				break;
+			if (!cor.getNomeCor().equals(usuarioNomeCor)) {
+				coresSemCorUsuario.add(cor);
 			}
 		}
+		
+		return coresSemCorUsuario;
 	}
 	
 }

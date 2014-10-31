@@ -42,8 +42,7 @@ public class Jogo {
 		getUsuarios().add(usuario);
 		usuario.setJogo(this);
 		
-		List<Cor> cores = Arrays.asList(Cor.values());
-		Cor.removeCor(cores, usuario.getCor());
+		List<Cor> cores = Cor.removeCor(Arrays.asList(Cor.values()), usuario.getCor());
 		Collections.shuffle(cores);
 		
 		for (int i = 1; i <= quantidadeInimigos; i++) {

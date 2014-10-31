@@ -29,10 +29,17 @@ select {
 	box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
 }
 
-.terrytory {
-	border-style: solid;
-	border-color: #95FF00;
-	border-width: 2px;
+.circleButton {
+	border-radius: 50%;
+    behavior: url(PIE.htc);
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+.circleButton span {
+	position: relative;
+	top: 3px;;
 }
 
 .Brasil {
@@ -42,51 +49,75 @@ select {
 }
 
 .Argentina-Uruguai {
-	
+	position:absolute; 
+	left: 260px; 
+	top: 713px;
 }
 
 .Chile-Bolivia-Peru {
-	
+	position:absolute; 
+	left: 220px; 
+	top: 603px;	
 }
 
 .Colombia-Venezuela {
-	
+	position:absolute; 
+	left: 222px; 
+	top: 498px;		
 }
 
 .Mexico {
-	
+	position:absolute; 
+	left: 100px; 
+	top: 380px;		
 }
 
 .Nova-York {
-	
+	position:absolute; 
+	left: 210px; 
+	top: 320px;			
 }
 
 .California {
-	
+	position:absolute; 
+	left: 80px; 
+	top: 310px;			
 }
 
 .Ottawa {
-	
+	position:absolute; 
+	left: 230px; 
+	top: 225px;		
 }
 
 .Vancouver {
-	
+	position:absolute; 
+	left: 138px; 
+	top: 208px;			
 }
 
 .Labrador {
-	
+	position:absolute; 
+	left: 293px; 
+	top: 272px;			
 }
 
 .Alaska {
-	
+	position:absolute; 
+	left: 128px; 
+	top: 152px;			
 }
 
 .Mackenzie {
-	
+	position:absolute; 
+	left: 158px; 
+	top: 176px;		
 }
 
 .Groelandia {
-	
+	position:absolute; 
+	left: 428px; 
+	top: 176px;		
 }
 
 .Islandia {
@@ -206,31 +237,31 @@ select {
 }
 
 .corAzul {
-	
+	background: #0721B4;
 }
 
 .corLaranja {
-	
+	background: #EF9F00;
 }
 
 .corVerde {
-	
+	background: #009917;
 }
 
 .corVermelho {
-	
+	background: #D50000;
 }
 
 .corAmarelo {
-	
+	background: #EBC000;
 }
 
 .corRosa {
-	
+	background: #F300C7;
 }
 
 .corRoxo {
-	
+	background: #8C00F7;
 }
 
 .Vermelho {

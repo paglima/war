@@ -42,7 +42,7 @@ public class JogoService {
 		
 	}
 	
-	public List<Territorio> distribuiTerritorio(List<Usuario> usuarios) {
+	public void distribuiTerritorio(List<Usuario> usuarios) {
 		List<Territorio> territorios = territorioDao.findAll();
 		Collections.shuffle(territorios);
 		
@@ -60,8 +60,6 @@ public class JogoService {
 			
 			indice++;
 		}
-		
-		return territorios;
 	}
 	
 }

@@ -10,7 +10,7 @@
 		<script src="../js/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
 	    <script src="../js/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
 	   	<link rel="stylesheet" type="text/css" href="../js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-	   	<!-- <link rel="stylesheet" type="text/css" href="../css/style.css"> -->
+	   	<link rel="stylesheet" type="text/css" href="../css/style.css"> 
 	   	<script src="../js/tabuleiro.js" type="text/javascript"></script>
 		<title>Tabuleiro</title>
 	</head>
@@ -21,7 +21,7 @@
 				<c:forEach items="${usuarios}" var="usuario">
 				
 					<c:forEach items="${usuario.territorios}" var="territorio">
-						<div id="tabLink" class="territory ${territorio.nomeTerritorio} cor${usuario.cor}">${territorio.quantidadeExercito}</div>
+						<div id="tabLink" class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}"><span>${territorio.quantidadeExercito}</span></div>
 					</c:forEach>
 				
 				</c:forEach>

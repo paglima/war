@@ -27,10 +27,10 @@
 							<c:forEach items="${cores}" var="cor">
 								<c:choose>
 									<c:when test="${cor.nomeCor eq 'Vermelho'}">
-										<option class="${cor.nomeCor}" value="cor.nomeCor" selected>${cor.nomeCor}</option>
+										<option class="${cor.nomeCor}" value="${cor.nomeCor}" selected>${cor.nomeCor}</option>
 									</c:when>
 									<c:otherwise>
-										<option class="${cor.nomeCor}" value="cor.nomeCor">${cor.nomeCor}</option>
+										<option class="${cor.nomeCor}" value="${cor.nomeCor}">${cor.nomeCor}</option>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach> 

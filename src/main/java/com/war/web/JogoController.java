@@ -43,12 +43,12 @@ public class JogoController {
 		
 		if (usuario != null) {
 			Jogo jogo = usuario.getJogo();
-			List<Territorio> territorios = jogoService.distribuiTerritorio(jogo.getUsuarios());
-		
-			view.addObject("territorios", territorios);
-			view.addObject("usuarios", jogo.getUsuarios());
 			
-			request.getSession().setAttribute("territorios", territorios);
+			if (usuario.getTerritorios() == null || usuario.getTerritorios().size() <= 0) {
+				jogoService.distribuiTerritorio(jogo.getUsuarios());
+			}
+			
+			view.addObject("usuarios", jogo.getUsuarios());
 		}
 		
 		return view;
