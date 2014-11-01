@@ -40,7 +40,6 @@
 					<div class="otherData" > 
 						<label for="numberOfPlayers">Entre com o número de jogadores</label> 
 						<select name="quantidadeInimigos">
-							<option value="1" selected>1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
