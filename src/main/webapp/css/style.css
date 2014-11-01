@@ -40,8 +40,9 @@ select {
 
 .circleButton span {
 	position: relative;
-	top: 2px;;
+	top: 5px;
 	color: #fff;
+	font-size: 0.7em;
 }
 
 .Brasil {
@@ -123,119 +124,177 @@ select {
 }
 
 .Islandia {
-	
+	position:absolute; 
+	left: 512px; 
+	top: 190px;		
 }
 
 .Inglaterra {
-	
+	position:absolute; 
+	left: 482px; 
+	top: 248px;		
 }
 
 .Suecia {
-	
+	position:absolute; 
+	left: 612px; 
+	top: 200px;			
 }
 
 .Moscou {
-	
+	position:absolute; 
+	left: 702px; 
+	top: 230px;		
 }
 
 .Polonia-Iugoslavia {
-	
+	position:absolute; 
+	left: 632px; 
+	top: 290px;			
 }
 
 .Portugal-Espanha-Franca {
-	
+	position:absolute; 
+	left: 588px; 
+	top: 325px;			
 }
 
 .Alemanha {
-	
+	position:absolute; 
+	left: 592px; 
+	top: 254px;			
 }
 
 .Argelia-Nigeria {
-	
+	position:absolute; 
+	left: 558px; 
+	top: 450px;		
 }
 
 .Egito {
-	
+	position:absolute; 
+	left: 618px; 
+	top: 400px;			
 }
 
 .Sudao {
-	
+	position:absolute; 
+	left: 668px; 
+	top: 480px;			
 }
 
 .Congo {
-	
+	position:absolute; 
+	left: 628px; 
+	top: 560px;			
 }
 
 .Africa-do-Sul {
-	
+	position:absolute; 
+	left: 648px; 
+	top: 660px;		
 }
 
 .Madagascar {
-	
+	position:absolute; 
+	left: 758px; 
+	top: 645px;			
 }
 
 .Oriente-Medio {
-	
+	position:absolute; 
+	left: 748px; 
+	top: 420px;			
 }
 
 .Aral {
-	
+	position:absolute; 
+	left: 828px; 
+	top: 290px;			
 }
 
 .Omsk {
-	
+	position:absolute; 
+	left: 810px; 
+	top: 220px;			
 }
 
 .Dudinka {
-	
+	position:absolute; 
+	left: 855px; 
+	top: 135px;		
 }
 
 .Siberia {
-	
+	position:absolute; 
+	left: 925px; 
+	top: 155px;	
 }
 
 .Tchita {
-	
+	position:absolute; 
+	left: 930px; 
+	top: 245px;	
 }
 
 .Mongolia {
-	
+	position:absolute; 
+	left: 940px; 
+	top: 305px;		
 }
 
 .China {
-	
+	position:absolute; 
+	left: 1040px; 
+	top: 385px;			
 }
 
 .India {
-	
+	position:absolute; 
+	left: 870px; 
+	top: 400px;			
 }
 
 .Vietna {
-	
+	position:absolute; 
+	left: 990px; 
+	top: 440px;			
 }
 
 .Japao {
-	
+	position:absolute; 
+	left: 1200px; 
+	top: 325px;			
 }
 
 .Vladivostok {
-	
+	position:absolute; 
+	left: 1005px; 
+	top: 175px;		
 }
 
 .Sumatra {
-	
+	position:absolute; 
+	left: 980px; 
+	top: 560px;			
 }
 
 .Borneo {
-	
+	position:absolute; 
+	left: 1080px; 
+	top: 545px;				
 }
 
 .Nova-Guine {
-	
+	position:absolute; 
+	left: 1165px; 
+	top: 610px;			
 }
 
 .Australia {
-	
+	position:absolute; 
+	left: 1050px; 
+	top: 695px;			
 }
 
 .corAzul {
