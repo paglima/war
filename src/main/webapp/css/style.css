@@ -20,7 +20,6 @@ select {
 	text-align: center;
 	font-family: Cursive;
 	border: 0 !important; 
-	background: #fff url(../img/arrowDown.png) no-repeat 90% center;
 	width: 100px; 
 	color: #333131;
 	border-radius: 5px;
@@ -36,6 +35,7 @@ select {
     height: 25px;
     text-align: center;
     box-shadow: inset 0 0 7px #000000;
+    cursor: pointer;
 }
 
 .circleButton a {

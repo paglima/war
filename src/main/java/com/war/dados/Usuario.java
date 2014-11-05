@@ -166,4 +166,12 @@ public class Usuario {
 		this.exercitoSobrando = exercitoSobrando;
 	}
 	
+	public Integer getTotalDeTerritorios() {
+		if (territorios == null) {
+			territorios = new ArrayList<Territorio>();
+		}
+		
+		return territorios.size();
+	}
+	
 }

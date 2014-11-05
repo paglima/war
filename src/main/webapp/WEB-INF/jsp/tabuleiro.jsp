@@ -23,17 +23,16 @@
 					<c:forEach items="${usuarios}" var="usuario">
 					
 						<c:forEach items="${usuario.territorios}" var="territorio" varStatus="status">
-							<div class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}">
 								<c:choose>
 									<c:when test="${usuario.jogadorHumano == true}">
-										<a class="tabLink ${territorio.nomeTerritorio}_link" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
+										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:when>
 									<c:otherwise>
-										<a class="${territorio.nomeTerritorio}_link" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
+										<a class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:otherwise>
 								</c:choose>
 								
-							</div>
+							</a>
 							
 							<form:hidden path="territorios[${status.index}].idTerritorio" value="${territorio.idTerritorio}" />
 							<form:hidden path="territorios[${status.index}].nomeTerritorio" value="${territorio.nomeTerritorio}" />
@@ -51,9 +50,10 @@
 				<c:forEach items="${usuarios}" var="usuario">
 					<span>${usuario.nomeUsuario}</span>				
 					<br/>
+					<span>Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
 					<c:if test="${usuario.jogadorHumano == true}">
-						<span>Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 						<span id="armyLeft">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
+						<span>Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 					</c:if>
 					<br/>
 				</c:forEach>
@@ -63,11 +63,12 @@
 		</div>
 		
 		<div style="display:none;">
-			<div id="redistributionDiv" style="width:280px;height:200px;overflow:auto;">
+			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
 				<h2>Remanejar exército</h2>
-				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir.</span>
+				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
 				<select id="armyNumber">
 				</select>
+				<br/>
 				<br/>
 				<div id="redistributeButton">
 					<span>Remanejar</span>
