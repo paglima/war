@@ -59,6 +59,9 @@ public class Usuario {
 	@Transient
 	private Boolean turnoDaJogada;
 	
+	@Transient
+	private Integer exercitoSobrando;
+	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
 	}
@@ -153,6 +156,14 @@ public class Usuario {
 
 	public void setJogo(Jogo jogo) {
 		this.jogo = jogo;
+	}
+
+	public Integer getExercitoSobrando() {
+		return exercitoSobrando;
+	}
+
+	public void setExercitoSobrando(Integer exercitoSobrando) {
+		this.exercitoSobrando = exercitoSobrando;
 	}
 	
 }

@@ -38,7 +38,8 @@ select {
     box-shadow: inset 0 0 7px #000000;
 }
 
-.circleButton span {
+.circleButton a {
+	text-decoration: none;
 	position: relative;
 	top: 5px;
 	color: #fff;
@@ -47,254 +48,254 @@ select {
 
 .Brasil {
 	position:absolute; 
-	left: 320px; 
-	top: 613px;
+	left: 331px; 
+	top: 624px;
 }
 
 .Argentina-Uruguai {
 	position:absolute; 
-	left: 260px; 
-	top: 713px;
+	left: 271px; 
+	top: 724px;
 }
 
 .Chile-Bolivia-Peru {
 	position:absolute; 
-	left: 220px; 
-	top: 603px;	
+	left: 231px; 
+	top: 614px;	
 }
 
 .Colombia-Venezuela {
 	position:absolute; 
-	left: 222px; 
-	top: 498px;		
+	left: 233px; 
+	top: 509px;		
 }
 
 .Mexico {
 	position:absolute; 
-	left: 100px; 
-	top: 380px;		
+	left: 111px; 
+	top: 391px;		
 }
 
 .Nova-York {
 	position:absolute; 
-	left: 210px; 
-	top: 320px;			
+	left: 221px; 
+	top: 331px;			
 }
 
 .California {
 	position:absolute; 
-	left: 80px; 
-	top: 310px;			
+	left: 91px; 
+	top: 331px;			
 }
 
 .Ottawa {
 	position:absolute; 
-	left: 230px; 
-	top: 225px;		
+	left: 241px; 
+	top: 236px;		
 }
 
 .Vancouver {
 	position:absolute; 
-	left: 138px; 
-	top: 208px;			
+	left: 149px; 
+	top: 219px;			
 }
 
 .Labrador {
 	position:absolute; 
-	left: 293px; 
-	top: 272px;			
+	left: 304px; 
+	top: 283px;			
 }
 
 .Alaska {
 	position:absolute; 
-	left: 128px; 
-	top: 152px;			
+	left: 139px; 
+	top: 163px;			
 }
 
 .Mackenzie {
 	position:absolute; 
-	left: 158px; 
-	top: 176px;		
+	left: 169px; 
+	top: 187px;		
 }
 
 .Groelandia {
 	position:absolute; 
-	left: 428px; 
-	top: 176px;		
+	left: 439px; 
+	top: 187px;		
 }
 
 .Islandia {
 	position:absolute; 
-	left: 512px; 
-	top: 190px;		
+	left: 523px; 
+	top: 201px;		
 }
 
 .Inglaterra {
 	position:absolute; 
-	left: 482px; 
-	top: 248px;		
+	left: 493px; 
+	top: 259px;		
 }
 
 .Suecia {
 	position:absolute; 
-	left: 612px; 
-	top: 200px;			
+	left: 623px; 
+	top: 211px;			
 }
 
 .Moscou {
 	position:absolute; 
-	left: 702px; 
-	top: 230px;		
+	left: 713px; 
+	top: 241px;		
 }
 
 .Polonia-Iugoslavia {
 	position:absolute; 
-	left: 632px; 
-	top: 290px;			
+	left: 643px; 
+	top: 301px;			
 }
 
 .Portugal-Espanha-Franca {
 	position:absolute; 
-	left: 588px; 
-	top: 325px;			
+	left: 599px; 
+	top: 336px;			
 }
 
 .Alemanha {
 	position:absolute; 
-	left: 592px; 
-	top: 254px;			
+	left: 603px; 
+	top: 265px;			
 }
 
 .Argelia-Nigeria {
 	position:absolute; 
-	left: 558px; 
-	top: 450px;		
+	left: 569px; 
+	top: 461px;		
 }
 
 .Egito {
 	position:absolute; 
-	left: 618px; 
-	top: 400px;			
+	left: 629px; 
+	top: 411px;			
 }
 
 .Sudao {
 	position:absolute; 
-	left: 668px; 
-	top: 480px;			
+	left: 679px; 
+	top: 491px;			
 }
 
 .Congo {
 	position:absolute; 
-	left: 628px; 
-	top: 560px;			
+	left: 639px; 
+	top: 571px;			
 }
 
 .Africa-do-Sul {
 	position:absolute; 
-	left: 648px; 
-	top: 660px;		
+	left: 659px; 
+	top: 671px;		
 }
 
 .Madagascar {
 	position:absolute; 
-	left: 758px; 
-	top: 645px;			
+	left: 769px; 
+	top: 656px;			
 }
 
 .Oriente-Medio {
 	position:absolute; 
-	left: 748px; 
-	top: 420px;			
+	left: 759px; 
+	top: 431px;			
 }
 
 .Aral {
 	position:absolute; 
-	left: 828px; 
-	top: 290px;			
+	left: 839px; 
+	top: 301px;			
 }
 
 .Omsk {
 	position:absolute; 
-	left: 810px; 
-	top: 220px;			
+	left: 821px; 
+	top: 231px;			
 }
 
 .Dudinka {
 	position:absolute; 
-	left: 855px; 
-	top: 135px;		
+	left: 866px; 
+	top: 146px;		
 }
 
 .Siberia {
 	position:absolute; 
-	left: 925px; 
-	top: 155px;	
+	left: 936px; 
+	top: 166px;	
 }
 
 .Tchita {
 	position:absolute; 
-	left: 930px; 
-	top: 245px;	
+	left: 941px; 
+	top: 256px;	
 }
 
 .Mongolia {
 	position:absolute; 
-	left: 940px; 
-	top: 305px;		
+	left: 951px; 
+	top: 316px;		
 }
 
 .China {
 	position:absolute; 
-	left: 1040px; 
-	top: 385px;			
+	left: 1051px; 
+	top: 396px;			
 }
 
 .India {
 	position:absolute; 
-	left: 870px; 
-	top: 400px;			
+	left: 881px; 
+	top: 411px;			
 }
 
 .Vietna {
 	position:absolute; 
-	left: 990px; 
-	top: 440px;			
+	left: 1001px; 
+	top: 451px;			
 }
 
 .Japao {
 	position:absolute; 
-	left: 1200px; 
-	top: 325px;			
+	left: 1211px; 
+	top: 336px;			
 }
 
 .Vladivostok {
 	position:absolute; 
-	left: 1005px; 
-	top: 175px;		
+	left: 1016px; 
+	top: 186px;		
 }
 
 .Sumatra {
 	position:absolute; 
-	left: 980px; 
-	top: 560px;			
+	left: 991px; 
+	top: 571px;			
 }
 
 .Borneo {
 	position:absolute; 
-	left: 1080px; 
-	top: 545px;				
+	left: 1091px; 
+	top: 556px;				
 }
 
 .Nova-Guine {
 	position:absolute; 
-	left: 1165px; 
-	top: 610px;			
+	left: 1176px; 
+	top: 621px;			
 }
 
 .Australia {
 	position:absolute; 
-	left: 1050px; 
-	top: 695px;			
+	left: 1061px; 
+	top: 706px;			
 }
 
 .corAzul {
@@ -469,13 +470,6 @@ select {
 	text-shadow: -3px 3px #525F59;
 }
 
-#wrapper-tabuleiro {
-	width: 100%;
-	height: 100%;
-	background-color: #000;
-	margin-left: -11px;
-	margin-top: -11px;	
-}
 
 #numeroJogadores {
 	margin-left: 5px;
@@ -485,6 +479,26 @@ table, th, td {
    padding: 5px;
    text-align:center; 
    vertical-align:middle;
+}
+
+#wrapperBoard {
+	margin: 0;
+	width: 100%;
+	height: 910px;
+	background-color: #000;
+}
+
+#tabuleiro {
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	display: table-cell;
+	background-image: url(../img/war.jpg);
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	width: 1280px;
+	height: 910px;
 }
 
 #tabuleiro input {
@@ -501,4 +515,54 @@ table, th, td {
 
 #divFormCadastroUsuario input {
 	margin-top: 5px;
+}
+
+#info {
+	margin: 0;
+	display: table-cell;
+	height: 910px;
+	background-color: #656565;
+}
+
+#redistributionDiv {
+	margin: 0;
+	border-width: 0;
+	text-align: center;
+	background-color: #002C30;
+	color: #fff;
+}
+
+#redistributeButton span {
+    vertical-align: middle;
+	line-height:25px;
+}
+
+#redistributeButton {
+	margin: 0 auto;
+	position: relative;
+	top: 30px;
+	
+	width: 100px;
+	height: 30px; 
+	cursor: pointer;
+	background-color: #C8752C;
+	
+	border-bottom-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	
+	border-bottom-width: 3px;
+	border-right-width: 3px;
+	border-left-width: 3px;
+	border-top-width: 3px;
+	
+	border-right-color: #A55B1A;
+	border-bottom-color: #7F4614;
+	border-left-color: #3D240E;
+	border-top-color: #F29E54;
+}
+
+#redistributeButton:hover {
+	background-color: #FFBB7F;
 }

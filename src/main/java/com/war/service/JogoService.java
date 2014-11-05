@@ -14,12 +14,14 @@ import com.war.dao.TerritorioDao;
 public class JogoService {
 	
 	@Autowired
+	private ObjetivoService objetivoService;
+	
+	@Autowired
 	private TerritorioDao territorioDao;
 
 	public void ataque(Territorio territorioAtacante,
 			Territorio territorioDefensor) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public Boolean verificaFimDoJogo() {
@@ -29,20 +31,15 @@ public class JogoService {
 
 	public void processaFimDaJogada() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	public void distribuiCarta() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void redistribuiExercitos() {
-		// TODO Auto-generated method stub
-		
 	}
 	
-	public void distribuiTerritorio(List<Usuario> usuarios) {
+	public void preparaJogadores(List<Usuario> usuarios) {
+		distribuiTerritorio(usuarios);
+		distribuiExercitosInciais(usuarios);
+		objetivoService.sorteiaObjetivos(usuarios);
+	}
+	
+	private void distribuiTerritorio(List<Usuario> usuarios) {
 		List<Territorio> territorios = territorioDao.findAll();
 		Collections.shuffle(territorios);
 		
@@ -55,10 +52,17 @@ public class JogoService {
 			
 			Usuario usuario = usuarios.get(indice);
 			if (usuario != null) {
-				usuario.addTerritorio(territorio);;
+				territorio.setQuantidadeExercito(1);
+				usuario.addTerritorio(territorio);
 			}
 			
 			indice++;
+		}
+	}
+
+	private void distribuiExercitosInciais(List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			usuario.setExercitoSobrando((usuario.getTerritorios() != null) ? (usuario.getTerritorios().size() / 2) : 0);
 		}
 	}
 	
