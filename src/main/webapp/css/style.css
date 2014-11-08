@@ -16,6 +16,7 @@ input {
 }
 
 select {
+	background-color: #fff;
 	cursor: pointer;
 	text-align: center;
 	font-family: Cursive;
@@ -36,6 +37,17 @@ select {
     text-align: center;
     box-shadow: inset 0 0 7px #000000;
     cursor: pointer;
+}
+
+.circleButtonTag {
+	margin: 0 10px 0 0;
+	float: left;
+	border-radius: 50%;
+    behavior: url(PIE.htc);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    box-shadow: inset 0 0 7px #000000;
 }
 
 .circleButton a {
@@ -302,10 +314,6 @@ select {
 	background: #0721B4;
 }
 
-.corLaranja {
-	background: #EF9F00;
-}
-
 .corVerde {
 	background: #009917;
 }
@@ -336,10 +344,6 @@ select {
 
 .Amarelo {
 	color: #EBC000;
-}
-
-.Laranja {
-	color: #EF9F00;
 }
 
 .Roxo {
@@ -404,6 +408,7 @@ select {
 }
 
 #play {
+	text-align: center;
 	margin: 120px auto 80px auto;
 	width: 250px;
 	height: 85px; 
@@ -518,13 +523,26 @@ table, th, td {
 }
 
 #info {
+	border-style: solid;
+	border-width: 5px;
+	border-color: #232323;
+	color: #fff;
+	padding: 20px;
 	margin: 0;
 	display: table-cell;
-	height: 910px;
+	height: 860px;
 	background-color: #656565;
 }
 
-#redistributionDiv {
+#userBox {
+	margin: 0 0 5px 0;
+	padding: 0 0 10px 0;
+	border-style: solid;
+	border-width: 0 0 3px 0;
+	border-color: #414141;
+}
+
+#redistributionDiv, #redistributionNotCompleted {
 	margin: 0;
 	border-width: 0;
 	text-align: center;
@@ -537,7 +555,7 @@ table, th, td {
 	line-height:25px;
 }
 
-#redistributeButton {
+#redistributeButton, #okButton, #cancelButton{
 	margin: 0 auto;
 	position: relative;
 	top: 30px;
@@ -563,6 +581,20 @@ table, th, td {
 	border-top-color: #F29E54;
 }
 
-#redistributeButton:hover {
+#redistributeButton:hover, #okButton:hover, #cancelButton:hover {
 	background-color: #FFBB7F;
+}
+
+.errorMessage {
+	border: 1px solid;
+	margin: 10px 0px;
+	padding:15px 10px 15px 10px;
+	color: #D8000C;
+	background-color: #FFBABA;
+}
+
+#gameStartedLightBox {
+	color: #fff;
+	text-align: center;
+	background-color: #002C30;
 }

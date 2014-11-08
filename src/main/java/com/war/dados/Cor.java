@@ -9,7 +9,6 @@ public enum Cor {
 	VERDE("Verde"),
 	AMARELO("Amarelo"),
 	AZUL("Azul"),
-	LARANJA("Laranja"),
 	ROXO("Roxo"),
 	ROSA("Rosa");
 	

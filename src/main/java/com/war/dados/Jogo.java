@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "JOGO")
@@ -36,8 +37,15 @@ public class Jogo {
 	@JoinColumn(name = "ID_JOGO", nullable = true)
 	private List<Usuario> usuarios;
 	
+	@Transient
+	private Integer turno = 0;
+	
+	@Transient
+	private Boolean partidaComecada = Boolean.FALSE;
+	
 	public Jogo(String tipo, Usuario usuario, Integer quantidadeInimigos, String nomeIdentificador) {
 		this.tipo = tipo;
+		partidaComecada = Boolean.TRUE;
 		nome = nomeIdentificador;
 		getUsuarios().add(usuario);
 		usuario.setJogo(this);
@@ -89,6 +97,42 @@ public class Jogo {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Integer getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Integer turno) {
+		this.turno = turno;
+	}
+
+	public Boolean getPartidaComecada() {
+		return partidaComecada;
+	}
+
+	public void setPartidaComecada(Boolean partidaComecada) {
+		this.partidaComecada = partidaComecada;
+	}
+
+	public boolean turnoDoInimigo() {
+		for (Usuario usuario : getUsuarios()) {
+			if (!usuario.getJogadorHumano() && usuario.getTurnoDaJogada()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public Usuario getUsuarioDaVez() {
+		for (Usuario usuario : getUsuarios()) {
+			if (usuario.getTurnoDaJogada()) {
+				return usuario;
+			}
+		}
+		
+		return null;
 	}
 	
 }

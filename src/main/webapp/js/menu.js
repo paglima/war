@@ -1,19 +1,37 @@
 jQuery(function($) {
-	$('#singleplayer').click(function(){
+	$('#singleplayer').click(function() {
 		location.href="solo";
 	});
 	
-	$('#multiplayer').click(function(){
+	$('#multiplayer').click(function() {
 		location.href="multi-jogador";
 	});
 	
-	$('#play').click(function(){
+	$('#play').click(function() {
+		var gameStarted = $("#gameStarted").val();
+		console.log(gameStarted);
+		
+		if (gameStarted != "true") {
+			$('#playSolo').submit();
+			return;
+		}
+		
+		$("#newGame").fancybox({ padding: 2});
+		$("#newGame").trigger('click');
+	});
+	
+	$('#cancelButton').click(function() {
+		$.fancybox.close();
+	});
+	
+	$('#okButton').click(function() {
 		$('#playSolo').submit();
 	});
 	
+	
 	$('#colors').removeClass().addClass($('#colors').find("option:selected").attr("class")); 
 		
-	$('#colors').change(function(){
+	$('#colors').change(function() {
 		$(this).removeClass().addClass($(this).find("option:selected").attr("class")); 
 	});
 	

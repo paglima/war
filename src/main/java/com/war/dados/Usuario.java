@@ -37,7 +37,7 @@ public class Usuario {
 	private String cor;
 	
 	@Column(name = "BO_HUMANO", nullable = false)
-	private Boolean jogadorHumano;
+	private Boolean jogadorHumano = Boolean.FALSE;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_OBJETIVO", nullable = true)
@@ -57,10 +57,13 @@ public class Usuario {
 	private Jogo jogo;
 	
 	@Transient
-	private Boolean turnoDaJogada;
+	private Boolean turnoDaJogada = Boolean.TRUE;
 	
 	@Transient
 	private Integer exercitoSobrando;
+	
+	@Transient
+	private Boolean aindaNoJogo = Boolean.TRUE;
 	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
@@ -172,6 +175,18 @@ public class Usuario {
 		}
 		
 		return territorios.size();
+	}
+
+	public boolean vazio() {
+		return (cor == null || nomeUsuario == null || jogo == null);
+	}
+
+	public Boolean getAindaNoJogo() {
+		return aindaNoJogo;
+	}
+
+	public void setAindaNoJogo(Boolean aindaNoJogo) {
+		this.aindaNoJogo = aindaNoJogo;
 	}
 	
 }

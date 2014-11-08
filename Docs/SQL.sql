@@ -121,12 +121,12 @@ insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (5,'Conquistar na totali
 insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (6,'Conquistar na totalidade a AMERICA DO NORTE e a AFRICA.');
 insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (7,'Conquistar 24 TERRITORIOS à sua escolha.');
 insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (8,'Conquistar na totalidade a AMERICA DO NORTE e a OCEANIA.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (9,'Destruir totalmente OS EXERCITOS AZUIS.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (10,'Destruir totalmente OS EXERCITOS AMARELOS.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (11,'Destruir totalmente OS EXERCITOS VERMELHOS.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (12,'Destruir totalmente OS EXERCITOS PRETOS.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (13,'Destruir totalmente OS EXERCITOS BRANCO.');
-insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (14,'Destruir totalmente OS EXERCITOS VERDES.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (9,'Destruir totalmente OS EXERCITOS AZUIS. Se não houver Jogador de Cor AZUL, conquistar 24 territórios de sua escolha.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (10,'Destruir totalmente OS EXERCITOS AMARELOS. Se não houver Jogador de Cor AMARELA, conquistar 24 territórios de sua escolha.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (11,'Destruir totalmente OS EXERCITOS VERMELHOS. Se não houver Jogador de Cor VERMELHA, conquistar 24 territórios de sua escolha.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (12,'Destruir totalmente OS EXERCITOS ROXOS. Se não houver Jogador de Cor ROXA, conquistar 24 territórios de sua escolha.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (13,'Destruir totalmente OS EXERCITOS ROSAS. Se não houver Jogador de Cor ROSA, conquistar 24 territórios de sua escolha.');
+insert into OBJETIVO (ID_OBJETIVO, NM_DESCRICAO) values (14,'Destruir totalmente OS EXERCITOS VERDES. Se não houver Jogador de Cor VERDE, conquistar 24 territórios de sua escolha.');
 
 insert into CONTINENTE (ID_CONTINENTE, NM_NOME) values (1, 'America do Sul');
 insert into CONTINENTE (ID_CONTINENTE, NM_NOME) values (2, 'America do Norte');

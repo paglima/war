@@ -3,6 +3,9 @@ jQuery(function($) {
         e.preventDefault();
     });
 	
+	$('#info').width($('#wrapperBoard').width() - $('#tabuleiro').width() - 50);
+	$('body').css('background-color', '#000');
+	
 	$(".tabLink").fancybox({ padding: 2});
 	
 	$(".tabLink").click(function() {
@@ -32,12 +35,21 @@ jQuery(function($) {
 		}	
 	});
 	
-	$('#info').width($('#wrapperBoard').width() - $('#tabuleiro').width());
-	$('body').css('background-color', '#000');
-	
 	$("#play").click(function() {
+		var actualArmyLeft = +$('#armyLeft').text().replace("Exercitos Sobrando: ", "");
+		
+		if (actualArmyLeft != 0) {
+			$("#keepDistribuition").fancybox({ padding: 2});
+			$("#keepDistribuition").trigger('click');
+			return;
+		}
+		
 		$("#distributionForm").submit();
-	});
+	}); 
+	
+	$("#okButton").click(function() {
+		$.fancybox.close();
+	}); 
 	
 	$("#redistributeButton").click(function() {
 		var classTextName = $('#armyNumber').attr('class').replace("_link", "");

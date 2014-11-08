@@ -13,85 +13,63 @@
 	    <script src="../js/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
 	   	<link rel="stylesheet" type="text/css" href="../js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	   	<link rel="stylesheet" type="text/css" href="../css/style.css"> 
-	   	<script src="../js/tabuleiro.js" type="text/javascript"></script>
+	   	<script src="../js/tabuleiroJogo.js" type="text/javascript"></script>
 		<title>Tabuleiro</title>
 	</head>
 	<body>
 		<div id="wrapperBoard">
 			<div id="tabuleiro">
-				<form:form id="distributionForm" action="partida" autocomplete="off" modelAttribute="territorioForm" method="POST">
+				<form:form id="distributionForm" action="distribuiExercito" autocomplete="off" modelAttribute="territorioForm" method="POST">
 					<c:forEach items="${usuarios}" var="usuario">
 					
 						<c:forEach items="${usuario.territorios}" var="territorio" varStatus="status">
 								<c:choose>
-									<c:when test="${usuario.jogadorHumano == true}">
+									<c:when test="${territorio.ehVizinhoInimigoDoJogadorHumano == true}">
 										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:when>
 									<c:otherwise>
 										<a class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:otherwise>
 								</c:choose>
+								
+							</a>
 							
 							<form:hidden path="territorios[${status.index}].idTerritorio" value="${territorio.idTerritorio}" />
+							<form:hidden path="territorios[${status.index}].nomeTerritorio" value="${territorio.nomeTerritorio}" />
 							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${status.index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
-						
-							<input type="hidden" name="turno" value="${usuario.jogo.turno}" />
 						</c:forEach>
-					
 					</c:forEach>
 					
+					<input type="hidden" name="turno" value="${usuario.jogo.turno}" />
 				</form:form>
 			</div>
 			
 			<div id="info">
+				
+				<c:if test="${erro != null}">
+					<span class="errorMessage">${erro}</span> <br/><br/>
+				</c:if>
+				
 				Jogadores
 				<br/>
 				<br/>
 				<c:forEach items="${usuarios}" var="usuario">
-					<div id="userBox">
-						<div class="circleButtonTag cor${usuario.cor}"></div>
-						<span>${usuario.nomeUsuario}</span>				
-						<br/>
-						<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
-						<c:if test="${usuario.jogadorHumano == true}">
-							<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
-							<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
-						</c:if>
-					</div>
+					<span>${usuario.nomeUsuario}</span>				
+					<br/>
+					<span>Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+					<c:if test="${usuario.jogadorHumano == true}">
+						<span>Objetivo: ${usuario.objetivo.descricao}</span> <br/>
+					</c:if>
 					<br/>
 				</c:forEach>
 				
-	        	<div id="play">
-	        		<button id="playButton" type="submit">Continuar</button>
-				</div>
-				
-				<a style="display:none;" id="keepDistribuition" href="#redistributionNotCompleted">confirm</a>
 			</div>
 		</div>
 		
 		<div style="display:none;">
 			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
-				<h2>Remanejar exército</h2>
-				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
-				<select id="armyNumber">
-				</select>
-				<br/>
-				<br/>
-				<div id="redistributeButton">
-					<span>Remanejar</span>
-				</div>
-			</div>
-		</div>
-		
-		<div style="display:none;">
-			<div id="redistributionNotCompleted" style="width:280px;height:230px;overflow:auto;">
-				<h2>Remanejar exército</h2>
-				<span>Você ainda tem exércitos para distribuir.</span>
-				<br/>
-				<br/>
-				<div id="okButton">
-					<span>Ok</span>
-				</div>
+				<h2>Atacar</h2>
+
 			</div>
 		</div>
 	</body>

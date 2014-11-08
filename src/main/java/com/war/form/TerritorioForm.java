@@ -24,5 +24,15 @@ public class TerritorioForm {
 	public void setTerritorios(List<Territorio> territorios) {
 		this.territorios = territorios;
 	}
+
+	public Territorio getTerritorioById(Long idTerritorio) {
+		for (Territorio territorio : getTerritorios()) {
+			if (territorio.getIdTerritorio().equals(idTerritorio)) {
+				return territorio;
+			}
+		}
+		
+		return null;
+	}
 	
 }
