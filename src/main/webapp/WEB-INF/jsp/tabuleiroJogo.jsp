@@ -24,7 +24,7 @@
 					
 						<c:forEach items="${usuario.territorios}" var="territorio" varStatus="status">
 								<c:choose>
-									<c:when test="${territorio.ehVizinhoInimigoDoJogadorHumano == true}">
+									<c:when test="${territorio.jogadorHumanoPodeAtacar == true}">
 										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:when>
 									<c:otherwise>
@@ -54,12 +54,15 @@
 				<br/>
 				<br/>
 				<c:forEach items="${usuarios}" var="usuario">
-					<span>${usuario.nomeUsuario}</span>				
-					<br/>
-					<span>Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
-					<c:if test="${usuario.jogadorHumano == true}">
-						<span>Objetivo: ${usuario.objetivo.descricao}</span> <br/>
-					</c:if>
+					<div id="userBox">
+						<div class="circleButtonTag cor${usuario.cor}"></div>
+						<span>${usuario.nomeUsuario}</span>				
+						<br/>
+						<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+						<c:if test="${usuario.jogadorHumano == true}">
+							<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
+						</c:if>
+					</div>
 					<br/>
 				</c:forEach>
 				
