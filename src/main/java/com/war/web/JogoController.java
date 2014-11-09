@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.war.dados.Jogo;
@@ -22,7 +21,6 @@ import com.war.service.JogoService;
 @Controller("JogoController")
 @RequestMapping("/jogo")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@SessionAttributes({ "usuario" })
 public class JogoController {
 	
 	@Autowired
@@ -70,29 +68,19 @@ public class JogoController {
 	}
 	
 	@RequestMapping(value = "/distribuiExercito",method = RequestMethod.GET )
-	public ModelAndView distribuiExercito(@ModelAttribute("usuario") Usuario usuario,
-										  HttpServletRequest request) {
+	public ModelAndView distribuiExercito(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView("tabuleiro");
 		
-		Usuario usuarioSessao = (Usuario) request.getSession().getAttribute("usuario");
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 		
-		if (usuario == null || usuario.vazio() || usuario.getJogo() == null || 
-				!usuario.getJogo().getPartidaComecada() || usuarioSessao != null) {
-		 	usuario = usuarioSessao;
-		}
-			 	
 	 	if (usuario != null) {
 			Jogo jogo = usuario.getJogo();
-			jogo.setTurno(1);
 			
-			if (usuario.getTerritorios() == null || (usuario.getTerritorios().isEmpty() && usuario.getAindaNoJogo())) {
-				jogoService.preparaJogadores(jogo.getUsuarios());
-				jogoService.distribuiExercitoInimigo(jogo.getUsuarios());
+			if (jogo != null) {
+				view.addObject("usuarios", jogo.getUsuarios());
 			}
-			
-			view.addObject("usuarios", jogo.getUsuarios());
 	 	}
-		
+	 	
 		view.addObject("territorioForm", new TerritorioForm());
 		request.getSession().setAttribute("usuario", usuario);
 		
@@ -102,6 +90,24 @@ public class JogoController {
 	@RequestMapping(value = "/passar",method = RequestMethod.GET )
 	public ModelAndView passarJogada() {
 		return null;
+	}
+	
+	@RequestMapping(value = "/preparaJogo",method = RequestMethod.GET )
+	public String preparaJogo(HttpServletRequest request) {
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			 	
+	 	if (usuario != null) {
+			Jogo jogo = usuario.getJogo();
+			
+			if (usuario.getTerritorios() == null || (usuario.getTerritorios().isEmpty() && usuario.getAindaNoJogo())) {
+				jogoService.preparaJogadores(jogo.getUsuarios());
+				jogoService.distribuiExercitoInimigo(jogo.getUsuarios());
+			}
+	 	}
+		
+		request.getSession().setAttribute("usuario", usuario);
+		
+		return "redirect:distribuiExercito";
 	}
 	
 	@RequestMapping(value = "/fim",method = RequestMethod.GET )

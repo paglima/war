@@ -49,14 +49,29 @@
 				<br/>
 				<c:forEach items="${usuarios}" var="usuario">
 					<div id="userBox">
-						<div class="circleButtonTag cor${usuario.cor}"></div>
-						<span>${usuario.nomeUsuario}</span>				
-						<br/>
-						<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
-						<c:if test="${usuario.jogadorHumano == true}">
-							<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
-							<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
-						</c:if>
+						<c:choose>
+							<c:when test="${usuario.jogadorHumano == true}">
+								<div class="circleButtonTag playerTurnCircle cor${usuario.cor}"></div>
+								<span class="playerTurnText">${usuario.nomeUsuario}</span>	(Jogando)			
+								<br/>
+								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<c:if test="${usuario.jogadorHumano == true}">
+									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
+									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
+								</c:if>	
+							</c:when>
+							<c:otherwise>
+								<div class="circleButtonTag cor${usuario.cor}"></div>
+								<span>${usuario.nomeUsuario}</span>				
+								<br/>
+								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<c:if test="${usuario.jogadorHumano == true}">
+									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
+									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 					<br/>
 				</c:forEach>

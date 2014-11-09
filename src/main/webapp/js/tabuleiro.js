@@ -4,7 +4,7 @@ jQuery(function($) {
     });
 	
 	$('#info').width($('#wrapperBoard').width() - $('#tabuleiro').width() - 50);
-	$('body').css('background-color', '#000');
+	$('body').css('background-color', '#1e2d4d');
 	
 	$(".tabLink").fancybox({ padding: 2});
 	

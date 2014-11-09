@@ -56,7 +56,7 @@ public class MenuController {
 		
 		request.getSession().setAttribute("usuario", usuario);
 		
-		return "redirect:../jogo/distribuiExercito";
+		return "redirect:../jogo/preparaJogo";
 	}
 	
 	@RequestMapping(value = "/inicio",method = RequestMethod.GET )

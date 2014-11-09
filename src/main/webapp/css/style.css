@@ -44,8 +44,8 @@ select {
 	float: left;
 	border-radius: 50%;
     behavior: url(PIE.htc);
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     text-align: center;
     box-shadow: inset 0 0 7px #000000;
 }
@@ -56,6 +56,17 @@ select {
 	top: 5px;
 	color: #fff;
 	font-size: 0.7em;
+}
+
+.playerTurnText {
+	margin-right: 8px;
+	text-shadow: -1px 0 #F1FE36, 0 1px #F1FE36, 1px 0 #F1FE36, 0 -1px #F1FE36;
+}
+
+.playerTurnCircle {
+	border-width: 2px;
+	border-style: solid;
+	border-color: #F1FE36;
 }
 
 .Brasil {
@@ -499,7 +510,7 @@ table, th, td {
 	margin: 0;
 	padding: 0;
 	display: table-cell;
-	background-image: url(../img/war.jpg);
+	background-image: url(../img/war.png);
 	background-size: 100% auto;
 	background-repeat: no-repeat;
 	width: 1280px;
