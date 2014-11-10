@@ -134,5 +134,42 @@ public class Jogo {
 		
 		return null;
 	}
+
+	public Jogada processaMovimento(Usuario usuarioAtacante) {
+		Territorio atacante = usuarioAtacante.getTerritorioComMaiorExercitoParaAtaque();
+		Territorio defensor = usuarioAtacante.getTerritorioASerAtacado(atacante);
+		
+		if (atacante == null) {
+			return null;
+		}
+		
+		Jogada jogada = new Jogada();
+		jogada.getAtaques().add(new Ataque(atacante, defensor));
+		
+		while (jogada.naoContemDefensorHumano()) {
+			jogada.processaAtaque(jogada.getUltimoAtaque());
+			
+			atacante = usuarioAtacante.getTerritorioComMaiorExercitoParaAtaque();
+			defensor = usuarioAtacante.getTerritorioASerAtacado(atacante);
+			
+			if (atacante == null || defensor == null) {
+				return jogada;
+			}
+			
+			jogada.getAtaques().add(new Ataque(atacante, defensor));
+		}
+		
+		jogada.getSumarioJogada().add("Você está sendo atacado. (" + atacante.getNomeTerritorio() + " está atacando " + defensor.getNomeTerritorio()+ ".");
+		
+		return jogada;
+	}
+
+	public void zeraExercitosAPerder() {
+		for (Usuario usuario : getUsuarios()) {
+			for (Territorio territorio : usuario.getTerritorios()) {
+				territorio.setExercitosAPerder(0);
+			}
+		}
+	}
 	
 }

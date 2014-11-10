@@ -2,11 +2,11 @@ package com.war.service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.war.dados.Jogada;
 import com.war.dados.Jogo;
 import com.war.dados.Territorio;
 import com.war.dados.Usuario;
@@ -30,8 +30,7 @@ public class JogoService {
 	}
 	
 	private void selecionaJogadorInicio(List<Usuario> usuarios) {
-		Random random = new Random();
-		Integer randomico = random.nextInt(usuarios.size());
+		Integer randomico = (int) (Math.random() * (usuarios.size()));
 		
 		for (int i = 0; i < usuarios.size(); i++) {
 			if (i == randomico) {
@@ -104,10 +103,11 @@ public class JogoService {
 		return false;
 	}
 
-	public void processaJogadaInimiga(Jogo jogo) {
+	public Jogada processaJogadaInimiga(Jogo jogo) {
+		jogo.zeraExercitosAPerder();
 		Usuario atacante = jogo.getUsuarioDaVez();
 		
-		
+		return jogo.processaMovimento(atacante);
 	}
 	
 }

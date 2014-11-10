@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -51,6 +52,9 @@ public class Territorio {
 	@JoinColumn(name="ID_USUARIO", referencedColumnName="ID_USUARIO", nullable=false)
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Usuario usuario;
+	
+	@Transient
+	private Integer exercitosAPerder = 0;
 	
 	public String getNomeTerritorio() {
 		return nomeTerritorio;
@@ -138,6 +142,28 @@ public class Territorio {
 		}
 		
 		return false;
+	}
+
+	public boolean contemVizinhoInimigo() {
+		for (Territorio vizinho : getVizinhos()) {
+			if (vizinho.getUsuario().getCor().equals(getUsuario().getCor())) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	public Integer getExercitosAPerder() {
+		return exercitosAPerder;
+	}
+
+	public void setExercitosAPerder(Integer exercitosAPerder) {
+		this.exercitosAPerder = exercitosAPerder;
+	}
+	
+	public void aumentaExercitosAPerder(Integer quantidade) {
+		this.exercitosAPerder += quantidade;
 	}
 	
 }

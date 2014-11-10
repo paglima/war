@@ -34,6 +34,7 @@
 							
 							<form:hidden path="territorios[${status.index}].idTerritorio" value="${territorio.idTerritorio}" />
 							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${status.index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
+							<span style="display:none" id="formerArmyQuantity">${usuario.territorios[status.index].quantidadeExercito}</span>
 						
 							<input type="hidden" name="turno" value="${usuario.jogo.turno}" />
 						</c:forEach>
@@ -50,7 +51,7 @@
 				<c:forEach items="${usuarios}" var="usuario">
 					<div id="userBox">
 						<c:choose>
-							<c:when test="${usuario.jogadorHumano == true}">
+							<c:when test="${usuario.turnoDaJogada == true}">
 								<div class="circleButtonTag playerTurnCircle cor${usuario.cor}"></div>
 								<span class="playerTurnText">${usuario.nomeUsuario}</span>	(Jogando)			
 								<br/>

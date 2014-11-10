@@ -18,19 +18,20 @@ jQuery(function($) {
 		
 		var armyQuantity = +$("#armyLeft").text().replace("Exercitos Sobrando: ", "");
 		var territoryActualArmy = +$(this).text();
+		var formerArmyQuantity = +$('#formerArmyQuantity').text();
 		
 		if (armyQuantity <= 0) {
 			$("#noArmyMessage").show();
 		} 
 		
 		if (territoryActualArmy > armyQuantity && armyQuantity == 0) {
-			for (var i = territoryActualArmy; i >= 1; i--) {
+			for (var i = territoryActualArmy; i >= formerArmyQuantity; i--) {
 				$("#armyNumber").append(new Option(i, i));		
 			}
 			return;
 		} 
 		
-		for (var i = (armyQuantity + territoryActualArmy); i >= 1; i--) {
+		for (var i = (armyQuantity + territoryActualArmy); i >= formerArmyQuantity; i--) {
 			$("#armyNumber").append(new Option(i, i));		
 		}	
 	});

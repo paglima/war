@@ -188,5 +188,41 @@ public class Usuario {
 	public void setAindaNoJogo(Boolean aindaNoJogo) {
 		this.aindaNoJogo = aindaNoJogo;
 	}
+
+	public Territorio getTerritorioComMaiorExercitoParaAtaque() {
+		Territorio maiorExercito = getTerritorios().get(0);
+		
+		for (Territorio territorio : getTerritorios()) {
+			if ((territorio.getQuantidadeExercito() - territorio.getExercitosAPerder()) > (maiorExercito.getQuantidadeExercito() - maiorExercito.getExercitosAPerder()) 
+				&& territorio.contemVizinhoInimigo()) {
+				maiorExercito = territorio;
+			}
+		}
+		
+		if (maiorExercito.getQuantidadeExercito() - maiorExercito.getExercitosAPerder() == 1) {
+			return null;
+		}
+		
+		return maiorExercito;
+	}
+
+	public Territorio getTerritorioASerAtacado(Territorio atacante) {
+		Territorio menorExercito = atacante.getVizinhos().get(0);
+		
+		for (Territorio vizinho : atacante.getVizinhos()) {
+			if ((vizinho.getQuantidadeExercito() - vizinho.getExercitosAPerder()) <= (menorExercito.getQuantidadeExercito() - menorExercito.getExercitosAPerder()) 
+				&& !cor.equals(vizinho.getUsuario().getCor()) && (vizinho.getQuantidadeExercito() - vizinho.getExercitosAPerder()) > 0) {
+				menorExercito = vizinho;
+			}
+		}
+		
+		if (menorExercito.getIdTerritorio().equals(atacante.getVizinhos().get(0).getIdTerritorio()) && 
+		   (((menorExercito.getQuantidadeExercito() - menorExercito.getExercitosAPerder()) == 0) || 
+		    menorExercito.getUsuario().getCor().equals(cor))) {
+			return null;
+		}
+		
+		return menorExercito;
+	}
 	
 }

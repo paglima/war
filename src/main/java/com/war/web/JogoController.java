@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.war.dados.Jogada;
 import com.war.dados.Jogo;
 import com.war.dados.SalaDeJogo;
 import com.war.dados.Usuario;
@@ -51,12 +52,16 @@ public class JogoController {
 				}
 				
 				if (jogo.turnoDoInimigo()) {
-					jogoService.processaJogadaInimiga(jogo);
+					Jogada jogada = jogoService.processaJogadaInimiga(jogo);
+					view.addObject("jogada", jogada);
+				} else {
+					view.addObject("turnoJogadorHumano", true);
 				}
 				
 				view.addObject("usuarios", jogo.getUsuarios());
 			}
 			
+			view.addObject("territorioForm", new TerritorioForm());
 			request.getSession().setAttribute("usuario", usuario);
 			
 		} catch (Exception e) {
