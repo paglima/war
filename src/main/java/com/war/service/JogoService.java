@@ -64,13 +64,15 @@ public class JogoService {
 		}
 	}
 
-	private void distribuiExercitosInciais(List<Usuario> usuarios) {
+	public void distribuiExercitosInciais(List<Usuario> usuarios) {
 		for (Usuario usuario : usuarios) {
 			usuario.setExercitoSobrando((usuario.getTerritorios() != null) ? (usuario.getTerritorios().size() / 2) : 0);
 		}
 	}
 
 	public void preparaTerritorios(List<Usuario> usuarios, TerritorioForm territorioForm) throws Exception {
+		atualizaTerritoriosPerdidos(usuarios, territorioForm);
+		
 		for (Usuario usuario : usuarios) {
 			Integer totalExercitosDistribuidos = 0;
 			
@@ -85,6 +87,31 @@ public class JogoService {
 			
 			usuario.setExercitoSobrando(0);
 		}
+	}
+
+	private void atualizaTerritoriosPerdidos(List<Usuario> usuarios, TerritorioForm territorioForm) {
+		for (Territorio territorioModificado : territorioForm.getTerritorios()) {
+			Territorio territorio = getTerritorioById(territorioModificado.getIdTerritorio(), usuarios);
+			
+			if (territorio != null) {
+				if (territorioModificado.getFoiConquistado()) {
+					territorio.atualizaJogadorDonoDoTerritorio(territorioModificado);
+				}
+			}
+		}
+		
+	}
+
+	private Territorio getTerritorioById(Long idTerritorio, List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			for (Territorio territorio : usuario.getTerritorios()) {
+				if (territorio.getIdTerritorio().equals(idTerritorio)) {
+					return territorio;
+				}
+			}
+		}
+		
+		return null;
 	}
 
 	public void distribuiExercitoInimigo(List<Usuario> usuarios) {
@@ -103,11 +130,51 @@ public class JogoService {
 		return false;
 	}
 
-	public Jogada processaJogadaInimiga(Jogo jogo) {
-		jogo.zeraExercitosAPerder();
+	public Jogada processaJogadaInimiga(Jogo jogo) throws Exception {
 		Usuario atacante = jogo.getUsuarioDaVez();
 		
 		return jogo.processaMovimento(atacante);
+	}
+
+	public void passaTurno(Jogo jogo) {
+		jogo.setTurno(jogo.getTurno() + 1);
+		Integer indice = 0;
+		
+		for (int i = 0; i < jogo.getUsuarios().size(); i++) {
+			if (jogo.getUsuarios().get(i).getTurnoDaJogada()) {
+				indice = i;
+				jogo.getUsuarios().get(i).setTurnoDaJogada(Boolean.FALSE);
+				break;
+			}
+		}
+		
+		if ((indice + 1) < jogo.getUsuarios().size()) {
+			indice++;
+		} else {
+			indice = 0;
+		}
+		
+		while (!jogo.getUsuarios().get(indice).getAindaNoJogo()) {
+			if (indice >= jogo.getUsuarios().size()) {
+				indice = 0;
+			}
+		}
+		
+		jogo.getUsuarios().get(indice).setTurnoDaJogada(Boolean.TRUE);
+	}
+
+	public void coletaExercitoParaUsuarioDaVez(Usuario usuarioDaVez) {
+		if (usuarioDaVez != null) {
+			usuarioDaVez.setExercitoSobrando((usuarioDaVez.getTerritorios() != null) ? (usuarioDaVez.getTerritorios().size() / 2) : 0);
+		}
+	}
+
+	public void distribuiExercitoParaInimigoDaVez(Usuario usuarioDaVez) {
+		Integer quantidadeExercito = usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().getQuantidadeExercito();
+		Integer exercitoSobrando = usuarioDaVez.getExercitoSobrando();
+		
+		usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().setQuantidadeExercito(quantidadeExercito + exercitoSobrando);
+		usuarioDaVez.setExercitoSobrando(0);
 	}
 	
 }

@@ -13,21 +13,21 @@
 	    <script src="../js/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
 	   	<link rel="stylesheet" type="text/css" href="../js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	   	<link rel="stylesheet" type="text/css" href="../css/style.css"> 
-	   	<script src="../js/tabuleiro.js" type="text/javascript"></script>
-	   	<script src="../js/tabuleiroRedistribuicao.js" type="text/javascript"></script>
+  		<script src="../js/tabuleiro.js" type="text/javascript"></script>
+	   	<script src="../js/tabuleiroRemanejamento.js" type="text/javascript"></script>
 		<title>Tabuleiro</title>
 	</head>
 	<body>
 		<div id="wrapperBoard">
 			<div id="tabuleiro">
-				<form:form id="distributionForm" action="partida" autocomplete="off" modelAttribute="territorioForm" method="POST">
+				<form:form id="distributionForm" action="preDistribuicao" autocomplete="off" modelAttribute="territorioForm" method="POST">
 					<c:set var="index" value="0" scope="page"/>	
 
 					<c:forEach items="${usuarios}" var="usuario">
 					
 						<c:forEach items="${usuario.territorios}" var="territorio">
 								<c:choose>
-									<c:when test="${usuario.jogadorHumano == true}">
+									<c:when test="${usuario.jogadorHumano == true && usuario.turnoDaJogada == true}">
 										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
 									</c:when>
 									<c:otherwise>
@@ -84,7 +84,7 @@
 				</c:forEach>
 				
 	        	<div id="play" style="display:none;">
-	        		<button id="playButton" type="submit">Continuar</button>
+	        		<button id="playButton" type="submit">Passar turno</button>
 				</div>
 				
 				<a style="display:none;" id="keepDistribuition" href="#redistributionNotCompleted">confirm</a>

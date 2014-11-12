@@ -1,6 +1,7 @@
 package com.war.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -61,15 +62,119 @@ public class JogoController {
 				view.addObject("usuarios", jogo.getUsuarios());
 			}
 			
+			view.addObject("turno", usuario.getJogo().getTurno());
 			view.addObject("territorioForm", new TerritorioForm());
-			request.getSession().setAttribute("usuario", usuario);
 			
+			boolean sessaoExiste = verificaSessao(request);
+			
+			if (sessaoExiste) {
+				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+				return view;
+			}
+			
+			view.addObject("erro", "A sessão de jogo expirou.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			view.addObject("erro", "Erro ao distribuir terrotórios.");
+			view.addObject("erro", "Erro ao exibir terrotórios.");
 		}
 		
 		return view;
+	}
+
+	private void colocaUsuarioNaSessao(HttpServletRequest request,
+			Usuario usuario, boolean sessaoExiste) {
+		if (sessaoExiste) {
+			request.getSession().setMaxInactiveInterval(60 * 60 * 6);
+			request.getSession().setAttribute("usuario", usuario);
+		}
+	}
+
+	private boolean verificaSessao(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	@RequestMapping(value = "/remanejamento",method = RequestMethod.POST )
+	public ModelAndView remanejaExercito(@RequestParam(value="turno", required=true) String turno,
+									     @ModelAttribute("territorioForm") TerritorioForm territorioForm,
+									     HttpServletRequest request) {
+		ModelAndView view = new ModelAndView("tabuleiroRemanejamento");
+		try {
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			
+		 	if (usuario != null) {
+		 		Jogo jogo = usuario.getJogo();
+		 		
+				if (usuario.getTerritorios() != null) {
+					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
+				}
+		 		
+				if (jogo != null) {
+					view.addObject("usuarios", jogo.getUsuarios());
+				}
+		 	}
+		 	
+		 	view.addObject("turno", usuario.getJogo().getTurno());
+			view.addObject("territorioForm", new TerritorioForm());
+			
+			boolean sessaoExiste = verificaSessao(request);
+			
+			if (sessaoExiste) {
+				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+				return view;
+			}
+			
+			view.addObject("erro", "A sessão de jogo expirou.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			view.addObject("erro", "Erro ao exibir terrotórios.");
+		}
+		
+		return view;
+	}
+	
+	@RequestMapping(value = "/preDistribuicao",method = RequestMethod.POST )
+	public String preDistribuicao(@RequestParam(value="turno", required=true) String turno,
+									     @ModelAttribute("territorioForm") TerritorioForm territorioForm,
+									     HttpServletRequest request) {
+		try {
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			
+		 	if (usuario != null) {
+		 		Jogo jogo = usuario.getJogo();
+		 		
+				if (usuario.getTerritorios() != null) {
+					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
+				}
+		 		
+				if (jogo != null) {
+					jogoService.passaTurno(jogo);
+					
+					if (jogo.getTurno() > 1) {
+						jogoService.coletaExercitoParaUsuarioDaVez(jogo.getUsuarioDaVez());
+						
+						if (jogo.getUsuarioDaVez() != null && !jogo.getUsuarioDaVez().getJogadorHumano()) {
+							jogoService.distribuiExercitoParaInimigoDaVez(jogo.getUsuarioDaVez());
+						}
+					}
+				}
+		 	}
+		 	
+		 	boolean sessaoExiste = verificaSessao(request);
+			
+			if (sessaoExiste) {
+				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:distribuiExercito";
 	}
 	
 	@RequestMapping(value = "/distribuiExercito",method = RequestMethod.GET )
@@ -79,22 +184,26 @@ public class JogoController {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 		
 	 	if (usuario != null) {
-			Jogo jogo = usuario.getJogo();
-			
+	 		Jogo jogo = usuario.getJogo();
+	 		
 			if (jogo != null) {
 				view.addObject("usuarios", jogo.getUsuarios());
 			}
 	 	}
 	 	
+	 	view.addObject("turno", usuario.getJogo().getTurno());
 		view.addObject("territorioForm", new TerritorioForm());
-		request.getSession().setAttribute("usuario", usuario);
+		
+		boolean sessaoExiste = verificaSessao(request);
+		
+		if (sessaoExiste) {
+			colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+			return view;
+		}
+		
+		view.addObject("erro", "A sessão de jogo expirou.");
 		
 		return view;
-	}
-	
-	@RequestMapping(value = "/passar",method = RequestMethod.GET )
-	public ModelAndView passarJogada() {
-		return null;
 	}
 	
 	@RequestMapping(value = "/preparaJogo",method = RequestMethod.GET )
@@ -104,20 +213,20 @@ public class JogoController {
 	 	if (usuario != null) {
 			Jogo jogo = usuario.getJogo();
 			
-			if (usuario.getTerritorios() == null || (usuario.getTerritorios().isEmpty() && usuario.getAindaNoJogo())) {
-				jogoService.preparaJogadores(jogo.getUsuarios());
-				jogoService.distribuiExercitoInimigo(jogo.getUsuarios());
-			}
+			if (jogo != null) {
+				jogo.setTurno(1);
+				
+				if (usuario.getTerritorios() == null || (usuario.getTerritorios().isEmpty() && usuario.getAindaNoJogo())) {
+					jogoService.preparaJogadores(jogo.getUsuarios());
+					jogoService.distribuiExercitoInimigo(jogo.getUsuarios());
+				}
+	 		}
 	 	}
 		
+	 	request.getSession().setMaxInactiveInterval(60 * 60 * 6);
 		request.getSession().setAttribute("usuario", usuario);
 		
 		return "redirect:distribuiExercito";
-	}
-	
-	@RequestMapping(value = "/fim",method = RequestMethod.GET )
-	public ModelAndView fim() {
-		return null;
 	}
 	
 }

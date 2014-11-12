@@ -135,11 +135,12 @@ public class Jogo {
 		return null;
 	}
 
-	public Jogada processaMovimento(Usuario usuarioAtacante) {
+	public Jogada processaMovimento(Usuario usuarioAtacante) throws Exception {
 		Territorio atacante = usuarioAtacante.getTerritorioComMaiorExercitoParaAtaque();
 		Territorio defensor = usuarioAtacante.getTerritorioASerAtacado(atacante);
 		
-		if (atacante == null) {
+		if (atacante == null || defensor == null || 
+		   (atacante.getQuantidadeExercito() < defensor.getQuantidadeExercito())) {
 			return null;
 		}
 		
@@ -152,24 +153,27 @@ public class Jogo {
 			atacante = usuarioAtacante.getTerritorioComMaiorExercitoParaAtaque();
 			defensor = usuarioAtacante.getTerritorioASerAtacado(atacante);
 			
-			if (atacante == null || defensor == null) {
+			if (atacante == null || defensor == null || 
+			   (atacante.getQuantidadeExercito() < defensor.getQuantidadeExercito())) {
 				return jogada;
 			}
 			
 			jogada.getAtaques().add(new Ataque(atacante, defensor));
 		}
 		
-		jogada.getSumarioJogada().add("Você está sendo atacado. (" + atacante.getNomeTerritorio() + " está atacando " + defensor.getNomeTerritorio()+ ".");
+		jogada.getSumarioJogada().add("Você está sendo atacado. (" + atacante.getNomeTerritorio() + " está atacando " + defensor.getNomeTerritorio()+ ").");
 		
 		return jogada;
 	}
 
-	public void zeraExercitosAPerder() {
+	public Usuario getUsuarioHumano() {
 		for (Usuario usuario : getUsuarios()) {
-			for (Territorio territorio : usuario.getTerritorios()) {
-				territorio.setExercitosAPerder(0);
+			if (usuario.getJogadorHumano()) {
+				return usuario;
 			}
 		}
+	
+		return null;
 	}
 	
 }

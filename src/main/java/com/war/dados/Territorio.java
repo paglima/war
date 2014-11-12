@@ -54,7 +54,7 @@ public class Territorio {
 	private Usuario usuario;
 	
 	@Transient
-	private Integer exercitosAPerder = 0;
+	private Boolean foiConquistado = Boolean.FALSE;
 	
 	public String getNomeTerritorio() {
 		return nomeTerritorio;
@@ -130,13 +130,37 @@ public class Territorio {
 		}
 	}
 	
+	public void atualizaJogadorDonoDoTerritorio(Territorio territorio) {
+		if (territorio != null) {
+			Usuario usuarioHumano = usuario.getJogo().getUsuarioHumano();
+	
+			if (usuarioHumano != null) {
+				usuario.removeTerritorio(this);
+				this.setUsuario(usuarioHumano);
+				usuario.addTerritorio(this);
+			}
+		}
+	}
+	
+	public List<Territorio> getVizinhosJogadorHumano() {
+		List<Territorio> vizinhosJogadorHumano = new ArrayList<Territorio>();
+		
+		for (Territorio vizinho : getVizinhos()) {
+			if (vizinho.getUsuario().getJogadorHumano()) {
+				vizinhosJogadorHumano.add(vizinho);
+			}
+		}
+		
+		return vizinhosJogadorHumano;
+	}
+	
 	public boolean getJogadorHumanoPodeAtacar() {
 		if (!usuario.getJogo().getUsuarioDaVez().getJogadorHumano()) {
 			return false;
 		}
 		
 		for (Territorio vizinho : getVizinhos()) {
-			if (vizinho.getUsuario().getJogadorHumano()) {
+			if (vizinho.getUsuario().getJogadorHumano() && !usuario.getJogadorHumano()) {
 				return true;
 			}
 		}
@@ -153,17 +177,17 @@ public class Territorio {
 		
 		return true;
 	}
-
-	public Integer getExercitosAPerder() {
-		return exercitosAPerder;
-	}
-
-	public void setExercitosAPerder(Integer exercitosAPerder) {
-		this.exercitosAPerder = exercitosAPerder;
-	}
 	
-	public void aumentaExercitosAPerder(Integer quantidade) {
-		this.exercitosAPerder += quantidade;
+	public void diminuiExercito(Integer quantidade) {
+		this.quantidadeExercito -= quantidade;
+	}
+
+	public Boolean getFoiConquistado() {
+		return foiConquistado;
+	}
+
+	public void setFoiConquistado(Boolean foiConquistado) {
+		this.foiConquistado = foiConquistado;
 	}
 	
 }

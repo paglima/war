@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="hidden"%>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -13,6 +15,7 @@
 	    <script src="../js/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
 	   	<link rel="stylesheet" type="text/css" href="../js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	   	<link rel="stylesheet" type="text/css" href="../css/style.css"> 
+	   	<script src="../js/tabuleiro.js" type="text/javascript"></script>
 	   	<script src="../js/tabuleiroJogo.js" type="text/javascript"></script>
 		<title>Tabuleiro</title>
 	</head>
@@ -20,47 +23,62 @@
 
 		<div id="wrapperBoard">
 			<div id="tabuleiro">
-				<form:form id="distributionForm" action="partida" autocomplete="off" modelAttribute="territorioForm" method="POST">
+				<form:form id="matchForm" action="remanejamento" autocomplete="off" modelAttribute="territorioForm" method="POST">
+					<c:set var="index" value="0" scope="page"/>	
+					
 					<c:forEach items="${usuarios}" var="usuario">
 					
-						<c:forEach items="${usuario.territorios}" var="territorio" varStatus="status">
-								<c:choose>
-									<c:when test="${territorio.jogadorHumanoPodeAtacar == true}">
-										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
-									</c:when>
-									<c:otherwise>
-										<a class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
-									</c:otherwise>
-								</c:choose>
+						<c:forEach items="${usuario.territorios}" var="territorio">
+							<c:choose>
+								<c:when test="${territorio.jogadorHumanoPodeAtacar == true}">
+									<a class="circleButton atack ${territorio.nomeTerritorio} cor${usuario.cor}" href="#atackDiv">${territorio.quantidadeExercito}</a>
+									
+									<select id="playersAtackers_${territorio.nomeTerritorio}" name="playerAtacker" style="display:none">
+										<c:forEach items="${territorio.vizinhosJogadorHumano}" var="vizinhoJogadorHumano">
+											<option value="${vizinhoJogadorHumano.nomeTerritorio}">${vizinhoJogadorHumano.nomeTerritorio}</option>
+										</c:forEach> 
+									</select>
 								
-							<form:hidden path="territorios[${status.index}].idTerritorio" value="${territorio.idTerritorio}" />
-							<form:hidden path="territorios[${status.index}].nomeTerritorio" value="${territorio.nomeTerritorio}" />
-							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${status.index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
+								</c:when>
+								<c:otherwise>
+									<a class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}" href="#atackDiv">${territorio.quantidadeExercito}</a>
+								</c:otherwise>
+							</c:choose>
+							
+							<form:hidden class="conquested_${territorio.nomeTerritorio}" path="territorios[${index}].foiConquistado" value="${territorio.foiConquistado}" />
+							<form:hidden path="territorios[${index}].idTerritorio" value="${territorio.idTerritorio}" />
+							<form:hidden path="territorios[${index}].nomeTerritorio" value="${territorio.nomeTerritorio}" />
+							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
+							
+							<c:set var="index" value="${index + 1}" scope="page"/>
 						</c:forEach>
 					</c:forEach>
 					
-					<input type="hidden" name="turno" value="${usuario.jogo.turno}" />
+					<input type="hidden" name="turno" value="${turno}" />
 				</form:form>
+				
+				<a style="display:none;" id="atacked" href="#atackedDiv"></a>
 			</div>
 			
 			<div id="info">
-				
+				<div id="back">Desistir</div>
 				<c:if test="${erro != null}">
 					<span class="errorMessage">${erro}</span> <br/><br/>
 				</c:if>
 				
-				Jogadores
+				Jogadores (Rodada: <span id="turn">${usuarios[0].jogo.turno}</span>)
 				<br/>
 				<br/>
 				<c:forEach items="${usuarios}" var="usuario">
-					<div id="userBox">
+					<div class="userBox_${usuario.cor}">
 						<c:choose>
 							<c:when test="${usuario.turnoDaJogada == true}">
 								<div class="circleButtonTag playerTurnCircle cor${usuario.cor}"></div>
 								<span class="playerTurnText">${usuario.nomeUsuario}</span>	(Jogando)			
 								<br/>
-								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<span class="territoriesTotal" style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
 								<c:if test="${usuario.jogadorHumano == true}">
+									<input type="hidden" id="playerHumanTurn" value="true"/>							
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>	
 							</c:when>
@@ -68,7 +86,7 @@
 								<div class="circleButtonTag cor${usuario.cor}"></div>
 								<span>${usuario.nomeUsuario}</span>				
 								<br/>
-								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<span class="territoriesTotal" style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
 								<c:if test="${usuario.jogadorHumano == true}">
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>
@@ -80,11 +98,17 @@
 					<br/>
 				</c:forEach>
 									
-				<div id="movementDiv"> 
-					<c:forEach items="${jogada.sumarioJogada}" var="sumario">
-						<p>${sumario}</p> 
-					</c:forEach>
-				</div>
+				<c:if test="${turnoJogadorHumano != true}">
+					<div id="movementDiv"> 
+						<c:forEach items="${jogada.sumarioJogada}" var="sumario">
+							<c:if test="${fn:contains(sumario, 'Você está sendo atacado.')}">
+								<input type="hidden" id="playerAtacked" value="true"/>							
+							</c:if>
+							
+							<p>${sumario}</p> 
+						</c:forEach>
+					</div>
+				</c:if>					
 								
 				<c:choose>
 					<c:when test="${turnoJogadorHumano != true}">
@@ -102,9 +126,17 @@
 		</div>
 		
 		<div style="display:none;">
-			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
-				<h2>Atacar</h2>
-
+			<div id="atackDiv" style="width:630px;height:580px;overflow:auto;">
+			</div>
+		</div>
+		
+		<div style="display:none;">
+			<div id="atackedDiv" style="width:630px;height:580px;overflow:auto;">
+				<h2>Você está sendo atacado!</h2>
+				<span id="atackedInfo"></span>
+				<div id="atackButton"> 
+					<span>Defender</span>
+				</div>
 			</div>
 		</div>
 	</body>

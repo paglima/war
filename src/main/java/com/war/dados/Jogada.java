@@ -46,9 +46,9 @@ public class Jogada {
 		return getAtaques().get(ataques.size() - 1);
 	}
 
-	public void processaAtaque(Ataque ataque) {
-		Integer quantidadeDadosAtaque = pegaDadosParaAtaque(ataque.getAtacante().getQuantidadeExercito() - ataque.getAtacante().getExercitosAPerder());
-		Integer quantidadeDadosDefesa = pegaDadosParaDefesa(ataque.getDefensor().getQuantidadeExercito() - ataque.getDefensor().getExercitosAPerder());
+	public void processaAtaque(Ataque ataque) throws Exception {
+		Integer quantidadeDadosAtaque = pegaDadosParaAtaque(ataque.getAtacante().getQuantidadeExercito());
+		Integer quantidadeDadosDefesa = pegaDadosParaDefesa(ataque.getDefensor().getQuantidadeExercito());
 		
 		if (quantidadeDadosAtaque == 3 & quantidadeDadosDefesa == 3) {
 			ataqueComDadosIguais(ataque, quantidadeDadosDefesa);
@@ -62,7 +62,7 @@ public class Jogada {
 		}
 	}
 
-	private void ataqueComAtacanteComMaisDados(Ataque ataque, Integer quantidadeDadosAtaque, Integer quantidadeDadosDefesa) {
+	private void ataqueComAtacanteComMaisDados(Ataque ataque, Integer quantidadeDadosAtaque, Integer quantidadeDadosDefesa) throws Exception {
 		ArrayList<Integer> jogadasDeAtaque = geraJogadasMaiores(quantidadeDadosAtaque, quantidadeDadosDefesa);
 		
 		for (int i = 0; i < quantidadeDadosDefesa; i++) {
@@ -72,7 +72,7 @@ public class Jogada {
 		}
 	}
 	
-	private void ataqueComDadosIguais(Ataque ataque, Integer quantidadeDadosDefesa) {
+	private void ataqueComDadosIguais(Ataque ataque, Integer quantidadeDadosDefesa) throws Exception {
 		for (int i = 0; i < quantidadeDadosDefesa; i++) {
 			Integer dadoAtaque = (int) (Math.random() * (6 - 1) + 1);
 			Integer dadoDefesa = (int) (Math.random() * (6 - 1) + 1);
@@ -81,17 +81,34 @@ public class Jogada {
 		}
 	}
 
-	private void confereResultadoAtaque(Ataque ataque, Integer dadoAtaque, Integer dadoDefesa) {
+	private void confereResultadoAtaque(Ataque ataque, Integer dadoAtaque, Integer dadoDefesa) throws Exception {
 		if (dadoAtaque > dadoDefesa) {
 			this.getSumarioJogada().add(processaMensagemDeMovimento(ataque.getDefensor(), ataque.getAtacante()));
 			ataque.aumentaExercitoPerdidosPorDefesa(1);
-			ataque.getDefensor().aumentaExercitosAPerder(1);
+			ataque.getDefensor().diminuiExercito(1);
+			
+			if (ataque.getDefensor().getQuantidadeExercito() == 0) {
+				processaConquista(ataque);
+			}
 			
 		} else {
 			this.getSumarioJogada().add(processaMensagemDeMovimento(ataque.getAtacante(), ataque.getDefensor()));
 			ataque.aumentaExercitoPerdidosPorAtaque(1);
-			ataque.getAtacante().aumentaExercitosAPerder(1);
+			ataque.getAtacante().diminuiExercito(1);
 		}		
+	}
+
+	private void processaConquista(Ataque ataque) throws Exception {
+		if (ataque.getAtacante().getQuantidadeExercito() == 1) {
+			throw new Exception("Conquista de territorio com ataque indevido.");
+		}
+		
+		ataque.getDefensor().getUsuario().removeTerritorio(ataque.getDefensor());
+		ataque.getDefensor().setUsuario(ataque.getAtacante().getUsuario());
+		ataque.getDefensor().setQuantidadeExercito(1);
+		
+		ataque.getAtacante().getUsuario().addTerritorio(ataque.getDefensor());
+		ataque.getAtacante().diminuiExercito(1);
 	}
 
 	private String processaMensagemDeMovimento(Territorio perdedor, Territorio vencedor) {

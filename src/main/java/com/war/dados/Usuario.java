@@ -193,13 +193,12 @@ public class Usuario {
 		Territorio maiorExercito = getTerritorios().get(0);
 		
 		for (Territorio territorio : getTerritorios()) {
-			if ((territorio.getQuantidadeExercito() - territorio.getExercitosAPerder()) > (maiorExercito.getQuantidadeExercito() - maiorExercito.getExercitosAPerder()) 
-				&& territorio.contemVizinhoInimigo()) {
+			if (territorio.getQuantidadeExercito() > maiorExercito.getQuantidadeExercito() && territorio.contemVizinhoInimigo()) {
 				maiorExercito = territorio;
 			}
 		}
 		
-		if (maiorExercito.getQuantidadeExercito() - maiorExercito.getExercitosAPerder() == 1) {
+		if (maiorExercito.getQuantidadeExercito() == 1) {
 			return null;
 		}
 		
@@ -207,22 +206,36 @@ public class Usuario {
 	}
 
 	public Territorio getTerritorioASerAtacado(Territorio atacante) {
+		if (atacante == null) {
+			return null;
+		}
+		
 		Territorio menorExercito = atacante.getVizinhos().get(0);
 		
 		for (Territorio vizinho : atacante.getVizinhos()) {
-			if ((vizinho.getQuantidadeExercito() - vizinho.getExercitosAPerder()) <= (menorExercito.getQuantidadeExercito() - menorExercito.getExercitosAPerder()) 
-				&& !cor.equals(vizinho.getUsuario().getCor()) && (vizinho.getQuantidadeExercito() - vizinho.getExercitosAPerder()) > 0) {
+			if ((vizinho.getQuantidadeExercito()) <= (menorExercito.getQuantidadeExercito()) 
+				&& !cor.equals(vizinho.getUsuario().getCor()) && (vizinho.getQuantidadeExercito() > 0)) {
+				menorExercito = vizinho;
+			} else if (menorExercito.getUsuario().equals(cor)) {
 				menorExercito = vizinho;
 			}
 		}
 		
 		if (menorExercito.getIdTerritorio().equals(atacante.getVizinhos().get(0).getIdTerritorio()) && 
-		   (((menorExercito.getQuantidadeExercito() - menorExercito.getExercitosAPerder()) == 0) || 
+		   (((menorExercito.getQuantidadeExercito() == 0)) || 
 		    menorExercito.getUsuario().getCor().equals(cor))) {
 			return null;
 		}
 		
 		return menorExercito;
+	}
+
+	public void removeTerritorio(Territorio defensor) {
+		for (int i = 0; i < getTerritorios().size(); i++) {
+			if (getTerritorios().get(i).getIdTerritorio().equals(defensor.getIdTerritorio())) {
+				getTerritorios().remove(i);
+			}
+		}
 	}
 	
 }

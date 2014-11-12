@@ -54,13 +54,15 @@ public class MenuController {
 		String nomeIdentificador = "Sala " + UUID.randomUUID().toString();
 		salaDeJogo.adicionaJogo(new Jogo(TipoDeJogo.SOLO.getTipo(), usuario, Integer.parseInt(quantidadeInimigos), nomeIdentificador));
 		
+		request.getSession().setMaxInactiveInterval(60 * 60 * 6);
 		request.getSession().setAttribute("usuario", usuario);
 		
 		return "redirect:../jogo/preparaJogo";
 	}
 	
 	@RequestMapping(value = "/inicio",method = RequestMethod.GET )
-	public ModelAndView modoDeJogo() {
+	public ModelAndView modoDeJogo(HttpServletRequest request) {
+		request.getSession().invalidate();
 		return new ModelAndView("opcaoDeJogo");
 	}
 	
