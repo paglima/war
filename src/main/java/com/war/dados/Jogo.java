@@ -43,6 +43,9 @@ public class Jogo {
 	@Transient
 	private Boolean partidaComecada = Boolean.FALSE;
 	
+	@Transient
+	private Boolean distrubuicaoInicial = Boolean.TRUE;
+	
 	public Jogo(String tipo, Usuario usuario, Integer quantidadeInimigos, String nomeIdentificador) {
 		this.tipo = tipo;
 		partidaComecada = Boolean.TRUE;
@@ -173,6 +176,174 @@ public class Jogo {
 			}
 		}
 	
+		return null;
+	}
+
+	public Usuario getUsuarioPelaCor(String cor) {
+		for (Usuario usuario : getUsuarios()) {
+			if (usuario.getCor().equals(cor)) {
+				return usuario;
+			}
+		}
+	
+		return null;
+	}
+
+	public Usuario getUsuarioIniciador() {
+		for (Usuario usuario : getUsuarios()) {
+			if (usuario.getIniciador()) {
+				return usuario;
+			}
+		}
+	
+		return null;
+	}
+
+	public Boolean getDistrubuicaoInicial() {
+		return distrubuicaoInicial;
+	}
+
+	public void setDistrubuicaoInicial(Boolean distrubuicaoInicial) {
+		this.distrubuicaoInicial = distrubuicaoInicial;
+	}
+
+	public Usuario verificaFim(List<Continente> continentes) {
+		for (Usuario usuario : getUsuarios()) {
+			if (verificaSeGanhou(usuario, continentes)) {
+				return usuario;
+			}
+		}
+		
+		return null;
+	}
+
+	private boolean verificaSeGanhou(Usuario usuario, List<Continente> continentes) {
+		if (usuario.getObjetivo().getIdObjetivo() == 1) return verificaObjetivoTresContinentes(usuario, continentes, "Europa", "Oceania");
+		if (usuario.getObjetivo().getIdObjetivo() == 2) return verificaObjetivoTresContinentes(usuario, continentes, "America do Sul", "Asia");
+		if (usuario.getObjetivo().getIdObjetivo() == 3) return verificaObjetivoTresContinentes(usuario, continentes, "Europa", "America do Sul");
+		if (usuario.getObjetivo().getIdObjetivo() == 4) return verificaObjetivoDezoitoTerritoriosDois(usuario);
+		if (usuario.getObjetivo().getIdObjetivo() == 5) return verificaObjetivoDoisContinentes(usuario, continentes, "Asia", "Africa");
+		if (usuario.getObjetivo().getIdObjetivo() == 6) return verificaObjetivoDoisContinentes(usuario, continentes, "America do Norte", "Africa");
+		if (usuario.getObjetivo().getIdObjetivo() == 7) return verificaSeConquistouNTerritorios(usuario, 24);
+		if (usuario.getObjetivo().getIdObjetivo() == 8) return verificaObjetivoDoisContinentes(usuario, continentes, "America do Norte", "Oceania");
+		if (usuario.getObjetivo().getIdObjetivo() == 9) return verificaObjetivoDaCor(usuario, "Azul");
+		if (usuario.getObjetivo().getIdObjetivo() == 10) return verificaObjetivoDaCor(usuario, "Amarelo");
+		if (usuario.getObjetivo().getIdObjetivo() == 11) return verificaObjetivoDaCor(usuario, "Vermelho");
+		if (usuario.getObjetivo().getIdObjetivo() == 12) return verificaObjetivoDaCor(usuario, "Roxo");
+		if (usuario.getObjetivo().getIdObjetivo() == 13) return verificaObjetivoDaCor(usuario, "Rosa");
+		if (usuario.getObjetivo().getIdObjetivo() == 14) return verificaObjetivoDaCor(usuario, "Verde");
+		
+		return false;
+	}
+
+	private boolean verificaObjetivoDezoitoTerritoriosDois(Usuario usuario) {
+		if (usuario.getTerritorios().size() < 18) {
+			return false;
+		}
+		
+		for (Territorio territorio : usuario.getTerritorios()) {
+			if (territorio.getQuantidadeExercito() <= 1) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	private boolean verificaObjetivoDoisContinentes(Usuario usuario, List<Continente> continentes, String continentePrimeiro, String continenteSegundo) {
+		Continente continentenUm = getContinenteByNome(continentes, continentePrimeiro);
+		Continente continenteDois = getContinenteByNome(continentes, continenteSegundo);
+		
+		if (verificaSeContinenteFoiConquistado(usuario, continentenUm) && verificaSeContinenteFoiConquistado(usuario, continenteDois)) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	private boolean verificaObjetivoTresContinentes(Usuario usuario, List<Continente> continentes, String continentePrimeiro, String continenteSegundo) {
+		Continente continentenUm = getContinenteByNome(continentes, continentePrimeiro);
+		Continente continenteDois = getContinenteByNome(continentes, continenteSegundo);
+		
+		if (verificaSeContinenteFoiConquistado(usuario, continentenUm) && verificaSeContinenteFoiConquistado(usuario, continenteDois) &&
+		    verificaTerceiroContinente(usuario, continentenUm, continenteDois, continentes)) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	private boolean verificaObjetivoDaCor(Usuario usuario, String cor) {
+		boolean existeUsuarioDaCor = verificaSeTemUsuarioDaCorNoJogo(cor);
+		
+		if (existeUsuarioDaCor) {
+			return verificaSeUsuarioEliminado(cor);
+		}
+		
+		return verificaSeConquistouNTerritorios(usuario, 24);
+	}
+	
+	private boolean verificaSeConquistouNTerritorios(Usuario usuario, int n) {
+		if (usuario.getTerritorios().size() < n) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	private boolean verificaSeUsuarioEliminado(String cor) {
+		for (Usuario usuario : getUsuarios()) {
+			if (cor.equals(usuario.getCor()) && !usuario.getAindaNoJogo()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean verificaSeTemUsuarioDaCorNoJogo(String cor) {
+		for (Usuario usuario : getUsuarios()) {
+			if (cor.equals(usuario.getCor())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean verificaTerceiroContinente(Usuario usuario, Continente continentePrimeiro, Continente continentenSegundo, List<Continente> continentes) {
+		if (continentePrimeiro != null && continentenSegundo != null) {
+			for (Continente continente : continentes) {
+				if (continente.getNomeContinente().equals(continentePrimeiro.getNomeContinente()) && continente.getNomeContinente().equals(continentenSegundo.getNomeContinente())) {
+					if (verificaSeContinenteFoiConquistado(usuario, continente) == true) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean verificaSeContinenteFoiConquistado(Usuario usuario, Continente continente) {
+		if (continente != null) {
+			for (Territorio territorio : continente.getTerritorios()) {
+				if (!usuario.contemTerritorio(territorio)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		return false;
+	}
+
+	private Continente getContinenteByNome(List<Continente> continentes, String nomeContinente) {
+		for (Continente continente : continentes) {
+			if (nomeContinente.equals(continente.getNomeContinente())) {
+				return continente;
+			}
+		}
+		
 		return null;
 	}
 	

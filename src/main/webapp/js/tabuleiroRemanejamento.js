@@ -1,14 +1,5 @@
 jQuery(function($) {
-	$('#info').width($('#wrapperBoard').width() - $('#tabuleiro').width() - 50);
-	$('body').css('background-color', '#1e2d4d');
-	
 	$(".tabLink").fancybox({ padding: 2});
-	
-	$("#back").click(function() {
-		if (confirm("Você perderá a partida, deseja mesmo desistir do jogo?")) {
-			location.href="../menu/inicio";
-		}
-	});
 	
 	var playerHumanTurn = $("#playerHumanTurn").val();
 	if (playerHumanTurn == "true") {
@@ -16,42 +7,34 @@ jQuery(function($) {
 	}
 	
 	$(".tabLink").click(function() {
-		$("#noArmyMessage").hide();
-		$("#armyNumber").empty();
-		$("#armyNumber").removeClass();
+		var armyQuantity = +$(this).text();
+		var countryName = $(this).attr('class').split(" ")[2]; 
+		var selectElement = '<select id="borderAlly">';
+		var selectArmy = '<select id="armyNumber">';
 		
-		var className = $(this).attr('class').split(" ")[2];
-		$("#armyNumber").addClass(className + "_link");
-		
-		var armyQuantity = +$("#armyLeft").text().replace("Exercitos Sobrando: ", "");
-		var territoryActualArmy = +$(this).text();
-		var formerArmyQuantity = +$('#formerArmyQuantity').text();
-		
-		if (armyQuantity <= 0) {
-			$("#noArmyMessage").show();
-		} 
-		
-		if (territoryActualArmy > armyQuantity && armyQuantity == 0) {
-			for (var i = territoryActualArmy; i >= formerArmyQuantity; i--) {
-				$("#armyNumber").append(new Option(i, i));		
-			}
-			return;
-		} 
-		
-		for (var i = (armyQuantity + territoryActualArmy); i >= formerArmyQuantity; i--) {
-			$("#armyNumber").append(new Option(i, i));		
-		}	
-	});
-	
-	$("#play").click(function() {
-		var actualArmyLeft = +$('#armyLeft').text().replace("Exercitos Sobrando: ", "");
-		
-		if (actualArmyLeft != 0) {
-			$("#keepDistribuition").fancybox({ padding: 2});
-			$("#keepDistribuition").trigger('click');
+		if (armyQuantity <= 1) {
+			$("#redistributionDiv").html("");
+			$("#redistributionDiv").html("<h2>Remanejar exército</h2><span>Você não tem exércitos suficientes neste território para remanejar.</span>");
 			return;
 		}
 		
+		//monta lista de aliados
+		$("#borderAlly_" + countryName).find('option').each(function() {
+			selectElement += '<option value="' + $(this).val() + '">' + $(this).val() + '</option>';
+		});
+		selectElement += '</select>';
+		
+		//monta lista de exercito remanejavel
+		for (var i = armyQuantity - 1; i >= 1; i--) {
+			selectArmy += '<option value="' + i + '">' + i + '</option>';
+		}
+		selectArmy += '</select>';
+		
+		$("#redistributionDiv").html("");
+		$("#redistributionDiv").append('<h2>Remanejar exército</h2><span class="redistribuitionMessage">Mover exércitos de ' + countryName + ' para:</span><br/><br/>' + selectArmy + '<br/><br/>' + selectElement + '<div id="redistributeButton" class="' + 'button_' + countryName + '"><span>Remanejar</span></div>)');
+	});
+	
+	$("#play").click(function() {
 		$("#distributionForm").submit();
 	}); 
 	
@@ -59,41 +42,20 @@ jQuery(function($) {
 		$.fancybox.close();
 	}); 
 	
-	$("#redistributeButton").click(function() {
-		var classTextName = $('#armyNumber').attr('class').replace("_link", "");
-		var classInputName = "territoryArmy_" + classTextName;
+	$("#redistributeButton").live('click', function() {	
+		var countryFrom = $(".redistribuitionMessage").text().split(" ")[3];
+		var countryFor = $("#borderAlly").val();
+
+		var armyQuantity = +$("#armyNumber").val();
+		var formerArmyCountryFrom = +$(".territoryArmy_" + countryFrom).val();
+		var formerArmyCountryFor = +$(".territoryArmy_" + countryFor).val();
 		
-		var armyChangeNumber = +$("#armyNumber").val();
-		var actualTerrytoryArmy = +$('.' + classInputName).val();
-		var actualArmyLeft = +$('#armyLeft').text().replace("Exercitos Sobrando: ", "");
+		$("." + countryFrom).text(formerArmyCountryFrom - armyQuantity);
+		$("." + countryFor).text(formerArmyCountryFor + armyQuantity);
+		$(".territoryArmy_" + countryFrom).val(formerArmyCountryFrom - armyQuantity);
+		$(".territoryArmy_" + countryFor).val(formerArmyCountryFor + armyQuantity);
 		
-		$('.' + classInputName).val(armyChangeNumber);
-		$('.' + classTextName).html(armyChangeNumber);
-		
-		if (armyChangeNumber < actualTerrytoryArmy) {
-			var newTotalArmyLeft = actualArmyLeft + (actualTerrytoryArmy - armyChangeNumber);
-			$('#armyLeft').html("Exercitos Sobrando: " + newTotalArmyLeft);
-			
-			$.fancybox.close();
-			return;
-		} 
-		
-		if ((armyChangeNumber > actualTerrytoryArmy) && ((armyChangeNumber - actualTerrytoryArmy) >= actualArmyLeft) && (actualArmyLeft > 0)) {
-			var newTotalArmyLeft = actualArmyLeft - (armyChangeNumber - actualTerrytoryArmy);
-			$('#armyLeft').html("Exercitos Sobrando: " + newTotalArmyLeft);
-			
-			$.fancybox.close();
-			return;
-		}
-		
-		if (actualArmyLeft == 0 && armyChangeNumber == actualTerrytoryArmy) {
-			$.fancybox.close();
-			return;
-		}
-		
-		var newTotalArmyLeft = actualArmyLeft - armyChangeNumber;
-		$('#armyLeft').html("Exercitos Sobrando: " + (newTotalArmyLeft + 1));
-		
+		$("." + countryFrom).text()
 		$.fancybox.close();
 	});
 	

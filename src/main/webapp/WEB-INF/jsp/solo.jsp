@@ -21,7 +21,7 @@
 					
 					<div class="firstData">
 						<span>Digite o seu nome:</span>
-		        		<input type="text" maxlength="20" name="nome"/>
+		        		<input type="text" maxlength="20" name="nome" autocomplete="off"/>
 					</div>
 					
 					<div class="otherData" > 

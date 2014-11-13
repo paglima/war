@@ -4,7 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="hidden"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,7 +33,7 @@
 									<a class="circleButton atack ${territorio.nomeTerritorio} cor${usuario.cor}" href="#atackDiv">${territorio.quantidadeExercito}</a>
 									
 									<select id="playersAtackers_${territorio.nomeTerritorio}" name="playerAtacker" style="display:none">
-										<c:forEach items="${territorio.vizinhosJogadorHumano}" var="vizinhoJogadorHumano">
+										<c:forEach items="${territorio.vizinhosJogadorHumanoQuePodemAtacar}" var="vizinhoJogadorHumano">
 											<option value="${vizinhoJogadorHumano.nomeTerritorio}">${vizinhoJogadorHumano.nomeTerritorio}</option>
 										</c:forEach> 
 									</select>
@@ -45,7 +44,7 @@
 								</c:otherwise>
 							</c:choose>
 							
-							<form:hidden class="conquested_${territorio.nomeTerritorio}" path="territorios[${index}].foiConquistado" value="${territorio.foiConquistado}" />
+							<form:hidden class="conquested_${territorio.nomeTerritorio}" path="territorios[${index}].corDoConquistador" value="" />
 							<form:hidden path="territorios[${index}].idTerritorio" value="${territorio.idTerritorio}" />
 							<form:hidden path="territorios[${index}].nomeTerritorio" value="${territorio.nomeTerritorio}" />
 							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
@@ -61,6 +60,7 @@
 			</div>
 			
 			<div id="info">
+				<h2>Atacar</h2>
 				<div id="back">Desistir</div>
 				<c:if test="${erro != null}">
 					<span class="errorMessage">${erro}</span> <br/><br/>
@@ -70,7 +70,7 @@
 				<br/>
 				<br/>
 				<c:forEach items="${usuarios}" var="usuario">
-					<div class="userBox_${usuario.cor}">
+					<div class="userBox_${usuario.cor}" id="userBox">
 						<c:choose>
 							<c:when test="${usuario.turnoDaJogada == true}">
 								<div class="circleButtonTag playerTurnCircle cor${usuario.cor}"></div>
@@ -112,12 +112,12 @@
 								
 				<c:choose>
 					<c:when test="${turnoJogadorHumano != true}">
-						<div id="play" style="display:none;">
+						<div id="play" style="display:none; margin: 50px auto 80px auto;">
 			        		<button id="playButton" type="submit">Continuar</button>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div id="play">
+						<div id="play" style="margin: 50px auto 80px auto;">
 			        		<button id="playButton" type="submit">Continuar</button>
 						</div>
 					</c:otherwise>
@@ -134,7 +134,7 @@
 			<div id="atackedDiv" style="width:630px;height:580px;overflow:auto;">
 				<h2>Você está sendo atacado!</h2>
 				<span id="atackedInfo"></span>
-				<div id="atackButton"> 
+				<div id="defenseButton"> 
 					<span>Defender</span>
 				</div>
 			</div>

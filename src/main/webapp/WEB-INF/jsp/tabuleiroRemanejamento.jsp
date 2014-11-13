@@ -29,6 +29,13 @@
 								<c:choose>
 									<c:when test="${usuario.jogadorHumano == true && usuario.turnoDaJogada == true}">
 										<a class="circleButton tabLink ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
+									
+										<select id="borderAlly_${territorio.nomeTerritorio}" name="borderAlly" style="display:none">
+											<c:forEach items="${territorio.vizinhosJogadorHumano}" var="vizinhoJogadorHumano">
+												<option value="${vizinhoJogadorHumano.nomeTerritorio}">${vizinhoJogadorHumano.nomeTerritorio}</option>
+											</c:forEach> 
+										</select>
+										
 									</c:when>
 									<c:otherwise>
 										<a class="circleButton ${territorio.nomeTerritorio} cor${usuario.cor}" href="#redistributionDiv">${territorio.quantidadeExercito}</a>
@@ -49,6 +56,7 @@
 			</div>
 			
 			<div id="info">
+				<h2>Remanejar exércitos</h2>
 				<div id="back">Desistir</div>
 				Jogadores (Rodada: <span id="turn">${usuarios[0].jogo.turno}</span>)
 				<br/>
@@ -63,7 +71,6 @@
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
 								<c:if test="${usuario.jogadorHumano == true}">
 									<input type="hidden" id="playerHumanTurn" value="true"/>							
-									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>	
 							</c:when>
@@ -73,7 +80,6 @@
 								<br/>
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
 								<c:if test="${usuario.jogadorHumano == true}">
-									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>
 							</c:otherwise>
@@ -83,38 +89,17 @@
 					<br/>
 				</c:forEach>
 				
-	        	<div id="play" style="display:none;">
+	        	<div id="play" style="display:none; margin: 50px auto 80px auto;"">
 	        		<button id="playButton" type="submit">Passar turno</button>
 				</div>
 				
-				<a style="display:none;" id="keepDistribuition" href="#redistributionNotCompleted">confirm</a>
 			</div>
 		</div>
 		
 		<div style="display:none;">
-			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
-				<h2>Remanejar exército</h2>
-				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
-				<select id="armyNumber">
-				</select>
-				<br/>
-				<br/>
-				<div id="redistributeButton">
-					<span>Remanejar</span>
-				</div>
+			<div id="redistributionDiv" style="width:330px;height:320px;overflow:auto;">
 			</div>
 		</div>
-		
-		<div style="display:none;">
-			<div id="redistributionNotCompleted" style="width:280px;height:230px;overflow:auto;">
-				<h2>Remanejar exército</h2>
-				<span>Você ainda tem exércitos para distribuir.</span>
-				<br/>
-				<br/>
-				<div id="okButton">
-					<span>Ok</span>
-				</div>
-			</div>
-		</div>
+	
 	</body>
 </html>

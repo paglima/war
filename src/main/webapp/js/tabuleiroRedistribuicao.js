@@ -2,9 +2,8 @@ jQuery(function($) {
 	$(".tabLink").fancybox({ padding: 2});
 	
 	var playerHumanTurn = $("#playerHumanTurn").val();
-	var turn = +$("#turn").text();
-	
-	if (playerHumanTurn == "true" || turn == 1) {
+
+	if (playerHumanTurn == "true" || $("#firstDistribuition").val() == "true") {
 		$("#play").css('display', 'block');
 	}
 	
@@ -91,7 +90,7 @@ jQuery(function($) {
 	});
 	
 	setTimeout(function() {
-		if ($("#playerHumanTurn").val() != "true" && turn != 1) {
+		if ($("#playerHumanTurn").val() != "true" && $("#firstDistribuition").val() != "true") {
 			$("#distributionForm").submit();
 		}
 		

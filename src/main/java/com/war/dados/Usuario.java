@@ -65,6 +65,9 @@ public class Usuario {
 	@Transient
 	private Boolean aindaNoJogo = Boolean.TRUE;
 	
+	@Transient
+	private Boolean iniciador = Boolean.TRUE;
+	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
 	}
@@ -138,6 +141,10 @@ public class Usuario {
 	}
 
 	public List<Carta> getCartas() {
+		if (cartas == null) {
+			cartas = new ArrayList<Carta>();
+		}
+		
 		return cartas;
 	}
 
@@ -236,6 +243,24 @@ public class Usuario {
 				getTerritorios().remove(i);
 			}
 		}
+	}
+
+	public Boolean getIniciador() {
+		return iniciador;
+	}
+
+	public void setIniciador(Boolean iniciador) {
+		this.iniciador = iniciador;
+	}
+
+	public boolean contemTerritorio(Territorio territorio) {
+		for (Territorio territorioDoUsuario : getTerritorios()) {
+			if (territorioDoUsuario.getIdTerritorio().equals(territorio.getIdTerritorio())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 }

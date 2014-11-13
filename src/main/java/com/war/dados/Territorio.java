@@ -53,8 +53,13 @@ public class Territorio {
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Usuario usuario;
 	
+	@ManyToOne
+	@JoinColumn(name="ID_CONTINENTE", referencedColumnName="ID_CONTINENTE", nullable=false)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Continente continente;
+	
 	@Transient
-	private Boolean foiConquistado = Boolean.FALSE;
+	private String corDoConquistador = "";
 	
 	public String getNomeTerritorio() {
 		return nomeTerritorio;
@@ -128,15 +133,19 @@ public class Territorio {
 		if (territorio != null) {
 			quantidadeExercito = territorio.getQuantidadeExercito();
 		}
+		
+		if (usuario.getTurnoDaJogada()) {
+			usuario.setExercitoSobrando(0);
+		}
 	}
 	
-	public void atualizaJogadorDonoDoTerritorio(Territorio territorio) {
+	public void atualizaJogadorDonoDoTerritorio(Territorio territorio, String cor) {
 		if (territorio != null) {
-			Usuario usuarioHumano = usuario.getJogo().getUsuarioHumano();
+			Usuario usuarioBuscado = usuario.getJogo().getUsuarioPelaCor(cor);
 	
-			if (usuarioHumano != null) {
+			if (usuarioBuscado != null) {
 				usuario.removeTerritorio(this);
-				this.setUsuario(usuarioHumano);
+				this.setUsuario(usuarioBuscado);
 				usuario.addTerritorio(this);
 			}
 		}
@@ -147,6 +156,18 @@ public class Territorio {
 		
 		for (Territorio vizinho : getVizinhos()) {
 			if (vizinho.getUsuario().getJogadorHumano()) {
+				vizinhosJogadorHumano.add(vizinho);
+			}
+		}
+		
+		return vizinhosJogadorHumano;
+	}
+	
+	public List<Territorio> getVizinhosJogadorHumanoQuePodemAtacar() {
+		List<Territorio> vizinhosJogadorHumano = new ArrayList<Territorio>();
+		
+		for (Territorio vizinho : getVizinhos()) {
+			if (vizinho.getUsuario().getJogadorHumano() && vizinho.getQuantidadeExercito() >= 2) {
 				vizinhosJogadorHumano.add(vizinho);
 			}
 		}
@@ -182,12 +203,20 @@ public class Territorio {
 		this.quantidadeExercito -= quantidade;
 	}
 
-	public Boolean getFoiConquistado() {
-		return foiConquistado;
+	public String getCorDoConquistador() {
+		return corDoConquistador;
 	}
 
-	public void setFoiConquistado(Boolean foiConquistado) {
-		this.foiConquistado = foiConquistado;
+	public void setCorDoConquistador(String corDoConquistador) {
+		this.corDoConquistador = corDoConquistador;
+	}
+
+	public Continente getContinente() {
+		return continente;
+	}
+
+	public void setContinente(Continente continente) {
+		this.continente = continente;
 	}
 	
 }

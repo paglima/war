@@ -568,7 +568,7 @@ table, th, td {
 	line-height:25px;
 }
 
-#redistributeButton, #okButton, #cancelButton, #atackButton{
+#redistributeButton, #okButton, #cancelButton, #atackButton, #defenseButton {
 	margin: 0 auto;
 	position: relative;
 	top: 30px;
@@ -594,7 +594,7 @@ table, th, td {
 	border-top-color: #F29E54;
 }
 
-#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover {
+#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover, #defenseButton:hover {
 	background-color: #FFBB7F;
 }
 

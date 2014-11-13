@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.war.dados.Continente;
 import com.war.dados.Jogada;
 import com.war.dados.Jogo;
 import com.war.dados.Territorio;
 import com.war.dados.Usuario;
+import com.war.dao.ContinenteDao;
 import com.war.dao.TerritorioDao;
 import com.war.form.TerritorioForm;
 
@@ -21,6 +23,9 @@ public class JogoService {
 	
 	@Autowired
 	private TerritorioDao territorioDao;
+	
+	@Autowired
+	private ContinenteDao continenteDao;
 	
 	public void preparaJogadores(List<Usuario> usuarios) {
 		selecionaJogadorInicio(usuarios);
@@ -35,6 +40,7 @@ public class JogoService {
 		for (int i = 0; i < usuarios.size(); i++) {
 			if (i == randomico) {
 				usuarios.get(i).setTurnoDaJogada(Boolean.TRUE);
+				usuarios.get(i).setIniciador(Boolean.TRUE);
 				continue;
 			}
 			
@@ -94,8 +100,8 @@ public class JogoService {
 			Territorio territorio = getTerritorioById(territorioModificado.getIdTerritorio(), usuarios);
 			
 			if (territorio != null) {
-				if (territorioModificado.getFoiConquistado()) {
-					territorio.atualizaJogadorDonoDoTerritorio(territorioModificado);
+				if (territorioModificado.getCorDoConquistador() != null && !"".equals(territorioModificado.getCorDoConquistador())) {
+					territorio.atualizaJogadorDonoDoTerritorio(territorioModificado, territorioModificado.getCorDoConquistador());
 				}
 			}
 		}
@@ -137,7 +143,6 @@ public class JogoService {
 	}
 
 	public void passaTurno(Jogo jogo) {
-		jogo.setTurno(jogo.getTurno() + 1);
 		Integer indice = 0;
 		
 		for (int i = 0; i < jogo.getUsuarios().size(); i++) {
@@ -161,10 +166,14 @@ public class JogoService {
 		}
 		
 		jogo.getUsuarios().get(indice).setTurnoDaJogada(Boolean.TRUE);
+		
+		if (jogo.getUsuarios().get(indice).getCor().equals(jogo.getUsuarioIniciador().getCor())) {
+			jogo.setTurno(jogo.getTurno() + 1);
+		}
 	}
 
 	public void coletaExercitoParaUsuarioDaVez(Usuario usuarioDaVez) {
-		if (usuarioDaVez != null) {
+		if (usuarioDaVez != null && usuarioDaVez.getExercitoSobrando() == 0) {
 			usuarioDaVez.setExercitoSobrando((usuarioDaVez.getTerritorios() != null) ? (usuarioDaVez.getTerritorios().size() / 2) : 0);
 		}
 	}
@@ -175,6 +184,12 @@ public class JogoService {
 		
 		usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().setQuantidadeExercito(quantidadeExercito + exercitoSobrando);
 		usuarioDaVez.setExercitoSobrando(0);
+	}
+	
+	public Usuario verificaFimDoJogo(Jogo jogo) {
+		List<Continente> continentes = continenteDao.findAll();
+		
+		return jogo.verificaFim(continentes);
 	}
 	
 }

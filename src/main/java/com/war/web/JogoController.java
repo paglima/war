@@ -52,17 +52,19 @@ public class JogoController {
 					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
 				}
 				
-				if (jogo.turnoDoInimigo()) {
-					Jogada jogada = jogoService.processaJogadaInimiga(jogo);
-					view.addObject("jogada", jogada);
-				} else {
-					view.addObject("turnoJogadorHumano", true);
+				if (jogo != null) {
+					if (jogo.turnoDoInimigo()) {
+						Jogada jogada = jogoService.processaJogadaInimiga(jogo);
+						view.addObject("jogada", jogada);
+					} else {
+						view.addObject("turnoJogadorHumano", true);
+					}
+					
+					view.addObject("usuarios", jogo.getUsuarios());
+					view.addObject("turno", usuario.getJogo().getTurno());
 				}
-				
-				view.addObject("usuarios", jogo.getUsuarios());
 			}
 			
-			view.addObject("turno", usuario.getJogo().getTurno());
 			view.addObject("territorioForm", new TerritorioForm());
 			
 			boolean sessaoExiste = verificaSessao(request);
@@ -114,11 +116,12 @@ public class JogoController {
 				}
 		 		
 				if (jogo != null) {
+					jogo.setDistrubuicaoInicial(Boolean.FALSE);
 					view.addObject("usuarios", jogo.getUsuarios());
+					view.addObject("turno", usuario.getJogo().getTurno());
 				}
 		 	}
 		 	
-		 	view.addObject("turno", usuario.getJogo().getTurno());
 			view.addObject("territorioForm", new TerritorioForm());
 			
 			boolean sessaoExiste = verificaSessao(request);
@@ -133,6 +136,35 @@ public class JogoController {
 			e.printStackTrace();
 			view.addObject("erro", "Erro ao exibir terrotórios.");
 		}
+		
+		return view;
+	}
+	
+	@RequestMapping(value = "/distribuiExercito",method = RequestMethod.GET )
+	public ModelAndView distribuiExercito(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView("tabuleiro");
+		
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+		
+	 	if (usuario != null) {
+	 		Jogo jogo = usuario.getJogo();
+	 		
+			if (jogo != null) {
+				view.addObject("usuarios", jogo.getUsuarios());
+				view.addObject("turno", usuario.getJogo().getTurno());
+			}
+	 	}
+	 	
+		view.addObject("territorioForm", new TerritorioForm());
+		
+		boolean sessaoExiste = verificaSessao(request);
+		
+		if (sessaoExiste) {
+			colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+			return view;
+		}
+		
+		view.addObject("erro", "A sessão de jogo expirou.");
 		
 		return view;
 	}
@@ -177,35 +209,6 @@ public class JogoController {
 		return "redirect:distribuiExercito";
 	}
 	
-	@RequestMapping(value = "/distribuiExercito",method = RequestMethod.GET )
-	public ModelAndView distribuiExercito(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView("tabuleiro");
-		
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-		
-	 	if (usuario != null) {
-	 		Jogo jogo = usuario.getJogo();
-	 		
-			if (jogo != null) {
-				view.addObject("usuarios", jogo.getUsuarios());
-			}
-	 	}
-	 	
-	 	view.addObject("turno", usuario.getJogo().getTurno());
-		view.addObject("territorioForm", new TerritorioForm());
-		
-		boolean sessaoExiste = verificaSessao(request);
-		
-		if (sessaoExiste) {
-			colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
-			return view;
-		}
-		
-		view.addObject("erro", "A sessão de jogo expirou.");
-		
-		return view;
-	}
-	
 	@RequestMapping(value = "/preparaJogo",method = RequestMethod.GET )
 	public String preparaJogo(HttpServletRequest request) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -215,6 +218,7 @@ public class JogoController {
 			
 			if (jogo != null) {
 				jogo.setTurno(1);
+				jogo.setDistrubuicaoInicial(Boolean.TRUE);
 				
 				if (usuario.getTerritorios() == null || (usuario.getTerritorios().isEmpty() && usuario.getAindaNoJogo())) {
 					jogoService.preparaJogadores(jogo.getUsuarios());

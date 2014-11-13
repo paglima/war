@@ -19,7 +19,7 @@ public class Continente {
 	@Column(name = "ID_CONTINENTE", nullable = false, unique = true)
 	private Long idContinente;
 	
-	@Column(name = "NM_NOME_USUARIO", nullable = false, unique = true)
+	@Column(name = "NM_NOME", nullable = false, unique = true)
 	private String nomeContinente;
 	
 	@OneToMany(fetch = FetchType.EAGER, targetEntity = Territorio.class)

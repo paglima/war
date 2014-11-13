@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="hidden"%>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -46,9 +47,12 @@
 					<input type="hidden" name="turno" value="${turno}" />
 					
 				</form:form>
+				
+				<input id="firstDistribuition" type="hidden" name="firstDistribuition" value="${usuarios[0].jogo.distrubuicaoInicial}" />
 			</div>
 			
 			<div id="info">
+				<h2>Distribuir exércitos</h2>
 				<div id="back">Desistir</div>
 				Jogadores (Rodada: <span id="turn">${usuarios[0].jogo.turno}</span>)
 				<br/>
@@ -65,6 +69,7 @@
 									<input type="hidden" id="playerHumanTurn" value="true"/>							
 									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
+									<a id="cards" href="#cardsDiv">Cartas</a>
 								</c:if>	
 							</c:when>
 							<c:otherwise>
@@ -83,7 +88,7 @@
 					<br/>
 				</c:forEach>
 				
-	        	<div id="play" style="display:none;">
+	        	<div id="play" style="display:none;	margin: 50px auto 80px auto;">
 	        		<button id="playButton" type="submit">Continuar</button>
 				</div>
 				
@@ -93,27 +98,45 @@
 		
 		<div style="display:none;">
 			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
-				<h2>Remanejar exército</h2>
+				<h2>Distribuir exército</h2>
 				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
 				<select id="armyNumber">
 				</select>
 				<br/>
 				<br/>
 				<div id="redistributeButton">
-					<span>Remanejar</span>
+					<span>Distribuir</span>
 				</div>
 			</div>
 		</div>
 		
 		<div style="display:none;">
 			<div id="redistributionNotCompleted" style="width:280px;height:230px;overflow:auto;">
-				<h2>Remanejar exército</h2>
+				<h2>Distribuir exército</h2>
 				<span>Você ainda tem exércitos para distribuir.</span>
 				<br/>
 				<br/>
 				<div id="okButton">
 					<span>Ok</span>
 				</div>
+			</div>
+		</div>
+		
+		<div style="display:none;">
+			<div id="cardsDiv" style="width:280px;height:230px;overflow:auto;">
+				<h2>Cartas</h2>
+				<br/>
+				
+				<c:choose>
+					<c:when test="${fn:length(usuarios[0].jogo.usuarioHumano.cartas) > 0}">
+						<c:forEach items="${usuarios[0].jogo.usuarioHumano.cartas}" var="carta">
+							
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<span>Você ainda não tem nenhuma carta.</span>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</body>
