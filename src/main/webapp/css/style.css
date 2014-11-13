@@ -29,6 +29,43 @@ select {
 	box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
 }
 
+.atackingDice {
+	position: relative;
+	top: 10px;
+	margin: 10px 70px;;
+	float: left;
+	font-size: 1.9em;
+    line-height: 75px;
+    behavior: url(PIE.htc);
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    box-shadow: inset 0 0 10px #000000;
+    cursor: pointer;
+    background-color: #D20000;
+}
+
+.defendingDice {
+	position: relative;
+	top: 10px;
+	margin: 10px 70px;
+	float: right;
+	font-size: 1.9em;
+	line-height: 75px;
+    behavior: url(PIE.htc);
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    box-shadow: inset 0 0 10px #000000;
+    cursor: pointer;
+    background-color: #E6B401;
+}
+
+.notPlaying {
+	color: #838383;
+	background-color: #838383;		
+}
+
 .circleButton {
 	font-size: 0.8em;
 	line-height: 25px;
@@ -555,7 +592,7 @@ table, th, td {
 	border-color: #414141;
 }
 
-#redistributionDiv, #redistributionNotCompleted {
+#redistributionDiv, #redistributionNotCompleted, #cardsDiv {
 	margin: 0;
 	border-width: 0;
 	text-align: center;
@@ -646,7 +683,7 @@ table, th, td {
 	float: right;
 }
 
-#back:hover {
+#back:hover, #cards:hover{
 	cursor: pointer;
 	background-color: #45C284;
 }
@@ -657,4 +694,29 @@ table, th, td {
 	text-align: center;
 	background-color: #002C30;
 	color: #fff;
+}
+
+#cards {
+	position: relative;
+	top: -10px;
+	padding:2px;
+	font-size: 0.9em;
+	text-align: center;
+	cursor: pointer;
+	background-color: #067A40;
+	
+	border-bottom-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	
+	border-bottom-width: 3px;
+	border-right-width: 3px;
+	border-left-width: 3px;
+	border-top-width: 3px;
+	
+	border-right-color: #054123;
+	border-bottom-color: #0A2D1B;
+	border-left-color: #131E18;
+	border-top-color: #0FA55A;
 }

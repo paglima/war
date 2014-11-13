@@ -148,9 +148,7 @@ public class Territorio {
 				this.setUsuario(usuarioBuscado);
 				usuarioBuscado.addTerritorio(this);
 				
-				if (usuarioBuscado.getJogadorHumano()) {
-					usuarioBuscado.setConquistouTerritorio(Boolean.TRUE);
-				}
+				usuarioBuscado.setConquistouTerritorio(Boolean.TRUE);
 			}
 		}
 	}

@@ -20,11 +20,14 @@ public class Carta {
 	private String simbolo;
 	
 	@Column(name = "BO_CORINGA", nullable = false)
-	private String cartaCoringa;
+	private Boolean cartaCoringa;
 	
 	@OneToOne
 	@JoinColumn(name="ID_CARTA", referencedColumnName="ID_CARTA", nullable=true)
 	private Territorio Territorio;
+	
+	@Transient
+	private static Integer trocaAtual = 0;
 	
 	@Transient
 	private Boolean usada = Boolean.FALSE;
@@ -45,11 +48,11 @@ public class Carta {
 		this.simbolo = simbolo;
 	}
 
-	public String getCartaCoringa() {
+	public Boolean getCartaCoringa() {
 		return cartaCoringa;
 	}
 
-	public void setCartaCoringa(String cartaCoringa) {
+	public void setCartaCoringa(Boolean cartaCoringa) {
 		this.cartaCoringa = cartaCoringa;
 	}
 
@@ -67,6 +70,28 @@ public class Carta {
 
 	public void setUsada(Boolean usada) {
 		this.usada = usada;
+	}
+	
+	public static Integer geraExercitoDeTroca(Integer troca) {
+		if (troca != null) {
+			if (troca == 1) {
+				trocaAtual = 4;
+			} else if (troca == 2) {
+				trocaAtual = 6;
+			} else if (troca == 3) {
+				trocaAtual = 8;
+			} else if (troca == 4) {
+				trocaAtual = 10;
+			} else if (troca == 5) {
+				trocaAtual = 12;
+			} else if (troca == 6) {
+				trocaAtual = 15;
+			} else {
+				trocaAtual += 5;
+			}
+		}
+		
+		return trocaAtual;
 	}
 	
 }

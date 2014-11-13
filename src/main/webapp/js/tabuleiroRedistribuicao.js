@@ -1,5 +1,6 @@
 jQuery(function($) {
 	$(".tabLink").fancybox({ padding: 2});
+	$("#cards").fancybox({ padding: 2});
 	
 	var playerHumanTurn = $("#playerHumanTurn").val();
 

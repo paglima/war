@@ -57,7 +57,7 @@ public class Usuario {
 	private Jogo jogo;
 	
 	@Transient
-	private Boolean turnoDaJogada = Boolean.TRUE;
+	private Boolean turnoDaJogada = Boolean.FALSE;
 	
 	@Transient
 	private Integer exercitoSobrando;
@@ -66,10 +66,10 @@ public class Usuario {
 	private Boolean aindaNoJogo = Boolean.TRUE;
 	
 	@Transient
-	private Boolean iniciador = Boolean.TRUE;
+	private Boolean iniciador = Boolean.FALSE;
 	
 	@Transient
-	private Boolean jaPegouCartaNoTurno = Boolean.TRUE;
+	private Boolean jaPegouCartaNoTurno = Boolean.FALSE;
 	
 	@Transient
 	private Boolean conquistouTerritorio = Boolean.FALSE;
@@ -276,6 +276,16 @@ public class Usuario {
 		
 		return false;
 	}
+	
+	public Territorio getTerritorio(Territorio territorio) {
+		for (Territorio territorioDoUsuario : getTerritorios()) {
+			if (territorioDoUsuario.getIdTerritorio().equals(territorio.getIdTerritorio())) {
+				return territorio;
+			}
+		}
+		
+		return null;
+	}
 
 	public Boolean getJaPegouCartaNoTurno() {
 		return jaPegouCartaNoTurno;
@@ -291,6 +301,49 @@ public class Usuario {
 
 	public void setConquistouTerritorio(Boolean conquistouTerritorio) {
 		this.conquistouTerritorio = conquistouTerritorio;
+	}
+
+	public boolean verificaOcorrenciaDeSimbolosIguais(String simbolo) {
+		Integer contador = 0;
+		for (Carta carta : getCartas()) {
+			if (carta.getSimbolo().equals(simbolo) || carta.getCartaCoringa()) {
+				contador++;
+			}
+ 		}
+		
+		if (contador >= 3) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public void removeCartas(List<Carta> cartasPraRemover) {
+		for (Carta cartaParaRemover : cartasPraRemover) {
+			Carta carta = pegaCartaPorId(cartaParaRemover.getIdCarta());
+			
+			if (carta != null) {
+				removeCartaPorId(carta.getIdCarta());
+			}
+		}
+	}
+
+	private void removeCartaPorId(Long idCarta) {
+		for (int i = 0; i < getCartas().size(); i++) {
+			if (getCartas().get(i).getIdCarta().equals(idCarta)) {
+				getCartas().get(i).setUsada(Boolean.FALSE);
+				getCartas().remove(i);
+			}
+		}
+	}
+
+	private Carta pegaCartaPorId(Long idCarta) {
+		for (Carta carta : getCartas()) {
+			if (carta.getIdCarta().equals(idCarta)) {
+				return carta;
+			}
+ 		}
+		return null;
 	}
 
 }

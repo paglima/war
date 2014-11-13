@@ -68,8 +68,8 @@
 								<c:if test="${usuario.jogadorHumano == true}">
 									<input type="hidden" id="playerHumanTurn" value="true"/>							
 									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
-									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
-									<a id="cards" href="#cardsDiv">Cartas</a>
+									<span style="margin-bottom: 10px;font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> 
+									<br/><br/><a id="cards" href="#cardsDiv">Cartas</a>
 								</c:if>	
 							</c:when>
 							<c:otherwise>
@@ -77,7 +77,7 @@
 								<span>${usuario.nomeUsuario}</span>				
 								<br/>
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
-								<c:if test="${usuario.jogadorHumano == true}">
+								<c:if test="${usuario.jogadorHumano == true && turno == 1}">
 									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>
@@ -99,11 +99,10 @@
 		<div style="display:none;">
 			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
 				<h2>Distribuir exército</h2>
-				<span">Selecione a quantidade de exército que deseja ter no território. <br/><br/></span>
+				<span">Selecione a quantidade de exércitos que deseja ter no território. <br/><br/></span>
 				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
 				<select id="armyNumber">
 				</select>
-				<br/>
 				<br/>
 				<div id="redistributeButton">
 					<span>Distribuir</span>
@@ -131,7 +130,14 @@
 				<c:choose>
 					<c:when test="${fn:length(usuarios[0].jogo.usuarioHumano.cartas) > 0}">
 						<c:forEach items="${usuarios[0].jogo.usuarioHumano.cartas}" var="carta">
-							
+							<c:choose>
+								<c:when test="${carta.cartaCoringa == true}">
+									<p>Carta coringa</p>
+								</c:when>
+								<c:otherwise>
+									<p>Símbolo: ${carta.simbolo}</p>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

@@ -41,13 +41,6 @@ jQuery(function($) {
 		var atackingArmyQuantity = +$("." + atackingCountryName).text();
 		var defendingArmyQuantity = +$("." + atackedCountryName).text();
 		
-		if (atackingArmyQuantity <= 1) {
-			if (!$(".noArmyForAtackMessage").text()) {
-				$("#atackDiv").append('<br/><span class="noArmyForAtackMessage" style="position:relative;top:20px;">Você não tem exércitos suficiente para atacar com o território escolhido.</span>');
-			}
-			return;
-		}
-		
 		if ($(".noArmyForAtackMessage").text()) {
 			$(".noArmyForAtackMessage").hide();
 		}
@@ -163,6 +156,9 @@ jQuery(function($) {
 	function verifyResult(atackingCountryName, atackedCountryName, atackingDice, defendingDice) {
 		var defendingArmyQuantity = +$("." + atackedCountryName).text();
 		var atackingArmyQuantity = +$("." + atackingCountryName).text();
+		
+		$("#atackDiv").append('<div class="atackingDice">' + atackingDice + '</div>');
+		$("#atackDiv").append('<div class="defendingDice">' + defendingDice + '</div>');
 		
 		if (atackingDice > defendingDice) {
 			$("." + atackedCountryName).text(defendingArmyQuantity - 1);

@@ -41,7 +41,7 @@ public class Jogo {
 	private Integer turno = 0;
 	
 	@Transient
-	private Integer trocas = 0;
+	private Integer trocas = 1;
 	
 	@Transient
 	private Boolean partidaComecada = Boolean.FALSE;
@@ -254,10 +254,10 @@ public class Jogo {
 	}
 
 	private boolean verificaObjetivoDoisContinentes(Usuario usuario, List<Continente> continentes, String continentePrimeiro, String continenteSegundo) {
-		Continente continentenUm = getContinenteByNome(continentes, continentePrimeiro);
-		Continente continenteDois = getContinenteByNome(continentes, continenteSegundo);
+		Continente continentenUm = Continente.getContinenteByNome(continentes, continentePrimeiro);
+		Continente continenteDois = Continente.getContinenteByNome(continentes, continenteSegundo);
 		
-		if (verificaSeContinenteFoiConquistado(usuario, continentenUm) && verificaSeContinenteFoiConquistado(usuario, continenteDois)) {
+		if (continentenUm.verificaSeContinenteFoiConquistado(usuario) && continenteDois.verificaSeContinenteFoiConquistado(usuario)) {
 			return true;
 		}
 		
@@ -265,10 +265,10 @@ public class Jogo {
 	}
 
 	private boolean verificaObjetivoTresContinentes(Usuario usuario, List<Continente> continentes, String continentePrimeiro, String continenteSegundo) {
-		Continente continentenUm = getContinenteByNome(continentes, continentePrimeiro);
-		Continente continenteDois = getContinenteByNome(continentes, continenteSegundo);
+		Continente continentenUm = Continente.getContinenteByNome(continentes, continentePrimeiro);
+		Continente continenteDois = Continente.getContinenteByNome(continentes, continenteSegundo);
 		
-		if (verificaSeContinenteFoiConquistado(usuario, continentenUm) && verificaSeContinenteFoiConquistado(usuario, continenteDois) &&
+		if (continentenUm.verificaSeContinenteFoiConquistado(usuario) && continenteDois.verificaSeContinenteFoiConquistado(usuario) &&
 		    verificaTerceiroContinente(usuario, continentenUm, continenteDois, continentes)) {
 			return true;
 		}
@@ -317,7 +317,7 @@ public class Jogo {
 		if (continentePrimeiro != null && continentenSegundo != null) {
 			for (Continente continente : continentes) {
 				if (continente.getNomeContinente().equals(continentePrimeiro.getNomeContinente()) && continente.getNomeContinente().equals(continentenSegundo.getNomeContinente())) {
-					if (verificaSeContinenteFoiConquistado(usuario, continente) == true) {
+					if (continente.verificaSeContinenteFoiConquistado(usuario) == true) {
 						return true;
 					}
 				}
@@ -325,29 +325,6 @@ public class Jogo {
 		}
 		
 		return false;
-	}
-
-	public boolean verificaSeContinenteFoiConquistado(Usuario usuario, Continente continente) {
-		if (continente != null) {
-			for (Territorio territorio : continente.getTerritorios()) {
-				if (!usuario.contemTerritorio(territorio)) {
-					return false;
-				}
-			}
-			return true;
-		}
-		
-		return false;
-	}
-
-	private Continente getContinenteByNome(List<Continente> continentes, String nomeContinente) {
-		for (Continente continente : continentes) {
-			if (nomeContinente.equals(continente.getNomeContinente())) {
-				return continente;
-			}
-		}
-		
-		return null;
 	}
 
 	public Integer getTrocas() {

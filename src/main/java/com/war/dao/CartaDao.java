@@ -31,10 +31,10 @@ public class CartaDao extends GenericDao<Carta>{
 		super.saveOrUpdate(object);
 	}
 	
-	public Carta findByName(String name) {
+	public Carta findBySimbolo(String simbolo) {
 		return (Carta) sessionFactory.getCurrentSession()
 										 .createCriteria(Carta.class)
-										 .add(Restrictions.eq("nomeContinente", name))
+										 .add(Restrictions.eq("simbolo", simbolo))
 										 .uniqueResult();
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.war.dados.Carta;
@@ -38,12 +39,22 @@ public class JogoController {
 	@Autowired
 	protected SalaDeJogo salaDeJogo;
 
-	@RequestMapping(value = "/",method = RequestMethod.GET )
-	public ModelAndView jogo(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView("tabuleiro");
-		return view;
-	}
-	
+	 @RequestMapping(value="fim",method = RequestMethod.GET)
+	  public @ResponseBody String getJogoAcabou(HttpServletRequest request) {
+		 Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+		 
+		 if (usuario != null) {
+			Jogo jogo = usuario.getJogo();
+			if (jogo != null) {
+				Usuario vencedor = jogoService.verificaFimDoJogo(jogo);
+				if (vencedor != null) {
+					return vencedor.getNomeUsuario() + " " + vencedor.getCor() + " " + vencedor.getObjetivo().getDescricao();
+				}
+			}
+		 }
+	      return "nenhum vencedor";
+	  }
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/partida",method = RequestMethod.POST )
 	public ModelAndView partida(@RequestParam(value="turno", required=true) String turno,
@@ -52,13 +63,14 @@ public class JogoController {
 		ModelAndView view = new ModelAndView("tabuleiroJogo");
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("cartas");
 			
 			if (usuario != null) {
 				Jogo jogo = usuario.getJogo();
 				
 				if (usuario.getTerritorios() != null) {
 					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
+					jogoService.verificaSeAlguemSaiuDoJogo(jogo.getUsuarios());
 				}
 				
 				if (jogo != null) {
@@ -126,13 +138,18 @@ public class JogoController {
 		ModelAndView view = new ModelAndView("tabuleiroRemanejamento");
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("cartas");
 
 		 	if (usuario != null) {
 		 		Jogo jogo = usuario.getJogo();
 		 		
 				if (usuario.getTerritorios() != null) {
 					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
+					jogoService.verificaSeAlguemSaiuDoJogo(jogo.getUsuarios());
+					
+					if (jogo.getUsuarioDaVez() != null && !jogo.getUsuarioDaVez().getJogadorHumano()) {
+						jogoService.remanejaExercitoParaInimigoDaVez(jogo.getUsuarioDaVez());
+					}
 				}
 		 		
 				if (jogo != null) {
@@ -198,13 +215,14 @@ public class JogoController {
 									     HttpServletRequest request) {
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("cartas");
 			
 		 	if (usuario != null) {
 		 		Jogo jogo = usuario.getJogo();
 		 		
 				if (usuario.getTerritorios() != null) {
 					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
+					jogoService.verificaSeAlguemSaiuDoJogo(jogo.getUsuarios());
 				}
 		 		
 				if (jogo != null) {

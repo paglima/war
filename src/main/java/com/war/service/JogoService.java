@@ -1,5 +1,6 @@
 package com.war.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,14 +108,14 @@ public class JogoService {
 				if (territorioModificado.getCorDoConquistador() != null && !"".equals(territorioModificado.getCorDoConquistador())) {
 					territorio.atualizaJogadorDonoDoTerritorio(territorioModificado, territorioModificado.getCorDoConquistador());
 				
-					if (territorio.getUsuario().getJogadorHumano() && territorio.getUsuario().getConquistouTerritorio()) {
+					if (territorio.getUsuario().getConquistouTerritorio() && !territorio.getUsuario().getJaPegouCartaNoTurno()) {
 						territorio.getUsuario().addCarta(cartaService.sorteiaCarta(todasAsCartas));
 						territorio.getUsuario().setConquistouTerritorio(Boolean.FALSE);
+						territorio.getUsuario().setJaPegouCartaNoTurno(Boolean.TRUE);
 					}
 				}
 			}
 		}
-		
 	}
 
 	private Territorio getTerritorioById(Long idTerritorio, List<Usuario> usuarios) {
@@ -132,7 +133,16 @@ public class JogoService {
 	public void distribuiExercitoInimigo(List<Usuario> usuarios) {
 		for (Usuario usuario : usuarios) {
 			if (!usuario.getJogadorHumano()) {
-				usuario.getTerritorios().get(0).setQuantidadeExercito(1 + usuario.getExercitoSobrando());
+				Integer indiceRandomicoUm = (int) (Math.random() * (usuario.getTerritorios().size()));
+				usuario.getTerritorios().get(indiceRandomicoUm).setQuantidadeExercito(1 + (usuario.getExercitoSobrando() / 2));
+				
+				Integer indiceRandomicoDois = (int) (Math.random() * (usuario.getTerritorios().size()));
+				while (indiceRandomicoDois.equals(indiceRandomicoUm)) {
+					indiceRandomicoDois = (int) (Math.random() * (usuario.getTerritorios().size()));
+				}
+				
+				usuario.getTerritorios().get(indiceRandomicoDois).setQuantidadeExercito(1 + (usuario.getExercitoSobrando() - (usuario.getExercitoSobrando() / 2)));
+				usuario.setExercitoSobrando(0);
 			}
 		}
 	}
@@ -185,13 +195,110 @@ public class JogoService {
 		
 		if (jogo.getUsuarios().get(indice).getCor().equals(jogo.getUsuarioIniciador().getCor())) {
 			jogo.setTurno(jogo.getTurno() + 1);
+			zeraTrocaDeCartaParaNovoTurno(jogo);
+		}
+	}
+
+	private void zeraTrocaDeCartaParaNovoTurno(Jogo jogo) {
+		for (Usuario usuario : jogo.getUsuarios()) {
+			usuario.setJaPegouCartaNoTurno(Boolean.FALSE);
+			usuario.setConquistouTerritorio(Boolean.FALSE);
 		}
 	}
 
 	public void coletaExercitoParaUsuarioDaVez(Usuario usuarioDaVez) {
+		boolean houveTroca = false;
+		
 		if (usuarioDaVez != null && usuarioDaVez.getExercitoSobrando() == 0) {
 			usuarioDaVez.setExercitoSobrando((usuarioDaVez.getTerritorios() != null) ? (usuarioDaVez.getTerritorios().size() / 2) : 0);
 		}
+		
+		if (verificaTrocaDeCartas(usuarioDaVez)) {
+			usuarioDaVez.setExercitoSobrando(usuarioDaVez.getExercitoSobrando() + Carta.geraExercitoDeTroca(usuarioDaVez.getJogo().getTrocas()));
+			houveTroca = true;
+		}
+		
+		List<Continente> continentesConquistados = verificaContinente(usuarioDaVez);
+		if (continentesConquistados.size() >= 1) {
+			for (Continente continente : continentesConquistados) {
+				usuarioDaVez.setExercitoSobrando(usuarioDaVez.getExercitoSobrando() + Continente.retornaExercitoPorContinente(continente.getNomeContinente()));
+			}
+			
+			houveTroca = true;
+		}
+		
+		if (houveTroca) {
+			usuarioDaVez.getJogo().setTrocas(usuarioDaVez.getJogo().getTrocas() + 1);
+		}
+	}
+
+	private List<Continente> verificaContinente(Usuario usuarioDaVez) {
+		List<Continente> continentes = continenteDao.findAll();
+		List<Continente> continentesConquistados = new ArrayList<Continente>();
+		
+		for (Continente continente : continentes) {
+			if (continente.verificaSeContinenteFoiConquistado(usuarioDaVez)) {
+				continentesConquistados.add(continente);
+			}
+		}
+		return continentesConquistados;
+	}
+
+	private boolean verificaTrocaDeCartas(Usuario usuarioDaVez) {
+		return verificaCartasIguaisParaTroca(usuarioDaVez) || verificaCartasDiferentesParaTroca(usuarioDaVez);
+	}
+	 
+	private boolean verificaCartasDiferentesParaTroca(Usuario usuarioDaVez) {
+		List<Carta> cartasDiferentes = new ArrayList<Carta>();
+		Carta cartaAux = usuarioDaVez.getCartas().get(0);
+		cartasDiferentes.add(cartaAux);
+		
+		for (Carta carta : usuarioDaVez.getCartas()) {
+			if (!cartaAux.getSimbolo().equals(carta.getSimbolo()) || carta.getCartaCoringa()) {
+				cartasDiferentes.add(carta);
+			}
+		}
+		
+		if (cartasDiferentes.size() >= 3) {
+			for (Carta carta : cartasDiferentes) {
+				if (usuarioDaVez.contemTerritorio(carta.getTerritorio())) {
+					cartasDiferentes.add(carta);
+					
+					Territorio territorio = usuarioDaVez.getTerritorio(carta.getTerritorio()); 
+					if (territorio != null) {
+						territorio.setQuantidadeExercito(territorio.getQuantidadeExercito() + 2);
+					}
+				}
+			}
+			usuarioDaVez.removeCartas(cartasDiferentes);
+			return true;
+		}
+		
+		return false;	
+	}
+
+	private boolean verificaCartasIguaisParaTroca(Usuario usuarioDaVez) {
+		List<Carta> cartasPraRemover = new ArrayList<Carta>();
+		
+		for (Carta carta : usuarioDaVez.getCartas()) {
+			if (usuarioDaVez.verificaOcorrenciaDeSimbolosIguais(carta.getSimbolo())) {
+				if (usuarioDaVez.contemTerritorio(carta.getTerritorio())) {
+					cartasPraRemover.add(carta);
+					
+					Territorio territorio = usuarioDaVez.getTerritorio(carta.getTerritorio()); 
+					if (territorio != null) {
+						territorio.setQuantidadeExercito(territorio.getQuantidadeExercito() + 2);
+					}
+				}
+			}
+		}
+		
+		if (cartasPraRemover.size() == 0) {
+			return false;
+		}
+		
+		usuarioDaVez.removeCartas(cartasPraRemover);
+		return true;	
 	}
 
 	public void distribuiExercitoParaInimigoDaVez(Usuario usuarioDaVez) {
@@ -207,5 +314,27 @@ public class JogoService {
 		
 		return jogo.verificaFim(continentes);
 	}
-	
+
+	public void verificaSeAlguemSaiuDoJogo(List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			if (usuario.getTerritorios().size() <= 0) {
+				usuario.setAindaNoJogo(Boolean.FALSE);
+			}
+		}
+	}
+
+	public void remanejaExercitoParaInimigoDaVez(Usuario usuarioDaVez) {
+		for (Territorio territorio : usuarioDaVez.getTerritorios()) {
+			if (!territorio.contemVizinhoInimigo() && territorio.getQuantidadeExercito() > 1) {
+				for (Territorio vizinho : territorio.getVizinhos()) {
+					if (vizinho.contemVizinhoInimigo() && vizinho.getUsuario().getCor().equals(territorio.getUsuario().getCor())) {
+						Integer quantidadeExercito = (territorio.getQuantidadeExercito() -1) + vizinho.getQuantidadeExercito();
+						territorio.setQuantidadeExercito(1);
+						vizinho.setQuantidadeExercito(quantidadeExercito);
+					}
+				}
+			}
+		}
+	}
+
 }
