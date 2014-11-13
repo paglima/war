@@ -1,5 +1,7 @@
 package com.war.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.war.dados.Carta;
 import com.war.dados.Jogada;
 import com.war.dados.Jogo;
 import com.war.dados.SalaDeJogo;
 import com.war.dados.Usuario;
 import com.war.form.TerritorioForm;
+import com.war.service.CartaService;
 import com.war.service.JogoService;
 
 @Controller("JogoController")
@@ -29,6 +33,9 @@ public class JogoController {
 	private JogoService jogoService;
 	
 	@Autowired
+	private CartaService cartaService;
+	
+	@Autowired
 	protected SalaDeJogo salaDeJogo;
 
 	@RequestMapping(value = "/",method = RequestMethod.GET )
@@ -37,6 +44,7 @@ public class JogoController {
 		return view;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/partida",method = RequestMethod.POST )
 	public ModelAndView partida(@RequestParam(value="turno", required=true) String turno,
 								@ModelAttribute("territorioForm") TerritorioForm territorioForm,
@@ -44,17 +52,18 @@ public class JogoController {
 		ModelAndView view = new ModelAndView("tabuleiroJogo");
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
 			
 			if (usuario != null) {
 				Jogo jogo = usuario.getJogo();
 				
 				if (usuario.getTerritorios() != null) {
-					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
+					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
 				}
 				
 				if (jogo != null) {
 					if (jogo.turnoDoInimigo()) {
-						Jogada jogada = jogoService.processaJogadaInimiga(jogo);
+						Jogada jogada = jogoService.processaJogadaInimiga(jogo, todasAsCartas);
 						view.addObject("jogada", jogada);
 					} else {
 						view.addObject("turnoJogadorHumano", true);
@@ -62,6 +71,7 @@ public class JogoController {
 					
 					view.addObject("usuarios", jogo.getUsuarios());
 					view.addObject("turno", usuario.getJogo().getTurno());
+					view.addObject("usuarioVencedor", jogoService.verificaFimDoJogo(jogo));
 				}
 			}
 			
@@ -70,7 +80,7 @@ public class JogoController {
 			boolean sessaoExiste = verificaSessao(request);
 			
 			if (sessaoExiste) {
-				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+				colocaDadosNaSessao(request, usuario, todasAsCartas, sessaoExiste);  
 				return view;
 			}
 			
@@ -82,12 +92,20 @@ public class JogoController {
 		
 		return view;
 	}
-
-	private void colocaUsuarioNaSessao(HttpServletRequest request,
-			Usuario usuario, boolean sessaoExiste) {
+	
+	private void colocaUsuarioNaSessao(HttpServletRequest request, Usuario usuario, boolean sessaoExiste) {
 		if (sessaoExiste) {
 			request.getSession().setMaxInactiveInterval(60 * 60 * 6);
 			request.getSession().setAttribute("usuario", usuario);
+		}
+		
+	}
+
+	private void colocaDadosNaSessao(HttpServletRequest request, Usuario usuario, List<Carta> todasAsCartas, boolean sessaoExiste) {
+		if (sessaoExiste) {
+			request.getSession().setMaxInactiveInterval(60 * 60 * 6);
+			request.getSession().setAttribute("usuario", usuario);
+			request.getSession().setAttribute("cartas", todasAsCartas);
 		}
 	}
 
@@ -100,6 +118,7 @@ public class JogoController {
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/remanejamento",method = RequestMethod.POST )
 	public ModelAndView remanejaExercito(@RequestParam(value="turno", required=true) String turno,
 									     @ModelAttribute("territorioForm") TerritorioForm territorioForm,
@@ -107,18 +126,20 @@ public class JogoController {
 		ModelAndView view = new ModelAndView("tabuleiroRemanejamento");
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-			
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
+
 		 	if (usuario != null) {
 		 		Jogo jogo = usuario.getJogo();
 		 		
 				if (usuario.getTerritorios() != null) {
-					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
+					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
 				}
 		 		
 				if (jogo != null) {
 					jogo.setDistrubuicaoInicial(Boolean.FALSE);
 					view.addObject("usuarios", jogo.getUsuarios());
 					view.addObject("turno", usuario.getJogo().getTurno());
+					view.addObject("usuarioVencedor", jogoService.verificaFimDoJogo(jogo));
 				}
 		 	}
 		 	
@@ -127,7 +148,7 @@ public class JogoController {
 			boolean sessaoExiste = verificaSessao(request);
 			
 			if (sessaoExiste) {
-				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+				colocaDadosNaSessao(request, usuario, todasAsCartas, sessaoExiste);  
 				return view;
 			}
 			
@@ -139,7 +160,7 @@ public class JogoController {
 		
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/distribuiExercito",method = RequestMethod.GET )
 	public ModelAndView distribuiExercito(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView("tabuleiro");
@@ -152,6 +173,7 @@ public class JogoController {
 			if (jogo != null) {
 				view.addObject("usuarios", jogo.getUsuarios());
 				view.addObject("turno", usuario.getJogo().getTurno());
+				view.addObject("usuarioVencedor", jogoService.verificaFimDoJogo(jogo));
 			}
 	 	}
 	 	
@@ -169,18 +191,20 @@ public class JogoController {
 		return view;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/preDistribuicao",method = RequestMethod.POST )
 	public String preDistribuicao(@RequestParam(value="turno", required=true) String turno,
 									     @ModelAttribute("territorioForm") TerritorioForm territorioForm,
 									     HttpServletRequest request) {
 		try {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			List<Carta> todasAsCartas = (List<Carta>) request.getSession().getAttribute("Cartas");
 			
 		 	if (usuario != null) {
 		 		Jogo jogo = usuario.getJogo();
 		 		
 				if (usuario.getTerritorios() != null) {
-					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm);
+					jogoService.preparaTerritorios(jogo.getUsuarios(), territorioForm, todasAsCartas);
 				}
 		 		
 				if (jogo != null) {
@@ -199,7 +223,7 @@ public class JogoController {
 		 	boolean sessaoExiste = verificaSessao(request);
 			
 			if (sessaoExiste) {
-				colocaUsuarioNaSessao(request, usuario, sessaoExiste);  
+				colocaDadosNaSessao(request, usuario, todasAsCartas, sessaoExiste);  
 			}
 		
 		} catch (Exception e) {
@@ -211,6 +235,7 @@ public class JogoController {
 	
 	@RequestMapping(value = "/preparaJogo",method = RequestMethod.GET )
 	public String preparaJogo(HttpServletRequest request) {
+		List<Carta> todasAsCartas = cartaService.encontraTodasAsCartas();
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 			 	
 	 	if (usuario != null) {
@@ -229,6 +254,7 @@ public class JogoController {
 		
 	 	request.getSession().setMaxInactiveInterval(60 * 60 * 6);
 		request.getSession().setAttribute("usuario", usuario);
+		request.getSession().setAttribute("cartas", todasAsCartas);
 		
 		return "redirect:distribuiExercito";
 	}

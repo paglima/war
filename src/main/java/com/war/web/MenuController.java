@@ -19,7 +19,6 @@ import com.war.dados.SalaDeJogo;
 import com.war.dados.TipoDeJogo;
 import com.war.dados.Usuario;
 import com.war.dao.TerritorioDao;
-import com.war.dao.UsuarioDao;
 import com.war.service.JogoService;
 import com.war.service.ObjetivoService;
 
@@ -30,9 +29,6 @@ public class MenuController {
 	
 	@Autowired
 	private ObjetivoService objetivoService;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
 	
 	@Autowired
 	private TerritorioDao territorioDao;

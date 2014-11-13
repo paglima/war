@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.war.dados.Carta;
 import com.war.dados.Continente;
 import com.war.dados.Jogada;
 import com.war.dados.Jogo;
@@ -20,6 +21,9 @@ public class JogoService {
 	
 	@Autowired
 	private ObjetivoService objetivoService;
+	
+	@Autowired
+	private CartaService cartaService;
 	
 	@Autowired
 	private TerritorioDao territorioDao;
@@ -76,8 +80,8 @@ public class JogoService {
 		}
 	}
 
-	public void preparaTerritorios(List<Usuario> usuarios, TerritorioForm territorioForm) throws Exception {
-		atualizaTerritoriosPerdidos(usuarios, territorioForm);
+	public void preparaTerritorios(List<Usuario> usuarios, TerritorioForm territorioForm, List<Carta> todasAsCartas) throws Exception {
+		atualizaTerritoriosPerdidos(usuarios, territorioForm, todasAsCartas);
 		
 		for (Usuario usuario : usuarios) {
 			Integer totalExercitosDistribuidos = 0;
@@ -95,13 +99,18 @@ public class JogoService {
 		}
 	}
 
-	private void atualizaTerritoriosPerdidos(List<Usuario> usuarios, TerritorioForm territorioForm) {
+	private void atualizaTerritoriosPerdidos(List<Usuario> usuarios, TerritorioForm territorioForm, List<Carta> todasAsCartas) {
 		for (Territorio territorioModificado : territorioForm.getTerritorios()) {
 			Territorio territorio = getTerritorioById(territorioModificado.getIdTerritorio(), usuarios);
 			
 			if (territorio != null) {
 				if (territorioModificado.getCorDoConquistador() != null && !"".equals(territorioModificado.getCorDoConquistador())) {
 					territorio.atualizaJogadorDonoDoTerritorio(territorioModificado, territorioModificado.getCorDoConquistador());
+				
+					if (territorio.getUsuario().getJogadorHumano() && territorio.getUsuario().getConquistouTerritorio()) {
+						territorio.getUsuario().addCarta(cartaService.sorteiaCarta(todasAsCartas));
+						territorio.getUsuario().setConquistouTerritorio(Boolean.FALSE);
+					}
 				}
 			}
 		}
@@ -136,10 +145,17 @@ public class JogoService {
 		return false;
 	}
 
-	public Jogada processaJogadaInimiga(Jogo jogo) throws Exception {
+	public Jogada processaJogadaInimiga(Jogo jogo, List<Carta> cartas) throws Exception {
 		Usuario atacante = jogo.getUsuarioDaVez();
+		Jogada jogada = jogo.processaMovimento(atacante);
 		
-		return jogo.processaMovimento(atacante);
+		if (atacante.getConquistouTerritorio() && !atacante.getJaPegouCartaNoTurno()) {
+			atacante.addCarta(cartaService.sorteiaCarta(cartas));
+			atacante.setJaPegouCartaNoTurno(Boolean.TRUE);
+			atacante.setConquistouTerritorio(Boolean.FALSE);
+		}
+		
+		return jogada;
 	}
 
 	public void passaTurno(Jogo jogo) {

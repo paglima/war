@@ -41,6 +41,9 @@ public class Jogo {
 	private Integer turno = 0;
 	
 	@Transient
+	private Integer trocas = 0;
+	
+	@Transient
 	private Boolean partidaComecada = Boolean.FALSE;
 	
 	@Transient
@@ -324,7 +327,7 @@ public class Jogo {
 		return false;
 	}
 
-	private boolean verificaSeContinenteFoiConquistado(Usuario usuario, Continente continente) {
+	public boolean verificaSeContinenteFoiConquistado(Usuario usuario, Continente continente) {
 		if (continente != null) {
 			for (Territorio territorio : continente.getTerritorios()) {
 				if (!usuario.contemTerritorio(territorio)) {
@@ -345,6 +348,14 @@ public class Jogo {
 		}
 		
 		return null;
+	}
+
+	public Integer getTrocas() {
+		return trocas;
+	}
+
+	public void setTrocas(Integer trocas) {
+		this.trocas = trocas;
 	}
 	
 }

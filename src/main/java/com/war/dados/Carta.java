@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CARTA")
@@ -24,6 +25,9 @@ public class Carta {
 	@OneToOne
 	@JoinColumn(name="ID_CARTA", referencedColumnName="ID_CARTA", nullable=true)
 	private Territorio Territorio;
+	
+	@Transient
+	private Boolean usada = Boolean.FALSE;
 
 	public Long getIdCarta() {
 		return idCarta;
@@ -55,6 +59,14 @@ public class Carta {
 
 	public void setTerritorio(Territorio territorio) {
 		Territorio = territorio;
+	}
+
+	public Boolean getUsada() {
+		return usada;
+	}
+
+	public void setUsada(Boolean usada) {
+		this.usada = usada;
 	}
 	
 }

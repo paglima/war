@@ -68,6 +68,12 @@ public class Usuario {
 	@Transient
 	private Boolean iniciador = Boolean.TRUE;
 	
+	@Transient
+	private Boolean jaPegouCartaNoTurno = Boolean.TRUE;
+	
+	@Transient
+	private Boolean conquistouTerritorio = Boolean.FALSE;
+	
 	public Usuario() {
 		territorios = new ArrayList<Territorio>();
 	}
@@ -114,6 +120,14 @@ public class Usuario {
 		}
 		
 		territorios.add(territorio);
+	}
+	
+	public void addCarta(Carta carta) {
+		if(cartas == null) {
+			cartas = new ArrayList<Carta>();
+		}
+		
+		cartas.add(carta);
 	}
 
 	public List<Territorio> getTerritorios() {
@@ -262,5 +276,21 @@ public class Usuario {
 		
 		return false;
 	}
-	
+
+	public Boolean getJaPegouCartaNoTurno() {
+		return jaPegouCartaNoTurno;
+	}
+
+	public void setJaPegouCartaNoTurno(Boolean jaPegouCartaNoTurno) {
+		this.jaPegouCartaNoTurno = jaPegouCartaNoTurno;
+	}
+
+	public Boolean getConquistouTerritorio() {
+		return conquistouTerritorio;
+	}
+
+	public void setConquistouTerritorio(Boolean conquistouTerritorio) {
+		this.conquistouTerritorio = conquistouTerritorio;
+	}
+
 }

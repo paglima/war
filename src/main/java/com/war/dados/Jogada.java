@@ -109,6 +109,7 @@ public class Jogada {
 		
 		ataque.getAtacante().getUsuario().addTerritorio(ataque.getDefensor());
 		ataque.getAtacante().diminuiExercito(1);
+		ataque.getAtacante().getUsuario().setConquistouTerritorio(Boolean.TRUE);
 	}
 
 	private String processaMensagemDeMovimento(Territorio perdedor, Territorio vencedor) {

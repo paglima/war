@@ -99,6 +99,7 @@
 		<div style="display:none;">
 			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
 				<h2>Distribuir exército</h2>
+				<span">Selecione a quantidade de exército que deseja ter no território. <br/><br/></span>
 				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
 				<select id="armyNumber">
 				</select>
