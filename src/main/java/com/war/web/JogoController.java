@@ -39,22 +39,6 @@ public class JogoController {
 	@Autowired
 	protected SalaDeJogo salaDeJogo;
 
-	 @RequestMapping(value="fim",method = RequestMethod.GET)
-	  public @ResponseBody String getJogoAcabou(HttpServletRequest request) {
-		 Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-		 
-		 if (usuario != null) {
-			Jogo jogo = usuario.getJogo();
-			if (jogo != null) {
-				Usuario vencedor = jogoService.verificaFimDoJogo(jogo);
-				if (vencedor != null) {
-					return vencedor.getNomeUsuario() + " " + vencedor.getCor() + " " + vencedor.getObjetivo().getDescricao();
-				}
-			}
-		 }
-	      return "nenhum vencedor";
-	  }
-
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/partida",method = RequestMethod.POST )
 	public ModelAndView partida(@RequestParam(value="turno", required=true) String turno,
