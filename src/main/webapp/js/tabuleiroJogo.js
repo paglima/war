@@ -48,7 +48,7 @@ jQuery(function($) {
 			$(".noArmyForAtackMessage").hide();
 		}
 		
-		$("#atackDiv").append('<div id="dices" style="width:630px; height: 300px;"></div>');
+		$("#atackedDiv").append('<div id="dices" style="width:630px; height: 300px;"></div>');
 		
 		var atackingDicesNumber = processAtackingDices(atackingArmyQuantity);
 		var defendingDicesNumber = processDefendingDices(defendingArmyQuantity);
@@ -75,6 +75,9 @@ jQuery(function($) {
 			$("#atackedDiv").append('<p>' + atackedCountryName + ' perdeu ' + defenseLostArmy + ' exército(s).</p>');
 		}
 	
+		defenseLostArmy = 0;
+		atackLostArmy = 0;
+		
 		setTimeout(function() {
 			$.fancybox.close();
 			$("#matchForm").get(0).setAttribute('action', 'partida');
@@ -105,8 +108,6 @@ jQuery(function($) {
 		var atackingDicesNumber = processAtackingDices(atackingArmyQuantity);
 		var defendingDicesNumber = processDefendingDices(defendingArmyQuantity);
 		
-		console.log(atackingDicesNumber + ' ' + defendingDicesNumber);
-		
 		if (atackingDicesNumber == 3 & defendingDicesNumber == 3) {
 			atackWithSameDicesNumber(atackingCountryName, atackedCountryName, defendingDicesNumber);
 			
@@ -127,6 +128,9 @@ jQuery(function($) {
 			$("#atackDiv").append('<p>' + atackedCountryName + ' perdeu ' + defenseLostArmy + ' exército(s).</p>');
 		}
 		
+		defenseLostArmy = 0;
+		atackLostArmy = 0;
+		
 		$(this).hide();
 	});
 	
@@ -135,7 +139,6 @@ jQuery(function($) {
 		
 		for (var i = 0; i < defendingDicesNumber; i++) {
 			var defenseDice = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-			
 			verifyResult(atackingCountryName, atackedCountryName, atackingMove[i], defenseDice);
 		}
 	}

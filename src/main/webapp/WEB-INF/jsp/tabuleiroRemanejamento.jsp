@@ -75,7 +75,7 @@
 								</c:if>	
 							</c:when>
 							<c:when test="${usuario.aindaNoJogo == false}">
-								<div class="circleButtonTag playerTurnCircle cor${usuario.cor} notPlayingDiv"></div>
+								<div class="circleButtonTag cor${usuario.cor} notPlayingDiv"></div>
 								<span class="notPlayingText">${usuario.nomeUsuario}</span>	(Eliminado)			
 								<br/>
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
@@ -98,7 +98,7 @@
 					<br/>
 				</c:forEach>
 				
-	        	<div id="play" style="display:none; margin: 50px auto 80px auto;"">
+	        	<div id="play" style="display:none; margin: 20px auto;">
 	        		<button id="playButton" type="submit">Passar turno</button>
 				</div>
 				

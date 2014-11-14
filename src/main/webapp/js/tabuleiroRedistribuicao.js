@@ -18,7 +18,7 @@ jQuery(function($) {
 		
 		var armyQuantity = +$("#armyLeft").text().replace("Exercitos Sobrando: ", "");
 		var territoryActualArmy = +$(this).text();
-		var formerArmyQuantity = +$('#formerArmyQuantity').text();
+		var formerArmyQuantity = +$('#formerArmyQuantity_' + className).text();
 		
 		if (armyQuantity <= 0) {
 			$("#noArmyMessage").show();

@@ -9,7 +9,6 @@ jQuery(function($) {
 	
 	$('#play').click(function() {
 		var gameStarted = $("#gameStarted").val();
-		console.log(gameStarted);
 		
 		if (gameStarted != "true") {
 			$('#playSolo').submit();

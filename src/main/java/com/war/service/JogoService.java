@@ -1,6 +1,7 @@
 package com.war.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -186,6 +187,8 @@ public class JogoService {
 		}
 		
 		while (!jogo.getUsuarios().get(indice).getAindaNoJogo()) {
+			indice++;
+
 			if (indice >= jogo.getUsuarios().size()) {
 				indice = 0;
 			}
@@ -249,6 +252,10 @@ public class JogoService {
 	}
 	 
 	private boolean verificaCartasDiferentesParaTroca(Usuario usuarioDaVez) {
+		if (usuarioDaVez.getCartas() == null || usuarioDaVez.getCartas().size() <= 0) {
+			return false;
+		}
+		
 		List<Carta> cartasDiferentes = new ArrayList<Carta>();
 		Carta cartaAux = usuarioDaVez.getCartas().get(0);
 		cartasDiferentes.add(cartaAux);
@@ -262,14 +269,13 @@ public class JogoService {
 		if (cartasDiferentes.size() >= 3) {
 			for (Carta carta : cartasDiferentes) {
 				if (usuarioDaVez.contemTerritorio(carta.getTerritorio())) {
-					cartasDiferentes.add(carta);
-					
 					Territorio territorio = usuarioDaVez.getTerritorio(carta.getTerritorio()); 
 					if (territorio != null) {
 						territorio.setQuantidadeExercito(territorio.getQuantidadeExercito() + 2);
 					}
 				}
 			}
+			
 			usuarioDaVez.removeCartas(cartasDiferentes);
 			return true;
 		}
@@ -282,8 +288,8 @@ public class JogoService {
 		
 		for (Carta carta : usuarioDaVez.getCartas()) {
 			if (usuarioDaVez.verificaOcorrenciaDeSimbolosIguais(carta.getSimbolo())) {
+				cartasPraRemover.add(carta);
 				if (usuarioDaVez.contemTerritorio(carta.getTerritorio())) {
-					cartasPraRemover.add(carta);
 					
 					Territorio territorio = usuarioDaVez.getTerritorio(carta.getTerritorio()); 
 					if (territorio != null) {
@@ -302,11 +308,17 @@ public class JogoService {
 	}
 
 	public void distribuiExercitoParaInimigoDaVez(Usuario usuarioDaVez) {
-		Integer quantidadeExercito = usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().getQuantidadeExercito();
+		Territorio maiorExercito = usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque();
+		Integer quantidadeExercito = 0;
 		Integer exercitoSobrando = usuarioDaVez.getExercitoSobrando();
 		
-		usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().setQuantidadeExercito(quantidadeExercito + exercitoSobrando);
-		usuarioDaVez.setExercitoSobrando(0);
+		if (maiorExercito != null) {
+			quantidadeExercito = maiorExercito.getQuantidadeExercito();
+			usuarioDaVez.getTerritorioComMaiorExercitoParaAtaque().setQuantidadeExercito(quantidadeExercito + exercitoSobrando);
+			usuarioDaVez.setExercitoSobrando(0);
+		} else {
+			distribuiExercitoInimigo(Arrays.asList(usuarioDaVez));
+		}
 	}
 	
 	public Usuario verificaFimDoJogo(Jogo jogo) {

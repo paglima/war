@@ -38,7 +38,7 @@
 							
 							<form:hidden path="territorios[${index}].idTerritorio" value="${territorio.idTerritorio}" />
 							<form:hidden class="territoryArmy_${territorio.nomeTerritorio}" path="territorios[${index}].quantidadeExercito" value="${territorio.quantidadeExercito}" />
-							<span style="display:none" id="formerArmyQuantity">${usuario.territorios[index].quantidadeExercito}</span>
+							<span style="display:none" id="formerArmyQuantity_${territorio.nomeTerritorio}">${usuario.territorios[index].quantidadeExercito}</span>
 						
 							<c:set var="index" value="${index + 1}" scope="page"/>
 						</c:forEach>
@@ -73,7 +73,7 @@
 								</c:if>	
 							</c:when>
 							<c:when test="${usuario.aindaNoJogo == false}">
-								<div class="circleButtonTag playerTurnCircle cor${usuario.cor} notPlayingDiv"></div>
+								<div class="circleButtonTag cor${usuario.cor} notPlayingDiv"></div>
 								<span class="notPlayingText">${usuario.nomeUsuario}</span>	(Eliminado)			
 								<br/>
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
@@ -86,8 +86,11 @@
 								<span>${usuario.nomeUsuario}</span>				
 								<br/>
 								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
-								<c:if test="${usuario.jogadorHumano == true && turno == 1}">
-									<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
+								<c:if test="${usuario.jogadorHumano == true}">
+									<c:if test="${usuario.jogo.distrubuicaoInicial == true}">
+										<span id="armyLeft" style="font-size: 0.8em;">Exercitos Sobrando: ${usuario.exercitoSobrando}</span> <br/>
+									</c:if>
+									
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>
 							</c:otherwise>
@@ -97,7 +100,7 @@
 					<br/>
 				</c:forEach>
 				
-	        	<div id="play" style="display:none;	margin: 50px auto 80px auto;">
+	        	<div id="play" style="display:none;	margin: 20px auto;">
 	        		<button id="playButton" type="submit">Continuar</button>
 				</div>
 				
