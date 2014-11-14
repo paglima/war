@@ -15,9 +15,9 @@ jQuery(function($) {
 	     $(document).on("keydown", disableF5);
 	});
 	
-	$('#info').width($('#wrapperBoard').width() - $('#tabuleiro').width() - 50);
 	$('body').css('background-color', '#1e2d4d');
-	
+	$('html').css('background-color', '#1e2d4d');
+
 	$('#backEndGame').click(function() {
 		location.href="../menu/inicio";
 	});
