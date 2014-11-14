@@ -1,4 +1,7 @@
 jQuery(function($) {
+	var defenseLostArmy = 0;
+	var atackLostArmy = 0;
+	
 	$(".atack").fancybox({ padding: 2});
 	
 	$("#play").click(function() {
@@ -45,6 +48,8 @@ jQuery(function($) {
 			$(".noArmyForAtackMessage").hide();
 		}
 		
+		$("#atackDiv").append('<div id="dices" style="width:630px; height: 300px;"></div>');
+		
 		var atackingDicesNumber = processAtackingDices(atackingArmyQuantity);
 		var defendingDicesNumber = processDefendingDices(defendingArmyQuantity);
 		
@@ -59,14 +64,22 @@ jQuery(function($) {
 			atackWithSameDicesNumber(atackingCountryName, atackedCountryName, defendingDicesNumber);
 		}
 		
-		$(this).toggle();
+		$(this).hide();
+				
+		if (atackLostArmy > 0) {
+			$("#atackedDiv").append('<p>' + atackingCountryName + ' perdeu ' + atackLostArmy + ' exército(s).</p>');
+			atackLostArmy = 0;
+		}
 		
-		$.fancybox.close();
-		
+		if (defenseLostArmy > 0) {
+			$("#atackedDiv").append('<p>' + atackedCountryName + ' perdeu ' + defenseLostArmy + ' exército(s).</p>');
+		}
+	
 		setTimeout(function() {
+			$.fancybox.close();
 			$("#matchForm").get(0).setAttribute('action', 'partida');
 			$("#matchForm").submit();
-		}, 500);
+		}, 2700);
 	});
 	
 	$("#atackButton").live('click',function() {
@@ -83,12 +96,16 @@ jQuery(function($) {
 			return;
 		}
 		
+		$("#atackDiv").append('<div id="dices" style="width:630px; height: 300px;"></div>');
+		
 		if ($(".noArmyForAtackMessage").text()) {
 			$(".noArmyForAtackMessage").hide();
 		}
 		
 		var atackingDicesNumber = processAtackingDices(atackingArmyQuantity);
 		var defendingDicesNumber = processDefendingDices(defendingArmyQuantity);
+		
+		console.log(atackingDicesNumber + ' ' + defendingDicesNumber);
 		
 		if (atackingDicesNumber == 3 & defendingDicesNumber == 3) {
 			atackWithSameDicesNumber(atackingCountryName, atackedCountryName, defendingDicesNumber);
@@ -101,7 +118,16 @@ jQuery(function($) {
 			atackWithSameDicesNumber(atackingCountryName, atackedCountryName, defendingDicesNumber);
 		}
 		
-		$(this).toggle();
+		if (atackLostArmy > 0) {
+			$("#atackDiv").append('<p>' + atackingCountryName + ' perdeu ' + atackLostArmy + ' exército(s).</p>');
+			atackLostArmy = 0;
+		}
+		
+		if (defenseLostArmy > 0) {
+			$("#atackDiv").append('<p>' + atackedCountryName + ' perdeu ' + defenseLostArmy + ' exército(s).</p>');
+		}
+		
+		$(this).hide();
 	});
 	
 	function atackWithMoreAtackingDices(atackingCountryName, atackedCountryName, atackingDicesNumber, defendingDicesNumber) {
@@ -157,10 +183,12 @@ jQuery(function($) {
 		var defendingArmyQuantity = +$("." + atackedCountryName).text();
 		var atackingArmyQuantity = +$("." + atackingCountryName).text();
 		
-		$("#atackDiv").append('<div class="atackingDice">' + atackingDice + '</div>');
-		$("#atackDiv").append('<div class="defendingDice">' + defendingDice + '</div>');
+		$("#dices").append('<div class="atackingDice">' + atackingDice + '</div>');
+		$("#dices").append('<div class="defendingDice">' + defendingDice + '</div>');
 		
 		if (atackingDice > defendingDice) {
+			defenseLostArmy = defenseLostArmy + 1;
+			
 			$("." + atackedCountryName).text(defendingArmyQuantity - 1);
 			$(".territoryArmy_" + atackedCountryName).val(defendingArmyQuantity - 1);
 			
@@ -175,6 +203,8 @@ jQuery(function($) {
 			}
 			
 		} else {
+			atackLostArmy = atackLostArmy + 1;
+			
 			$("." + atackingCountryName).text(atackingArmyQuantity - 1);
 			$(".territoryArmy_" + atackingCountryName).val(atackingArmyQuantity - 1);
 		}		
@@ -208,7 +238,7 @@ jQuery(function($) {
 	}
 	
 	function processAtackingDices(atackingArmyQuantity) {
-		if (atackingArmyQuantity >= 3) {
+		if (atackingArmyQuantity > 3) {
 			return 3;
 		}
 		

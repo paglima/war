@@ -4,7 +4,7 @@ jQuery(function($) {
 	});
 	
 	$('#multiplayer').click(function() {
-		location.href="multi-jogador";
+		location.href="../files/manualWar.pdf";
 	});
 	
 	$('#play').click(function() {

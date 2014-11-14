@@ -61,11 +61,6 @@ select {
     background-color: #E6B401;
 }
 
-.notPlaying {
-	color: #838383;
-	background-color: #838383;		
-}
-
 .circleButton {
 	font-size: 0.8em;
 	line-height: 25px;
@@ -631,7 +626,33 @@ table, th, td {
 	border-top-color: #F29E54;
 }
 
-#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover, #defenseButton:hover {
+#backEndGame {
+	margin: 0 auto;
+	position: relative;
+	top: 30px;
+	
+	width: 150px;
+	height: 40px; 
+	cursor: pointer;
+	background-color: #C8752C;
+	
+	border-bottom-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	
+	border-bottom-width: 3px;
+	border-right-width: 3px;
+	border-left-width: 3px;
+	border-top-width: 3px;
+	
+	border-right-color: #A55B1A;
+	border-bottom-color: #7F4614;
+	border-left-color: #3D240E;
+	border-top-color: #F29E54;
+}
+
+#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover, #defenseButton:hover, backEndGame:hover  {
 	background-color: #FFBB7F;
 }
 
@@ -719,4 +740,13 @@ table, th, td {
 	border-bottom-color: #0A2D1B;
 	border-left-color: #131E18;
 	border-top-color: #0FA55A;
+}
+
+.notPlayingText {
+	color: #838383;
+	text-decoration: line-through;
+}
+
+.notPlayingDiv {
+	background-color: #838383;		
 }

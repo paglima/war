@@ -72,6 +72,15 @@
 									<br/><br/><a id="cards" href="#cardsDiv">Cartas</a>
 								</c:if>	
 							</c:when>
+							<c:when test="${usuario.aindaNoJogo == false}">
+								<div class="circleButtonTag playerTurnCircle cor${usuario.cor} notPlayingDiv"></div>
+								<span class="notPlayingText">${usuario.nomeUsuario}</span>	(Eliminado)			
+								<br/>
+								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<c:if test="${usuario.jogadorHumano == true}">
+									<span style="margin-bottom: 10px;font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> 
+								</c:if>	
+							</c:when>
 							<c:otherwise>
 								<div class="circleButtonTag cor${usuario.cor}"></div>
 								<span>${usuario.nomeUsuario}</span>				
@@ -97,9 +106,9 @@
 		</div>
 		
 		<div style="display:none;">
-			<div id="redistributionDiv" style="width:330px;height:280px;overflow:auto;">
+			<div id="redistributionDiv" style="width:400px;height:350px;overflow:auto;">
 				<h2>Distribuir exército</h2>
-				<span">Selecione a quantidade de exércitos que deseja ter no território. <br/><br/></span>
+				<span>Selecione a quantidade de exércitos que deseja ter no território. <br/><br/></span>
 				<span id="noArmyMessage" style="display:none;">Você não tem mais exércitos disponíveis para distribuir. <br/><br/></span>
 				<select id="armyNumber">
 				</select>
@@ -123,19 +132,19 @@
 		</div>
 		
 		<div style="display:none;">
-			<div id="cardsDiv" style="width:280px;height:230px;overflow:auto;">
+			<div id="cardsDiv" style="width:470px;height:390px;overflow:auto;">
 				<h2>Cartas</h2>
 				<br/>
 				
 				<c:choose>
 					<c:when test="${fn:length(usuarios[0].jogo.usuarioHumano.cartas) > 0}">
-						<c:forEach items="${usuarios[0].jogo.usuarioHumano.cartas}" var="carta">
+						<c:forEach items="${usuarios[0].jogo.usuarioHumano.cartas}" var="carta" varStatus="status">
 							<c:choose>
 								<c:when test="${carta.cartaCoringa == true}">
-									<p>Carta coringa</p>
+									<p>Carta ${status.index + 1} - Carta coringa</p>
 								</c:when>
 								<c:otherwise>
-									<p>Símbolo: ${carta.simbolo}</p>
+									<p>Carta ${Status.index + 1} - Símbolo: ${carta.simbolo} - Território: ${carta.territorio.nomeTerritorio}</p>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -146,5 +155,22 @@
 				</c:choose>
 			</div>
 		</div>
+		
+		<c:if test="${usuarioVencedor != null}">
+			<input type="hidden" id="endOfGame" value="true"/>							
+			<a style="display:none;" id="endGameLink" href="#endOfGame">confirm</a>
+			
+			<div style="display:none;">
+				<div id="endOfGame" style="width:380px;height:380px;overflow:auto;">
+					<h2>Fim de jogo</h2>
+					<p>O jogador ${usuarioVencedor.nomeUsuario} venceu a partida!</p>
+					<p>Objetivo: ${usuarioVencedor.objetivo.descricao}</p>
+					
+					<div id="backEndGame">
+						<span>Voltar ao menu</span>
+					</div>
+				</div>
+			</div>
+		</c:if>
 	</body>
 </html>

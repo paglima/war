@@ -216,6 +216,8 @@ public class Usuario {
 		for (Territorio territorio : getTerritorios()) {
 			if (territorio.getQuantidadeExercito() > maiorExercito.getQuantidadeExercito() && territorio.contemVizinhoInimigo()) {
 				maiorExercito = territorio;
+			} else if (territorio.contemVizinhoInimigo() && !maiorExercito.contemVizinhoInimigo()) {
+				maiorExercito = territorio;
 			}
 		}
 		

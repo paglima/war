@@ -193,12 +193,12 @@ public class Territorio {
 
 	public boolean contemVizinhoInimigo() {
 		for (Territorio vizinho : getVizinhos()) {
-			if (vizinho.getUsuario().getCor().equals(getUsuario().getCor())) {
-				return false;
+			if (!vizinho.getUsuario().getCor().equals(getUsuario().getCor())) {
+				return true;
 			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	public void diminuiExercito(Integer quantidade) {

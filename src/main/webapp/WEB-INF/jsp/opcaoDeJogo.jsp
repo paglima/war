@@ -15,11 +15,11 @@
 				<span id="title">War</span>
 				
 				<div id="singleplayer">
-					<span>Solo</span>
+					<span>Jogo</span>
 				</div>
 				
 				<div id="multiplayer">
-					<span>Multi-jogador</span>
+					<span>Regras</span>
 				</div>
 			</div>
 		</div>

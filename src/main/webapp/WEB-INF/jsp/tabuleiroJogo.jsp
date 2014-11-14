@@ -82,6 +82,15 @@
 									<span style="font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> <br/>
 								</c:if>	
 							</c:when>
+							<c:when test="${usuario.aindaNoJogo == false}">
+								<div class="circleButtonTag playerTurnCircle cor${usuario.cor} notPlayingDiv"></div>
+								<span class="notPlayingText">${usuario.nomeUsuario}</span>	(Eliminado)			
+								<br/>
+								<span style="font-size: 0.8em;">Total de territórios: ${usuario.totalDeTerritorios}</span> <br/>
+								<c:if test="${usuario.jogadorHumano == true}">
+									<span style="margin-bottom: 10px;font-size: 0.8em;font-weight: bold;font-style: italic;">Objetivo: ${usuario.objetivo.descricao}</span> 
+								</c:if>	
+							</c:when>
 							<c:otherwise>
 								<div class="circleButtonTag cor${usuario.cor}"></div>
 								<span>${usuario.nomeUsuario}</span>				
@@ -99,15 +108,17 @@
 				</c:forEach>
 									
 				<c:if test="${turnoJogadorHumano != true}">
-					<div id="movementDiv"> 
-						<c:forEach items="${jogada.sumarioJogada}" var="sumario">
-							<c:if test="${fn:contains(sumario, 'Você está sendo atacado.')}">
-								<input type="hidden" id="playerAtacked" value="true"/>							
-							</c:if>
-							
-							<p>${sumario}</p> 
-						</c:forEach>
-					</div>
+					<c:if test="${fn:length(jogada.sumarioJogada) > 0}">
+						<div id="movementDiv"> 
+							<c:forEach items="${jogada.sumarioJogada}" var="sumario">
+								<c:if test="${fn:contains(sumario, 'Você está sendo atacado.')}">
+									<input type="hidden" id="playerAtacked" value="true"/>							
+								</c:if>
+								
+								<p>${sumario}</p> 
+							</c:forEach>
+						</div>
+					</c:if>
 				</c:if>					
 								
 				<c:choose>
@@ -139,5 +150,22 @@
 				</div>
 			</div>
 		</div>
+		
+		<c:if test="${usuarioVencedor != null}">
+			<input type="hidden" id="endOfGame" value="true"/>							
+			<a style="display:none;" id="endGameLink" href="#endOfGame">confirm</a>
+			
+			<div style="display:none;">
+				<div id="endOfGame" style="width:380px;height:380px;overflow:auto;">
+					<h2>Fim de jogo</h2>
+					<p>O jogador ${usuarioVencedor.nomeUsuario} venceu a partida!</p>
+					<p>Objetivo: ${usuarioVencedor.objetivo.descricao}</p>
+					
+					<div id="backEndGame">
+						<span>Voltar ao menu</span>
+					</div>
+				</div>
+			</div>
+		</c:if>
 	</body>
 </html>

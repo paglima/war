@@ -316,7 +316,7 @@ public class Jogo {
 	private boolean verificaTerceiroContinente(Usuario usuario, Continente continentePrimeiro, Continente continentenSegundo, List<Continente> continentes) {
 		if (continentePrimeiro != null && continentenSegundo != null) {
 			for (Continente continente : continentes) {
-				if (continente.getNomeContinente().equals(continentePrimeiro.getNomeContinente()) && continente.getNomeContinente().equals(continentenSegundo.getNomeContinente())) {
+				if (!continente.getNomeContinente().equals(continentePrimeiro.getNomeContinente()) && !continente.getNomeContinente().equals(continentenSegundo.getNomeContinente())) {
 					if (continente.verificaSeContinenteFoiConquistado(usuario) == true) {
 						return true;
 					}
