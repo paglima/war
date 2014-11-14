@@ -41,7 +41,6 @@ select {
     height: 80px;
     text-align: center;
     box-shadow: inset 0 0 10px #000000;
-    cursor: pointer;
     background-color: #D20000;
 }
 
@@ -57,7 +56,6 @@ select {
     height: 80px;
     text-align: center;
     box-shadow: inset 0 0 10px #000000;
-    cursor: pointer;
     background-color: #E6B401;
 }
 
