@@ -157,11 +157,11 @@
 		</div>
 		
 		<c:if test="${usuarioVencedor != null}">
-			<input type="hidden" id="endOfGame" value="true"/>							
+			<input type="hidden" id="endOfGameFlag" value="true"/>							
 			<a style="display:none;" id="endGameLink" href="#endOfGame">confirm</a>
 			
 			<div style="display:none;">
-				<div id="endOfGame" style="width:380px;height:380px;overflow:auto;">
+				<div id="endOfGame" style="width:480px;height:480px;overflow:auto;padding-left: 10px;padding-right: 10px;">
 					<h2>Fim de jogo</h2>
 					<p>O jogador ${usuarioVencedor.nomeUsuario} venceu a partida!</p>
 					<p>Objetivo: ${usuarioVencedor.objetivo.descricao}</p>

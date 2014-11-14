@@ -587,7 +587,7 @@ table, th, td {
 	border-color: #414141;
 }
 
-#redistributionDiv, #redistributionNotCompleted, #cardsDiv {
+#redistributionDiv, #redistributionNotCompleted, #cardsDiv, #endOfGame {
 	margin: 0;
 	border-width: 0;
 	text-align: center;
@@ -632,7 +632,7 @@ table, th, td {
 	top: 30px;
 	
 	width: 150px;
-	height: 40px; 
+	height: 30px; 
 	cursor: pointer;
 	background-color: #C8752C;
 	
@@ -652,7 +652,7 @@ table, th, td {
 	border-top-color: #F29E54;
 }
 
-#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover, #defenseButton:hover, backEndGame:hover  {
+#redistributeButton:hover, #okButton:hover, #cancelButton:hover, #atackButton:hover, #defenseButton:hover, #backEndGame:hover  {
 	background-color: #FFBB7F;
 }
 
