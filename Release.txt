@@ -1,0 +1,10 @@
+Manual de instalação do Projeto
+
+1 – Instalar o Oracle;
+2 – Criar usuário para o Oracle com nome e senhas iguais a: “TrabalhoES”
+3 – Rodar os SQLs (SQL.sql) referentes ao projeto que se encontram na pasta /Docs do projeto; 
+4 – Instalar Eclipse de sua preferência (De preferência um compatível com o Jetty)
+5 – Fazer clone do projeto (https://github.com/paglima/war) ou se já tiver o projeto no computador, importar o projeto para o Eclipse;
+6 – Instalar o plugin do Jetty para o Eclipse;
+7 – Rodar o projeto (Run with Jetty) em uma porta de sua preferência (no nosso caso, usamos a porta 7070);
+8 – Acessar a url: http://localhost:{porta_de_sua_preferencia}/war/menu/inicio
