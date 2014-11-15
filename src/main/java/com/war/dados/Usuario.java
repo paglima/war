@@ -270,9 +270,11 @@ public class Usuario {
 	}
 
 	public boolean contemTerritorio(Territorio territorio) {
-		for (Territorio territorioDoUsuario : getTerritorios()) {
-			if (territorioDoUsuario.getIdTerritorio().equals(territorio.getIdTerritorio())) {
-				return true;
+		if (territorio != null) {
+			for (Territorio territorioDoUsuario : getTerritorios()) {
+				if (territorioDoUsuario.getIdTerritorio().equals(territorio.getIdTerritorio())) {
+					return true;
+				}
 			}
 		}
 		

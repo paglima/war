@@ -152,7 +152,7 @@
 		</div>
 		
 		<c:if test="${usuarioVencedor != null}">
-			<input type="hidden" id="endOfGame" value="true"/>							
+			<input type="hidden" id="endOfGameFlag" value="true"/>							
 			<a style="display:none;" id="endGameLink" href="#endOfGame">confirm</a>
 			
 			<div style="display:none;">
