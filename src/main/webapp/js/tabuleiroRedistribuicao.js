@@ -63,6 +63,7 @@ jQuery(function($) {
 		$('.' + classInputName).val(armyChangeNumber);
 		$('.' + classTextName).html(armyChangeNumber);
 		
+		//Devolvendo exercito para o total
 		if (armyChangeNumber < actualTerrytoryArmy) {
 			var newTotalArmyLeft = actualArmyLeft + (actualTerrytoryArmy - armyChangeNumber);
 			$('#armyLeft').html("Exercitos Sobrando: " + newTotalArmyLeft);
@@ -71,7 +72,7 @@ jQuery(function($) {
 			return;
 		} 
 		
-		if ((armyChangeNumber > actualTerrytoryArmy) && ((armyChangeNumber - actualTerrytoryArmy) >= actualArmyLeft) && (actualArmyLeft > 0)) {
+		if ((armyChangeNumber > actualTerrytoryArmy) && ((armyChangeNumber - actualTerrytoryArmy) <= actualArmyLeft) && (actualArmyLeft > 0)) {
 			var newTotalArmyLeft = actualArmyLeft - (armyChangeNumber - actualTerrytoryArmy);
 			$('#armyLeft').html("Exercitos Sobrando: " + newTotalArmyLeft);
 			
