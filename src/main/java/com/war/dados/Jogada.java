@@ -53,7 +53,7 @@ public class Jogada {
 		if (quantidadeDadosAtaque == 3 & quantidadeDadosDefesa == 3) {
 			ataqueComDadosIguais(ataque, quantidadeDadosDefesa);
 			
-		} else if (quantidadeDadosDefesa <= 2 && quantidadeDadosAtaque == 3) {
+		} else if ((quantidadeDadosDefesa <= 2 && quantidadeDadosAtaque == 3) || (quantidadeDadosDefesa == 1 && quantidadeDadosAtaque == 2)) {
 			ataqueComAtacanteComMaisDados(ataque, quantidadeDadosAtaque, quantidadeDadosDefesa);
 			
 		} else {

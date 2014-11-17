@@ -111,7 +111,7 @@ jQuery(function($) {
 		if (atackingDicesNumber == 3 & defendingDicesNumber == 3) {
 			atackWithSameDicesNumber(atackingCountryName, atackedCountryName, defendingDicesNumber);
 			
-		} else if (defendingDicesNumber <= 2 && atackingDicesNumber == 3) {
+		} else if ((defendingDicesNumber <= 2 && atackingDicesNumber == 3) || (defendingDicesNumber == 1 && atackingDicesNumber == 2)) {
 			atackWithMoreAtackingDices(atackingCountryName, atackedCountryName, atackingDicesNumber, defendingDicesNumber);
 			
 		} else {
